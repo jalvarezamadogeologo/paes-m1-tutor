@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    /* Estilos del calendario */
+    .calendario-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .progreso-barra {
+        width: 100%;
+        height: 24px;
+        background: #E5E7EB;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 16px 0;
+    }
+    
+    .progreso-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #2E5A9E, #1F3864);
+        transition: width 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .progreso-texto {
+        font-size: 0.9rem;
+        color: #333B48;
+        margin-bottom: 8px;
+    }
+    
+    .fase-titulo {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1F3864;
+        margin: 32px 0 16px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #D0D7E2;
+    }
+    
+    .semana-card {
+        background: white;
+        border: 1px solid #D0D7E2;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+    
+    .semana-card:hover {
+        border-color: #2E5A9E;
+        box-shadow: 0 2px 8px rgba(46, 90, 158, 0.1);
+    }
+    
+    .semana-card.pausa {
+        background: #F3F4F6;
+        border-style: dashed;
+        opacity: 0.7;
+    }
+    
+    .semana-card.hito {
+        border-left: 4px solid #1F3864;
+        background: #F8FAFC;
+    }
+    
+    .semana-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+    
+    .semana-numero {
+        font-weight: 700;
+        color: #1F3864;
+        font-size: 1rem;
+    }
+    
+    .semana-fechas {
+        font-size: 0.85rem;
+        color: #6B7280;
+    }
+    
+    .semana-contenido {
+        color: #333B48;
+        margin: 8px 0;
+        line-height: 1.5;
+    }
+    
+    .semana-medicion {
+        font-size: 0.9rem;
+        color: #2E5A9E;
+        font-weight: 500;
+        margin: 8px 0;
+    }
+    
+    .semana-medicion.vacia {
+        color: #9CA3AF;
+    }
+    
+    .semana-acciones {
+        display: flex;
+        gap: 12px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    .checkbox-sesion {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+    
+    .checkbox-sesion input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    
+    .campo-resultado {
+        width: 120px;
+        padding: 6px 10px;
+        border: 1px solid #D0D7E2;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+    
+    .campo-resultado:focus {
+        outline: none;
+        border-color: #2E5A9E;
+        box-shadow: 0 0 0 2px rgba(46, 90, 158, 0.2);
+    }
+    
+    .enlace-material {
+        font-size: 0.85rem;
+        color: #2E5A9E;
+        text-decoration: none;
+        padding: 4px 8px;
+        border: 1px solid #2E5A9E;
+        border-radius: 4px;
+        transition: all 0.15s;
+    }
+    
+    .enlace-material:hover {
+        background: #2E5A9E;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .botones-accion {
+        display: flex;
+        gap: 12px;
+        margin: 24px 0;
+        flex-wrap: wrap;
+    }
+    
+    .boton {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    
+    .boton-primario {
+        background: #1F3864;
+        color: white;
+    }
+    
+    .boton-primario:hover {
+        background: #2E5A9E;
+    }
+    
+    .boton-secundario {
+        background: #E5E7EB;
+        color: #333B48;
+    }
+    
+    .boton-secundario:hover {
+        background: #D1D5DB;
+    }
+    
+    .boton-peligro {
+        background: #FEE2E2;
+        color: #DC2626;
+    }
+    
+    .boton-peligro:hover {
+        background: #FECACA;
+    }
+    
+    #exportar-area {
+        width: 100%;
+        min-height: 200px;
+        margin-top: 16px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        padding: 12px;
+        border: 1px solid #D0D7E2;
+        border-radius: 6px;
+        resize: vertical;
+    }
+    
+    .aviso-privacidad {
+        background: #FEF3C7;
+        border: 1px solid #F59E0B;
+        border-radius: 6px;
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        font-size: 0.9rem;
+        color: #92400E;
+    }
+    
+    @media (max-width: 860px) {
+        .semana-header {
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .semana-acciones {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .campo-resultado {
+            width: 100%;
+        }
+    }
+    
+    /* Layout de dos columnas para el calendario */
+    .calendario-layout {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 24px;
+        align-items: start;
+    }
+    
+    .calendario-columna-izq {
+        min-width: 0;
+    }
+    
+    .calendario-columna-der {
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        background: white;
+        border: 1px solid #D0D7E2;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    
+    .panel-mensual-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    
+    .panel-mensual-titulo {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1F3864;
+    }
+    
+    .panel-mensual-nav {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .panel-mensual-nav button {
+        background: #E5E7EB;
+        border: none;
+        border-radius: 4px;
+        padding: 4px 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: #333B48;
+        transition: background 0.15s;
+    }
+    
+    .panel-mensual-nav button:hover {
+        background: #D1D5DB;
+    }
+    
+    .grid-mensual {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        margin-bottom: 16px;
+    }
+    
+    .grid-mensual-dia-header {
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #6B7280;
+        padding: 4px 0;
+        text-transform: uppercase;
+    }
+    
+    .grid-mensual-dia {
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        cursor: default;
+        position: relative;
+        transition: all 0.15s;
+        background: #F9FAFB;
+        border: 1px solid transparent;
+    }
+    
+    .grid-mensual-dia.vacio {
+        background: transparent;
+        cursor: default;
+    }
+    
+    .grid-mensual-dia.con-semana {
+        background: #EDF1F7;
+        border-color: #D0D7E2;
+        cursor: pointer;
+    }
+    
+    .grid-mensual-dia.con-semana:hover {
+        background: #DDE3ED;
+        border-color: #2E5A9E;
+    }
+    
+    .grid-mensual-dia.hecha {
+        background: #D1FAE5;
+        border-color: #6EE7B7;
+    }
+    
+    .grid-mensual-dia.hito {
+        background: #DBEAFE;
+        border-color: #93C5FD;
+    }
+    
+    .grid-mensual-dia.hito-hecha {
+        background: #D1FAE5;
+        border-color: #6EE7B7;
+    }
+    
+    .grid-mensual-dia.pausa {
+        background: #F3F4F6;
+        border-color: #E5E7EB;
+        opacity: 0.6;
+    }
+    
+    .grid-mensual-dia .punto-evento {
+        position: absolute;
+        bottom: 3px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #1F3864;
+    }
+    
+    .grid-mensual-dia.hecha .punto-evento {
+        background: #059669;
+    }
+    
+    .leyenda-calendario {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.75rem;
+        color: #6B7280;
+        margin-bottom: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #E5E7EB;
+    }
+    
+    .leyenda-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .leyenda-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 2px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .resumen-mes {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #E5E7EB;
+    }
+    
+    .resumen-mes-titulo {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #1F3864;
+        margin-bottom: 8px;
+    }
+    
+    .resumen-mes-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 6px 0;
+        font-size: 0.8rem;
+        border-bottom: 1px solid #F3F4F6;
+    }
+    
+    .resumen-mes-item:last-child {
+        border-bottom: none;
+    }
+    
+    .resumen-mes-semana {
+        font-weight: 600;
+        color: #1F3864;
+        min-width: 28px;
+    }
+    
+    .resumen-mes-contenido {
+        color: #333B48;
+        flex: 1;
+    }
+    
+    .resumen-mes-estado {
+        font-size: 0.75rem;
+        padding: 2px 6px;
+        border-radius: 3px;
+        white-space: nowrap;
+    }
+    
+    .resumen-mes-estado.hecha {
+        background: #D1FAE5;
+        color: #065F46;
+    }
+    
+    .resumen-mes-estado.pendiente {
+        background: #FEE2E2;
+        color: #991B1B;
+    }
+    
+    .semana-card.resaltada {
+        border-color: #2E5A9E;
+        box-shadow: 0 0 0 3px rgba(46, 90, 158, 0.3);
+        transition: box-shadow 0.3s ease;
+    }
+    
+    @media (max-width: 1100px) {
+        .calendario-layout {
+            grid-template-columns: 1fr;
+        }
+        
+        .calendario-columna-der {
+            position: static;
+            max-height: none;
+            order: 2;
+        }
+    }
+    
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="plan/entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="plan/calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="plan/guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="plan/guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="plan/guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="plan/guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="plan/guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="plan/guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="material/semanas/semana-01.html">Semana 1</a>
+<a href="material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="calendario.html" class="activo">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+
+        
+        <h1>Calendario de entrenamiento</h1>
+        
+        <div class="aviso-privacidad">
+            <strong>Nota:</strong> El progreso se guarda localmente en este navegador. 
+            Usa los botones de abajo para exportar o descargar un respaldo.
+        </div>
+        
+        <div class="calendario-header">
+            <div class="progreso-texto" id="progreso-texto">Cargando...</div>
+            <div class="progreso-barra">
+                <div class="progreso-fill" id="progreso-fill" style="width: 0%">0%</div>
+            </div>
+        </div>
+        
+        <div class="botones-accion">
+            <button id="btn-exportar" class="boton boton-primario">Exportar progreso</button>
+            <button id="btn-descargar" class="boton boton-secundario">Descargar .md</button>
+            <button id="btn-limpiar" class="boton boton-peligro">Limpiar todo</button>
+        </div>
+        
+        <textarea id="exportar-area" style="display: none;" readonly></textarea>
+        
+        <div class="calendario-layout">
+            <div class="calendario-columna-izq">
+                <div id="calendario-contenido">
+                    <!-- Se renderiza dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="calendario-columna-der" id="panel-mensual">
+                <div class="panel-mensual-header">
+                    <div class="panel-mensual-titulo" id="panel-mes-titulo">Cargando...</div>
+                    <div class="panel-mensual-nav">
+                        <button id="btn-mes-anterior">‹</button>
+                        <button id="btn-mes-siguiente">›</button>
+                    </div>
+                </div>
+                
+                <div class="grid-mensual" id="grid-mensual">
+                    <!-- Se renderiza dinámicamente -->
+                </div>
+                
+                <div class="leyenda-calendario">
+                    <div class="leyenda-item">
+                        <div class="leyenda-color" style="background: #EDF1F7; border-color: #D0D7E2;"></div>
+                        <span>Semana normal</span>
+                    </div>
+                    <div class="leyenda-item">
+                        <div class="leyenda-color" style="background: #DBEAFE; border-color: #93C5FD;"></div>
+                        <span>Hito/MC</span>
+                    </div>
+                    <div class="leyenda-item">
+                        <div class="leyenda-color" style="background: #D1FAE5; border-color: #6EE7B7;"></div>
+                        <span>Completada</span>
+                    </div>
+                    <div class="leyenda-item">
+                        <div class="leyenda-color" style="background: #F3F4F6; border-color: #E5E7EB; opacity: 0.6;"></div>
+                        <span>Pausa</span>
+                    </div>
+                </div>
+                
+                <div class="resumen-mes" id="resumen-mes">
+                    <!-- Se renderiza dinámicamente -->
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    
+    <!-- Datos del calendario embebidos -->
+    <script id="datos-calendario" type="application/json">
+[
+  {
+    "semana": "W1",
+    "fechas": "28/09 - 04/10",
+    "contenido": "Geometría: ángulos y rectas (paralelas, transversal)",
+    "medicion": "**Ensayo DEMRE baseline (escala real)**",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W2",
+    "fechas": "05/10 - 11/10",
+    "contenido": "Geometría: triángulos (clasificación, suma de ángulos)",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W3",
+    "fechas": "12/10 - 18/10",
+    "contenido": "Geometría: congruencia y semejanza de triángulos",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W4",
+    "fechas": "19/10 - 25/10",
+    "contenido": "Geometría: teorema de Pitágoras",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W5",
+    "fechas": "26/10 - 01/11",
+    "contenido": "Geometría: áreas y perímetros (polígonos)",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W6",
+    "fechas": "02/11 - 08/11",
+    "contenido": "Geometría: problemas integrados",
+    "medicion": "MC Geometría",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "material/mc/mc-f1.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W7",
+    "fechas": "09/11 - 15/11",
+    "contenido": "Funciones: concepto, dominio/recorrido, representaciones",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W8",
+    "fechas": "16/11 - 22/11",
+    "contenido": "Funciones: lineal y afín (pendiente, gráfica)",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W9",
+    "fechas": "23/11 - 29/11",
+    "contenido": "Funciones: cuadrática (vértice, raíces, modelación)",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W10",
+    "fechas": "30/11 - 06/12",
+    "contenido": "Funciones: modelación en contexto",
+    "medicion": "MC Funciones",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "material/mc/mc-f1.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W11",
+    "fechas": "07/12 - 13/12",
+    "contenido": "Números: porcentajes, fracciones, potencias y raíces",
+    "medicion": "",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W12",
+    "fechas": "14/12 - 20/12",
+    "contenido": "Repaso integrado de Geometría y Funciones",
+    "medicion": "MC3 Números (opcional)",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "material/mc/mc-f1.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W13",
+    "fechas": "21/12 - 27/12",
+    "contenido": "**Ensayo oficial DEMRE (dic 2026)**",
+    "medicion": "**Hito: 800**",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": true
+  },
+  {
+    "semana": "W14",
+    "fechas": "28/12 - 03/01",
+    "contenido": "Análisis de resultados, registro, cierre de F1",
+    "medicion": "Registro en ensayos.md",
+    "fase": "Fase 1",
+    "enlace_guia": "plan/guias/f1.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W15",
+    "fechas": "04/01 - 10/01",
+    "contenido": "Geometría avanzada: circunferencia (cuerdas, ángulos, sector)",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W16",
+    "fechas": "11/01 - 17/01",
+    "contenido": "Geometría avanzada: trigonometría básica (sen, cos, tan)",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "[Pausa]",
+    "fechas": "18/01 - 14/02",
+    "contenido": "—",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": true,
+    "es_hito": false
+  },
+  {
+    "semana": "W21",
+    "fechas": "15/02 - 21/02",
+    "contenido": "Geometría avanzada: cuerpos geométricos (volúmenes)",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W22",
+    "fechas": "22/02 - 28/02",
+    "contenido": "Geometría en contexto (problemas integrados)",
+    "medicion": "MC Geometría",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "material/mc/mc-f2.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W23",
+    "fechas": "01/03 - 07/03",
+    "contenido": "Funciones: exponencial en profundidad",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W24",
+    "fechas": "08/03 - 14/03",
+    "contenido": "Funciones: modelación (lineal, cuadrática, exponencial)",
+    "medicion": "Ensayo DEMRE 1er ciclo (mar) *",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W25",
+    "fechas": "15/03 - 21/03",
+    "contenido": "Funciones: modelación avanzada tipo corte 800+",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W26",
+    "fechas": "22/03 - 28/03",
+    "contenido": "Repaso de Funciones",
+    "medicion": "MC Funciones",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "material/mc/mc-f2.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W27",
+    "fechas": "29/03 - 04/04",
+    "contenido": "Números en profundidad (porcentajes encadenados, potencias)",
+    "medicion": "",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W28",
+    "fechas": "05/04 - 11/04",
+    "contenido": "Proporcionalidad y Álgebra a dificultad alta",
+    "medicion": "**MC6 Prop. + Álgebra**",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "material/mc/mc-f2.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W29",
+    "fechas": "12/04 - 18/04",
+    "contenido": "Estadística a dificultad alta",
+    "medicion": "**MC7 Estadística**",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "material/mc/mc-f2.html",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W30",
+    "fechas": "19/04 - 25/04",
+    "contenido": "Ensayo completo + análisis",
+    "medicion": "Ensayo DEMRE 1er ciclo (abr) * / cierre F2",
+    "fase": "Fase 2",
+    "enlace_guia": "plan/guias/f2.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W31",
+    "fechas": "26/04 - 02/05",
+    "contenido": "Ensayo completo 1 + clasificación de errores por área",
+    "medicion": "Ensayo",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W32",
+    "fechas": "03/05 - 09/05",
+    "contenido": "Refuerzo dirigido A (áreas con más errores)",
+    "medicion": "",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W33",
+    "fechas": "10/05 - 16/05",
+    "contenido": "Ensayo completo 2",
+    "medicion": "Ensayo",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W34",
+    "fechas": "17/05 - 23/05",
+    "contenido": "Refuerzo dirigido B",
+    "medicion": "",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W35",
+    "fechas": "24/05 - 30/05",
+    "contenido": "Ensayo completo 3",
+    "medicion": "Ensayo",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W36",
+    "fechas": "31/05 - 06/06",
+    "contenido": "Refuerzo dirigido C",
+    "medicion": "",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W37",
+    "fechas": "07/06 - 13/06",
+    "contenido": "Ensayo completo 4",
+    "medicion": "Ensayo",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W38",
+    "fechas": "14/06 - 20/06",
+    "contenido": "Preparación PAES de invierno (repaso ligero + estrategia)",
+    "medicion": "",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W39",
+    "fechas": "21/06 - 27/06",
+    "contenido": "**PAES de invierno** *",
+    "medicion": "**Hito (puntaje válido)**",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": true
+  },
+  {
+    "semana": "W40",
+    "fechas": "28/06 - 04/07",
+    "contenido": "Análisis de resultados de invierno",
+    "medicion": "Registro",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W41",
+    "fechas": "05/07 - 11/07",
+    "contenido": "Refuerzo según resultados de invierno",
+    "medicion": "",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W42",
+    "fechas": "12/07 - 18/07",
+    "contenido": "Ensayo completo 5 + cierre F3",
+    "medicion": "Ensayo",
+    "fase": "Fase 3",
+    "enlace_guia": "plan/guias/f3.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W43",
+    "fechas": "19/07 - 25/07",
+    "contenido": "Inscripción PAES regular * + ensayo completo 1",
+    "medicion": "Ensayo / inscripción",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W44",
+    "fechas": "26/07 - 01/08",
+    "contenido": "Refuerzo dirigido A",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W45",
+    "fechas": "02/08 - 08/08",
+    "contenido": "Refuerzo dirigido A (continuación)",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W46",
+    "fechas": "09/08 - 15/08",
+    "contenido": "Ensayo completo 2",
+    "medicion": "Ensayo DEMRE 2do ciclo (ago) *",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W47",
+    "fechas": "16/08 - 22/08",
+    "contenido": "Análisis + refuerzo B",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W48",
+    "fechas": "23/08 - 29/08",
+    "contenido": "Refuerzo B",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W49",
+    "fechas": "30/08 - 05/09",
+    "contenido": "Ensayo completo 3",
+    "medicion": "Ensayo DEMRE 2do ciclo (sep) *",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W50",
+    "fechas": "06/09 - 12/09",
+    "contenido": "Análisis + refuerzo C",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W51",
+    "fechas": "13/09 - 19/09",
+    "contenido": "Refuerzo C",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W52",
+    "fechas": "20/09 - 26/09",
+    "contenido": "Ensayo completo 4",
+    "medicion": "Ensayo",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W53",
+    "fechas": "27/09 - 03/10",
+    "contenido": "Refuerzo D",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W54",
+    "fechas": "04/10 - 10/10",
+    "contenido": "Refuerzo D",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W55",
+    "fechas": "11/10 - 17/10",
+    "contenido": "Ensayo completo 5",
+    "medicion": "Ensayo",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W56",
+    "fechas": "18/10 - 24/10",
+    "contenido": "Análisis + refuerzo E",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W57",
+    "fechas": "25/10 - 31/10",
+    "contenido": "Refuerzo E",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W58",
+    "fechas": "01/11 - 07/11",
+    "contenido": "Ensayo completo 6",
+    "medicion": "Ensayo",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W59",
+    "fechas": "08/11 - 14/11",
+    "contenido": "Consolidación final, revisión de errores recurrentes, cierre F4",
+    "medicion": "",
+    "fase": "Fase 4",
+    "enlace_guia": "plan/guias/f4.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W60",
+    "fechas": "15/11 - 21/11",
+    "contenido": "Repaso ligero (fórmulas, errores recurrentes, gestión de tiempo)",
+    "medicion": "",
+    "fase": "Fase 5",
+    "enlace_guia": "plan/guias/f5.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W61",
+    "fechas": "22/11 - 28/11",
+    "contenido": "Simulación completa + estrategia de examen",
+    "medicion": "Ensayo",
+    "fase": "Fase 5",
+    "enlace_guia": "plan/guias/f5.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": false
+  },
+  {
+    "semana": "W62",
+    "fechas": "29/11 - 05/12",
+    "contenido": "**PAES regular (rendición)** *",
+    "medicion": "**Hito: 1000**",
+    "fase": "Fase 5",
+    "enlace_guia": "plan/guias/f5.html",
+    "enlace_mc": "",
+    "es_pausa": false,
+    "es_hito": true
+  }
+]
+    </script>
+    
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar datos del calendario embebido
+        const datosElement = document.getElementById('datos-calendario');
+        if (!datosElement) {
+            console.error('No se encontraron datos del calendario');
+            return;
+        }
+        
+        const semanas = JSON.parse(datosElement.textContent);
+        const STORAGE_KEY = 'paes-calendario-v1';
+        
+        // Cargar progreso guardado
+        let progreso = {};
+        try {
+            const guardado = localStorage.getItem(STORAGE_KEY);
+            if (guardado) {
+                progreso = JSON.parse(guardado);
+            }
+        } catch (e) {
+            console.warn('No se pudo cargar localStorage:', e);
+        }
+        
+        // Función para parsear fechas DD/MM - DD/MM/YYYY o DD/MM - DD/MM
+        function parsearFechas(fechasStr, semanaStr) {
+            const partes = fechasStr.split(' - ');
+            if (partes.length !== 2) return null;
+            
+            const [diaIni, mesIni] = partes[0].split('/').map(Number);
+            let [diaFin, mesFin, anioFin] = partes[1].split('/').map(Number);
+            
+            // Determinar año basado en la semana
+            let anioIni;
+            const numSemana = parseInt(semanaStr.replace('W', ''));
+            
+            if (numSemana <= 14) {
+                // Fase 1: sep-dic 2026
+                anioIni = 2026;
+                if (!anioFin) anioFin = (mesFin < mesIni) ? 2027 : 2026;
+            } else if (numSemana <= 30) {
+                // Fase 2: ene-abr 2027 (W15-W16 ene 2027, W21-W30 feb-abr 2027)
+                anioIni = 2027;
+                if (!anioFin) anioFin = 2027;
+            } else if (numSemana <= 42) {
+                // Fase 3: abr-jul 2027
+                anioIni = 2027;
+                if (!anioFin) anioFin = 2027;
+            } else if (numSemana <= 59) {
+                // Fase 4: jul-nov 2027
+                anioIni = 2027;
+                if (!anioFin) anioFin = 2027;
+            } else {
+                // Fase 5: nov-dic 2027
+                anioIni = 2027;
+                if (!anioFin) anioFin = 2027;
+            }
+            
+            // Casos especiales de cruce de año
+            if (numSemana === 14) {
+                // W14: 28/12 - 03/01 → dic 2026 a ene 2027
+                anioIni = 2026;
+                anioFin = 2027;
+            } else if (numSemana === 13) {
+                // W13: 21/12 - 27/12 → dic 2026
+                anioIni = 2026;
+                anioFin = 2026;
+            } else if (numSemana === 15 || numSemana === 16) {
+                // W15-W16: ene 2027
+                anioIni = 2027;
+                anioFin = 2027;
+            } else if (numSemana >= 17 && numSemana <= 20) {
+                // Pausa: ene-feb 2027
+                anioIni = 2027;
+                anioFin = 2027;
+            }
+            
+            const fechaIni = new Date(anioIni, mesIni - 1, diaIni);
+            const fechaFin = new Date(anioFin, mesFin - 1, diaFin);
+            
+            return { inicio: fechaIni, fin: fechaFin };
+        }
+        
+        // Procesar semanas con fechas parseadas
+        const semanasConFechas = semanas.map(sem => {
+            const fechas = parsearFechas(sem.fechas, sem.semana);
+            return { ...sem, fechasParsed: fechas };
+        });
+        
+        // Renderizar tarjetas de semanas
+        const contenedor = document.getElementById('calendario-contenido');
+        let html = '';
+        
+        // Agrupar por fases
+        const fases = {};
+        semanas.forEach(semana => {
+            const fase = semana.fase || 'Sin fase';
+            if (!fases[fase]) {
+                fases[fase] = [];
+            }
+            fases[fase].push(semana);
+        });
+        
+        // Renderizar cada fase
+        Object.keys(fases).forEach(nombreFase => {
+            html += '<h2 class="fase-titulo">' + nombreFase + '</h2>';
+            
+            fases[nombreFase].forEach(semana => {
+                const id = semana.semana;
+                const estado = progreso[id] || {};
+                const hecha = estado.hecha || false;
+                const resultado = estado.resultado || '';
+                
+                let clases = 'semana-card';
+                if (semana.es_pausa) clases += ' pausa';
+                if (semana.es_hito) clases += ' hito';
+                
+                html += '<div class="' + clases + '" data-semana="' + id + '">';
+                html += '<div class="semana-header">';
+                html += '<span class="semana-numero">' + id + '</span>';
+                html += '<span class="semana-fechas">' + semana.fechas + '</span>';
+                html += '</div>';
+                
+                html += '<div class="semana-contenido">' + semana.contenido + '</div>';
+                
+                if (semana.medicion) {
+                    html += '<div class="semana-medicion">' + semana.medicion + '</div>';
+                } else {
+                    html += '<div class="semana-medicion vacia">Sin medición</div>';
+                }
+                
+                html += '<div class="semana-acciones">';
+                
+                // Checkbox de sesión hecha
+                html += '<label class="checkbox-sesion">';
+                html += '<input type="checkbox" ' + (hecha ? 'checked' : '') + ' ';
+                html += 'data-semana="' + id + '" class="check-sesion">';
+                html += '<span>Sesión hecha</span>';
+                html += '</label>';
+                
+                // Campo de resultado (solo si hay medición)
+                if (semana.medicion && !semana.es_pausa) {
+                    html += '<input type="text" class="campo-resultado" ';
+                    html += 'placeholder="Resultado (ej: 8/10)" ';
+                    html += 'value="' + resultado + '" ';
+                    html += 'data-semana="' + id + '">';
+                }
+                
+                // Enlace a guía
+                if (semana.enlace_guia && !semana.es_pausa) {
+                    html += '<a href="' + semana.enlace_guia + '" class="enlace-material">Guía</a>';
+                }
+                
+                // Enlace a MC específico
+                if (semana.enlace_mc) {
+                    html += '<a href="' + semana.enlace_mc + '" class="enlace-material">MC</a>';
+                }
+                
+                html += '</div>';
+                html += '</div>';
+            });
+        });
+        
+        contenedor.innerHTML = html;
+        
+        // Calendario mensual
+        const mesesNombres = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+        const diasNombres = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+        
+        let mesActual = 8; // Septiembre 2026 (0-indexed)
+        let anioActual = 2026;
+        
+        function renderizarCalendarioMensual() {
+            const grid = document.getElementById('grid-mensual');
+            const titulo = document.getElementById('panel-mes-titulo');
+            const resumen = document.getElementById('resumen-mes');
+            
+            titulo.textContent = mesesNombres[mesActual] + ' ' + anioActual;
+            
+            // Calcular primer día del mes (0=domingo, 1=lunes, etc.)
+            const primerDia = new Date(anioActual, mesActual, 1);
+            let diaInicioSemana = primerDia.getDay(); // 0=domingo
+            // Convertir a 0=lunes
+            diaInicioSemana = diaInicioSemana === 0 ? 6 : diaInicioSemana - 1;
+            
+            const diasEnMes = new Date(anioActual, mesActual + 1, 0).getDate();
+            
+            // Crear grid
+            let gridHtml = '';
+            
+            // Headers de días
+            diasNombres.forEach(dia => {
+                gridHtml += '<div class="grid-mensual-dia-header">' + dia + '</div>';
+            });
+            
+            // Celdas vacías al inicio
+            for (let i = 0; i < diaInicioSemana; i++) {
+                gridHtml += '<div class="grid-mensual-dia vacio"></div>';
+            }
+            
+            // Días del mes
+            for (let dia = 1; dia <= diasEnMes; dia++) {
+                const fecha = new Date(anioActual, mesActual, dia);
+                
+                // Buscar semanas que incluyen este día
+                const semanaEncontrada = semanasConFechas.find(sem => {
+                    if (!sem.fechasParsed) return false;
+                    return fecha >= sem.fechasParsed.inicio && fecha <= sem.fechasParsed.fin;
+                });
+                
+                let clases = 'grid-mensual-dia';
+                let tieneEvento = false;
+                let estaHecha = false;
+                
+                if (semanaEncontrada) {
+                    const estado = progreso[semanaEncontrada.semana] || {};
+                    estaHecha = estado.hecha || false;
+                    
+                    if (semanaEncontrada.es_pausa) {
+                        clases += ' pausa';
+                    } else {
+                        clases += ' con-semana';
+                        tieneEvento = true;
+                        
+                        if (semanaEncontrada.es_hito) {
+                            clases += ' hito';
+                            if (estaHecha) clases += ' hito-hecha';
+                        } else if (estaHecha) {
+                            clases += ' hecha';
+                        }
+                    }
+                }
+                
+                gridHtml += '<div class="' + clases + '" data-dia="' + dia + '"';
+                if (semanaEncontrada) {
+                    gridHtml += ' data-semana="' + semanaEncontrada.semana + '"';
+                }
+                gridHtml += '>';
+                gridHtml += '<span>' + dia + '</span>';
+                
+                if (tieneEvento && !semanaEncontrada.es_pausa) {
+                    gridHtml += '<div class="punto-evento"></div>';
+                }
+                
+                gridHtml += '</div>';
+            }
+            
+            grid.innerHTML = gridHtml;
+            
+            // Event listeners para clic en días
+            grid.querySelectorAll('.con-semana').forEach(celda => {
+                celda.addEventListener('click', function() {
+                    const semanaId = this.dataset.semana;
+                    if (!semanaId) return;
+                    
+                    // Scroll suave a la tarjeta
+                    const tarjeta = document.querySelector('.semana-card[data-semana="' + semanaId + '"]');
+                    if (tarjeta) {
+                        // Remover resaltado anterior
+                        document.querySelectorAll('.semana-card.resaltada').forEach(card => {
+                            card.classList.remove('resaltada');
+                        });
+                        
+                        // Scroll y resaltar
+                        tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        tarjeta.classList.add('resaltada');
+                        
+                        // Remover resaltado después de 2 segundos
+                        setTimeout(() => {
+                            tarjeta.classList.remove('resaltada');
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Resumen del mes
+            const semanasDelMes = semanasConFechas.filter(sem => {
+                if (!sem.fechasParsed) return false;
+                const mesIni = sem.fechasParsed.inicio.getMonth();
+                const anioIni = sem.fechasParsed.inicio.getFullYear();
+                const mesFin = sem.fechasParsed.fin.getMonth();
+                const anioFin = sem.fechasParsed.fin.getFullYear();
+                
+                return (mesIni === mesActual && anioIni === anioActual) ||
+                       (mesFin === mesActual && anioFin === anioActual);
+            });
+            
+            let resumenHtml = '<div class="resumen-mes-titulo">Semanas del mes</div>';
+            
+            if (semanasDelMes.length === 0) {
+                resumenHtml += '<div style="color: #6B7280; font-size: 0.8rem;">No hay semanas este mes</div>';
+            } else {
+                semanasDelMes.forEach(sem => {
+                    const estado = progreso[sem.semana] || {};
+                    const estaHecha = estado.hecha || false;
+                    const claseEstado = estaHecha ? 'hecha' : 'pendiente';
+                    const textoEstado = estaHecha ? 'Hecha' : 'Pendiente';
+                    
+                    resumenHtml += '<div class="resumen-mes-item">';
+                    resumenHtml += '<span class="resumen-mes-semana">' + sem.semana + '</span>';
+                    resumenHtml += '<span class="resumen-mes-contenido">' + sem.contenido.substring(0, 40) + (sem.contenido.length > 40 ? '...' : '') + '</span>';
+                    resumenHtml += '<span class="resumen-mes-estado ' + claseEstado + '">' + textoEstado + '</span>';
+                    resumenHtml += '</div>';
+                });
+            }
+            
+            resumen.innerHTML = resumenHtml;
+        }
+        
+        // Navegación de meses
+        document.getElementById('btn-mes-anterior').addEventListener('click', function() {
+            mesActual--;
+            if (mesActual < 0) {
+                mesActual = 11;
+                anioActual--;
+            }
+            renderizarCalendarioMensual();
+        });
+        
+        document.getElementById('btn-mes-siguiente').addEventListener('click', function() {
+            mesActual++;
+            if (mesActual > 11) {
+                mesActual = 0;
+                anioActual++;
+            }
+            renderizarCalendarioMensual();
+        });
+        
+        // Actualizar barra de progreso
+        function actualizarProgreso() {
+            const total = semanas.filter(s => !s.es_pausa).length;
+            const hechas = Object.values(progreso).filter(p => p.hecha).length;
+            const porcentaje = Math.round((hechas / total) * 100);
+            
+            document.getElementById('progreso-texto').textContent = 
+                hechas + ' de ' + total + ' semanas completadas (' + porcentaje + '%)';
+            document.getElementById('progreso-fill').style.width = porcentaje + '%';
+            document.getElementById('progreso-fill').textContent = porcentaje + '%';
+            
+            // Actualizar calendario mensual
+            renderizarCalendarioMensual();
+        }
+        
+        // Guardar progreso
+        function guardarProgreso() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(progreso));
+            } catch (e) {
+                console.warn('No se pudo guardar en localStorage:', e);
+            }
+        }
+        
+        // Event listeners para checkboxes
+        document.querySelectorAll('.check-sesion').forEach(check => {
+            check.addEventListener('change', function() {
+                const semana = this.dataset.semana;
+                if (!progreso[semana]) {
+                    progreso[semana] = {};
+                }
+                progreso[semana].hecha = this.checked;
+                guardarProgreso();
+                actualizarProgreso();
+            });
+        });
+        
+        // Event listeners para campos de resultado
+        document.querySelectorAll('.campo-resultado').forEach(campo => {
+            campo.addEventListener('input', function() {
+                const semana = this.dataset.semana;
+                if (!progreso[semana]) {
+                    progreso[semana] = {};
+                }
+                progreso[semana].resultado = this.value;
+                guardarProgreso();
+            });
+        });
+        
+        // Botón exportar
+        document.getElementById('btn-exportar').addEventListener('click', function() {
+            let markdown = '# Progreso del Calendario PAES\n\n';
+            markdown += '*Exportado: ' + new Date().toLocaleString('es-CL') + '*\n\n';
+            
+            semanas.forEach(semana => {
+                const estado = progreso[semana.semana] || {};
+                const hecha = estado.hecha ? '✅' : '⬜';
+                const resultado = estado.resultado ? ' (' + estado.resultado + ')' : '';
+                
+                markdown += '| ' + semana.semana + ' | ' + semana.fechas + ' | ' + hecha + ' | ';
+                markdown += semana.contenido.substring(0, 50) + (semana.contenido.length > 50 ? '...' : '') + ' | ';
+                markdown += semana.medicion + resultado + ' |\n';
+            });
+            
+            document.getElementById('exportar-area').value = markdown;
+            document.getElementById('exportar-area').style.display = 'block';
+        });
+        
+        // Botón descargar
+        document.getElementById('btn-descargar').addEventListener('click', function() {
+            const contenido = document.getElementById('exportar-area').value;
+            if (!contenido) {
+                alert('Primero exporta el progreso');
+                return;
+            }
+            
+            const blob = new Blob([contenido], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'progreso-calendario-paes.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        
+        // Botón limpiar
+        document.getElementById('btn-limpiar').addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que quieres borrar todo el progreso guardado?')) {
+                progreso = {};
+                try {
+                    localStorage.removeItem(STORAGE_KEY);
+                } catch (e) {
+                    console.warn('No se pudo limpiar localStorage:', e);
+                }
+                
+                // Reiniciar checkboxes y campos
+                document.querySelectorAll('.check-sesion').forEach(check => {
+                    check.checked = false;
+                });
+                document.querySelectorAll('.campo-resultado').forEach(campo => {
+                    campo.value = '';
+                });
+                
+                actualizarProgreso();
+                document.getElementById('exportar-area').style.display = 'none';
+            }
+        });
+        
+        // Inicializar
+        actualizarProgreso();
+        renderizarCalendarioMensual();
+    });
+    
+    </script>
+</body>
+</html>

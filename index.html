@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="plan/entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="plan/calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="plan/guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="plan/guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="plan/guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="plan/guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="plan/guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="plan/guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="material/semanas/semana-01.html">Semana 1</a>
+<a href="material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        
+        <h1>PAES — Preparación de estudio</h1>
+<p>Navegación del sitio con todo el material del proyecto.</p>
+<div class="index-seccion">
+<h2>🏠 Inicio</h2>
+<ul class="index-lista">
+<li>
+<a href="README.html">
+<div class="titulo">PAES — Preparación de estudio (admisión 2028)</div>
+<div class="desc">Panorama general del proyecto: contexto, metas y estructura.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>🎯 Metas</h2>
+<ul class="index-lista">
+<li>
+<a href="metas/carreras.html">
+<div class="titulo">Carreras de interés — Medicina (Universidad de Chile)</div>
+<div class="desc">Universidad de Chile Medicina: requisitos, ponderaciones y puntaje de corte.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📋 Plan</h2>
+<ul class="index-lista">
+<li>
+<a href="plan/entrenamiento-m1.html">
+<div class="titulo">Plan de entrenamiento — Matemática 1 (M1)</div>
+<div class="desc">Plan de entrenamiento M1: fases, metas escalonadas y medición.</div>
+</a>
+</li>
+<li>
+<a href="plan/calendario-detallado.html">
+<div class="titulo">Calendario detallado de entrenamiento M1 — semana a semana</div>
+<div class="desc">Calendario semana a semana (62 semanas, fases, contenidos e hitos).</div>
+</a>
+</li>
+<li>
+<a href="plan/guia-estudio-m1.html">
+<div class="titulo">Guía de estudio — Matemática 1 (PAES)</div>
+<div class="desc">Guía de estudio por área: teoría y ejercicios clave resueltos.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📖 Guías por fase</h2>
+<ul class="index-lista">
+<li>
+<a href="plan/guias/f1.html">
+<div class="titulo">Guía F1 — Base de Geometría y Funciones (W1-W14)</div>
+<div class="desc">Fase 1 — Geometría y Funciones (W1-W14). Teoría y ejercicios.</div>
+</a>
+</li>
+<li>
+<a href="plan/guias/f2.html">
+<div class="titulo">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</div>
+<div class="desc">Fase 2 — Consolidación (W15-W30). Profundización y práctica.</div>
+</a>
+</li>
+<li>
+<a href="plan/guias/f3.html">
+<div class="titulo">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</div>
+<div class="desc">Fase 3 — Ensayo (W31-W40). Simulaciones y estrategia.</div>
+</a>
+</li>
+<li>
+<a href="plan/guias/f4.html">
+<div class="titulo">Guía F4 — Ciclo final (W43-W59)</div>
+<div class="desc">Fase 4 — Refuerzo (W41-W58). Cierre de brechas.</div>
+</a>
+</li>
+<li>
+<a href="plan/guias/f5.html">
+<div class="titulo">Guía F5 — Ajuste final y PAES (W60-W62)</div>
+<div class="desc">Fase 5 — Estrategia de examen (W59-W62). Preparación final.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📚 Material</h2>
+<ul class="index-lista">
+<li>
+<a href="material/indice.html">
+<div class="titulo">Inventario de material de estudio</div>
+<div class="desc">Inventario del material de estudio (Preu, guías, libros, ensayos).</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>✏️ Mini-controles</h2>
+<ul class="index-lista">
+<li>
+<a href="material/mc/mc-f1.html">
+<div class="titulo">Mini-controles — Fase 1 (MC1-MC3)</div>
+<div class="desc">Mini-controles F1 — 13 MC x 10 preguntas + 2 mantenimiento.</div>
+</a>
+</li>
+<li>
+<a href="material/mc/mc-f2.html">
+<div class="titulo">Mini-controles — Fase 2 (MC4-MC7)</div>
+<div class="desc">Mini-controles F2 — Banco de preguntas fase 2.</div>
+</a>
+</li>
+<li>
+<a href="material/mc/mc-f3f4.html">
+<div class="titulo">Mini-controles — Refuerzo por área (MC8-MC13)</div>
+<div class="desc">Mini-controles F3-F4 — Banco de preguntas fases 3 y 4.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📄 Guías semanales</h2>
+<ul class="index-lista">
+<li>
+<a href="material/semanas/semana-01.html">
+<div class="titulo">Guía de estudio — Semana 1</div>
+<div class="desc">Guía explicativa + ejercicios con espacio para responder.</div>
+</a>
+<div class="desc"><a href="material/semanas/semana-01.pdf" download class="btn-descargar">Descargar PDF</a></div>
+</li>
+<li>
+<a href="material/semanas/semana-02.html">
+<div class="titulo">Guía de estudio — Semana 2</div>
+<div class="desc">Guía explicativa + ejercicios con espacio para responder.</div>
+</a>
+<div class="desc"><a href="material/semanas/semana-02.pdf" download class="btn-descargar">Descargar PDF</a></div>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📅 Calendario</h2>
+<ul class="index-lista">
+<li>
+<a href="calendario.html">
+<div class="titulo">Calendario de entrenamiento</div>
+<div class="desc">Vista interactiva semana a semana con registro de avance.</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="index-seccion">
+<h2>📚 Sitio de la estudiante</h2>
+<ul class="index-lista">
+<li>
+<a href="../sitio-estudiante-publico/index.html">
+<div class="titulo">Material de estudio semanal</div>
+<div class="desc">Sitio de la estudiante con guías semanales y ejercicios.</div>
+</a>
+</li>
+</ul>
+</div>
+        
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

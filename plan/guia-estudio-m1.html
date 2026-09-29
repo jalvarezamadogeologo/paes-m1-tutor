@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de estudio — Matemática 1 (PAES) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="guia-estudio-m1.html" class="activo">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="../material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="../material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="../material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../material/semanas/semana-01.html">Semana 1</a>
+<a href="../material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Plan</span>
+<span class="separador">›</span>
+<span>Guia Estudio M1</span>
+</nav>
+        <h1 id="guia-de-estudio-matematica-1-paes">Guía de estudio — Matemática 1 (PAES)</h1>
+<p>Material de apoyo del plan de entrenamiento M1 (<code>plan/entrenamiento-m1.md</code>). Elaborada 2026-09-24.</p>
+<p>Contenido: base teórica de los conceptos fundamentales de las 6 áreas de la PAES M1 + ejercicios<br />
+clave resueltos por tema. Cada área indica su prioridad según el diagnóstico 2026-09-24.</p>
+<h2 id="como-usar-esta-guia">Cómo usar esta guía</h2>
+<ol>
+<li>Estudiar la base teórica de cada tema.</li>
+<li>Resolver los ejercicios clave sin mirar la solución; después comparar con el desarrollo dado.</li>
+<li>Marcar los temas que cuestan para retomarlos en la siguiente sesión (el plan usa repaso de 20 min).</li>
+<li>La prioridad de estudio sigue el plan: <strong>Geometría y Funciones primero</strong> (debilidades), luego<br />
+   Números, y Proporcionalidad/Álgebra/Estadística se mantienen con práctica ligera.</li>
+</ol>
+<h2 id="mapa-de-estudio">Mapa de estudio</h2>
+<table>
+<thead>
+<tr>
+<th>Área</th>
+<th>Prioridad</th>
+<th>Fase del plan</th>
+<th>Temas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Números</td>
+<td>Consolidar</td>
+<td>F1 (semanas 11-12), F2 (9-12)</td>
+<td>Conjuntos numéricos, potencias y raíces, porcentajes</td>
+</tr>
+<tr>
+<td>2. Proporcionalidad</td>
+<td>Fortaleza</td>
+<td>F1-F2 (práctica mixta)</td>
+<td>Razones y proporciones, directa e inversa, escalas, repartos y mezclas</td>
+</tr>
+<tr>
+<td>3. Álgebra</td>
+<td>Fortaleza</td>
+<td>F1-F2 (práctica mixta)</td>
+<td>Expresiones, productos notables, ecuaciones, sistemas, valor absoluto</td>
+</tr>
+<tr>
+<td>4. Funciones</td>
+<td><strong>Debilidad</strong></td>
+<td>F1 (7-10), F2 (5-8)</td>
+<td>Concepto, lineal y afín, cuadrática, exponencial, modelación</td>
+</tr>
+<tr>
+<td>5. Geometría</td>
+<td><strong>Debilidad crítica</strong></td>
+<td>F1 (1-6), F2 (1-4)</td>
+<td>Ángulos y triángulos, Pitágoras, semejanza, áreas, circunferencia, trigonometría, volúmenes</td>
+</tr>
+<tr>
+<td>6. Estadística</td>
+<td>Fortaleza</td>
+<td>F1-F2 (práctica mixta)</td>
+<td>Medidas de tendencia central, probabilidad, probabilidad compuesta, promedio ponderado</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-numeros-y-operaciones">1. Números y operaciones</h2>
+<p>Prioridad: <strong>consolidar</strong> (50% en la prueba inicial). Es la base de cálculo de todas las demás áreas.</p>
+<h3 id="11-conjuntos-numericos">1.1 Conjuntos numéricos</h3>
+<ul>
+<li><strong>Naturales (N):</strong> 1, 2, 3, &hellip; (en algunos textos incluyen el 0).</li>
+<li><strong>Enteros (Z):</strong> &hellip;, −2, −1, 0, 1, 2, &hellip;</li>
+<li><strong>Racionales (Q):</strong> números que se escriben como fracción a/b con a, b enteros y b ≠ 0. Incluyen<br />
+  los decimales finitos (0,75 = 3/4) y los decimales periódicos (0,333&hellip; = 1/3).</li>
+<li><strong>Irracionales (I):</strong> números que no son fracción; su desarrollo decimal es infinito y no<br />
+  periódico. Ejemplos: √2, √3, √5, π.</li>
+<li><strong>Reales (R):</strong> unión de racionales e irracionales.</li>
+</ul>
+<p>Idea clave: <strong>la raíz cuadrada de un número que no es un cuadrado perfecto es irracional</strong><br />
+(√8 = 2√2 es irracional). Un decimal finito o periódico siempre es racional.</p>
+<h3 id="12-potencias-y-raices">1.2 Potencias y raíces</h3>
+<p>Propiedades de las potencias (con a ≠ 0 cuando hace falta):</p>
+<ul>
+<li>a^m · a^n = a^(m+n)</li>
+<li>a^m / a^n = a^(m−n)</li>
+<li>(a^m)^n = a^(m·n)</li>
+<li>(a·b)^n = a^n · b^n</li>
+<li>a^0 = 1</li>
+<li>a^(−n) = 1/a^n</li>
+<li>a^(1/n) = ⁿ√a (raíz enésima)</li>
+</ul>
+<p>Ejemplos:<br />
+- (√16)^(−2) = (4)^(−2) = 1/4² = 1/16<br />
+- √8 = √(4·2) = √4 · √2 = 2√2</p>
+<h3 id="13-porcentajes">1.3 Porcentajes</h3>
+<ul>
+<li>Porcentaje = fracción de denominador 100: 25% = 25/100 = 0,25.</li>
+<li>Aumentar un valor en p% equivale a multiplicarlo por (1 + p/100).</li>
+<li>Disminuir un valor en p% equivale a multiplicarlo por (1 − p/100).</li>
+<li>Porcentajes encadenados NO se suman: aumentar 20% y luego disminuir 20% NO vuelve al valor<br />
+  original, porque el segundo porcentaje se aplica sobre el valor ya modificado.</li>
+</ul>
+<p>Ejemplo: si un precio sube 20% y luego baja 20%: 1,20 · 0,80 = 0,96 → queda en 96% del original<br />
+(disminuyó 4%).</p>
+<h3 id="ejercicios-clave-numeros">Ejercicios clave — Números</h3>
+<p><strong>E1 (diagnóstico P1).</strong> Un producto cuesta $X. Si su precio aumenta 20% y luego disminuye 20%,<br />
+¿qué ocurre con el precio final?</p>
+<p>Solución: precio final = X · 1,20 · 0,80 = X · 0,96. Queda en 96% del original: <strong>disminuye 4%</strong>.</p>
+<p><strong>E2 (diagnóstico P2).</strong> Calcular (√16)^(−2) · 8.</p>
+<p>Solución: (√16)^(−2) = 4^(−2) = 1/16. Luego 1/16 · 8 = 8/16 = <strong>1/2</strong>.</p>
+<p><strong>E3 (diagnóstico P3).</strong> Ordenar de menor a mayor: 2/3, 0,7, 5/7, 3/4.</p>
+<p>Solución: 2/3 ≈ 0,6667; 0,7 = 0,7000; 5/7 ≈ 0,7143; 3/4 = 0,7500.<br />
+Orden: <strong>2/3 &lt; 0,7 &lt; 5/7 &lt; 3/4</strong>.</p>
+<p><strong>E4 (diagnóstico P4).</strong> ¿Cuál de los siguientes números es irracional? √8, 0,5, 1/3, 0,75.</p>
+<p>Solución: √8 = 2√2 no es fracción → <strong>irracional</strong>. Los demás son racionales (0,5 = 1/2;<br />
+1/3 es racional; 0,75 = 3/4).</p>
+<p><strong>E5 (extra).</strong> Un valor de $40.000 sube 15% y luego baja 10%. ¿Cuál es el valor final?</p>
+<p>Solución: 40.000 · 1,15 · 0,90 = 40.000 · 1,035 = <strong>$41.400</strong>.</p>
+<p><strong>E6 (extra).</strong> Calcular 2³ · 2⁵ / 2⁶.</p>
+<p>Solución: 2^(3+5−6) = 2² = <strong>4</strong>.</p>
+<hr />
+<h2 id="2-proporcionalidad">2. Proporcionalidad</h2>
+<p>Prioridad: <strong>fortaleza</strong> (75%). Mantener con práctica ligera; elevar a dificultad alta en F2.</p>
+<h3 id="21-razones-y-proporciones">2.1 Razones y proporciones</h3>
+<ul>
+<li>Razón entre a y b: a/b (o a:b).</li>
+<li>Proporción: igualdad de dos razones, a/b = c/d. Propiedad fundamental: <strong>a·d = b·c</strong>.</li>
+<li>Reparto proporcional: si A y B se reparten en razón k : m, entonces A = k·t y B = m·t con t común.</li>
+</ul>
+<h3 id="22-proporcionalidad-directa-e-inversa">2.2 Proporcionalidad directa e inversa</h3>
+<ul>
+<li><strong>Directa:</strong> y = k·x (si x se duplica, y se duplica). La razón y/x es constante.</li>
+<li><strong>Inversa:</strong> y = k/x (si x se duplica, y se reduce a la mitad). El producto x·y es constante.</li>
+<li>Regla de tres simple y compuesta: ordenar los datos, identificar si cada relación es directa o<br />
+  inversa, y despejar la incógnita.</li>
+</ul>
+<h3 id="23-escalas-y-unidades">2.3 Escalas y unidades</h3>
+<ul>
+<li>Escala de un mapa/plano: 1 : E significa que 1 unidad del dibujo representa E unidades reales.</li>
+<li>Las <strong>áreas</strong> escalan con el cuadrado de la razón de semejanza: si la escala lineal es 5/8, el<br />
+  área se multiplica por (5/8)².</li>
+<li>Superficies: 1 m² = 10.000 cm²; 1 km² = 1.000.000 m².</li>
+</ul>
+<h3 id="24-mezclas-y-promedios-ponderados">2.4 Mezclas y promedios ponderados</h3>
+<ul>
+<li>Promedio de una mezcla: suma de (cantidad · valor) dividida por la cantidad total.</li>
+<li>Ejemplo: 3 kg al 10% y 2 kg al 25% → (0,10·3 + 0,25·2)/5 = 0,16 → 16%.</li>
+</ul>
+<h3 id="ejercicios-clave-proporcionalidad">Ejercicios clave — Proporcionalidad</h3>
+<p><strong>E7 (diagnóstico P5).</strong> 5 máquinas producen 1.200 piezas en 4 horas. ¿Cuántas horas tardan<br />
+4 máquinas en producir 1.500 piezas (mismo ritmo)?</p>
+<p>Solución: es regla de tres compuesta. Máquinas y horas son inversamente proporcionales; piezas y<br />
+horas son directamente proporcionales:<br />
+t = 4 h · (5/4) · (1.500/1.200) = 4 · 1,25 · 1,25 = 6,25 h = <strong>6 h 15 min</strong>.</p>
+<p><strong>E8 (diagnóstico P6).</strong> Se mezclan 3 kg de una aleación con 10% de cobre y 2 kg con 25% de cobre.<br />
+¿Qué porcentaje de cobre tiene la mezcla?</p>
+<p>Solución: cobre total = 0,10·3 + 0,25·2 = 0,3 + 0,5 = 0,8 kg sobre 5 kg → 0,8/5 = 0,16 = <strong>16%</strong>.</p>
+<p><strong>E9 (diagnóstico P7).</strong> Un terreno rectangular de 40 m × 25 m se representa en un plano a escala<br />
+1:100. ¿Cuál es el área en el plano?</p>
+<p>Solución: las medidas en el plano son 40/100 = 0,4 m y 25/100 = 0,25 m → área = 0,4 · 0,25 =<br />
+0,1 m² = 1.000 cm². El área real es 1.000 m² y la escala de área es (1/100)² = 1/10.000:<br />
+1.000 m² / 10.000 = 0,1 m² = <strong>1.000 cm²</strong>. (Respuesta en cm².)</p>
+<p><strong>E10 (diagnóstico P8).</strong> En un grupo, hombres y mujeres están en razón 3:2. Si entran 2 mujeres,<br />
+la nueva razón es 5:4. ¿Cuántas mujeres hay?</p>
+<p>Solución: hombres = 3k, mujeres = 2k. Nueva razón: (3k)/(2k+2) = 5/4 →<br />
+4·3k = 5·(2k+2) → 12k = 10k + 10 → 2k = 10 → k = 5. Mujeres = 2k = <strong>15</strong>.</p>
+<p><strong>E11 (extra).</strong> 3 obreros construyen una muralla en 12 días. ¿Cuántos días tardan 6 obreros?</p>
+<p>Solución: inversamente proporcional: t = 12 · (3/6) = <strong>6 días</strong>.</p>
+<p><strong>E12 (extra).</strong> Un mapa usa escala 1:50.000. Dos pueblos distan 8 cm en el mapa. ¿Distancia real?</p>
+<p>Solución: 8 cm · 50.000 = 400.000 cm = <strong>4 km</strong>.</p>
+<hr />
+<h2 id="3-algebra">3. Álgebra</h2>
+<p>Prioridad: <strong>fortaleza</strong> (75%). Mantener; elevar con dificultad alta en F2.</p>
+<h3 id="31-expresiones-algebraicas-y-productos-notables">3.1 Expresiones algebraicas y productos notables</h3>
+<p>Productos notables (los más usados en la PAES):</p>
+<ul>
+<li>(a + b)² = a² + 2ab + b²</li>
+<li>(a − b)² = a² − 2ab + b²</li>
+<li>(a + b)(a − b) = a² − b²</li>
+<li>(x + a)(x + b) = x² + (a+b)x + ab</li>
+</ul>
+<h3 id="32-ecuaciones">3.2 Ecuaciones</h3>
+<ul>
+<li>Ecuación de primer grado: despejar la incógnita aplicando operaciones inversas.</li>
+<li>Ecuación de segundo grado ax² + bx + c = 0: factorización o fórmula general<br />
+  x = [−b ± √(b² − 4ac)] / 2a.</li>
+<li>Problemas de planteo: identificar la incógnita, traducir el enunciado a una ecuación y verificar<br />
+  que la solución cumpla las condiciones (por ejemplo, un lado de un cuadrado: (x+3)² = x² + 69).</li>
+</ul>
+<h3 id="33-sistemas-de-ecuaciones">3.3 Sistemas de ecuaciones</h3>
+<ul>
+<li>Dos ecuaciones con dos incógnitas. Métodos: sustitución, igualación, reducción.</li>
+<li>Ejemplo típico: suma y producto de dos números (a+b = 17, a·b = 60 → 12 y 5).</li>
+<li>Los números que cumplen x+y = S y x·y = P son las soluciones de t² − S·t + P = 0.</li>
+</ul>
+<h3 id="34-valor-absoluto-e-inecuaciones">3.4 Valor absoluto e inecuaciones</h3>
+<ul>
+<li>|a| = a si a ≥ 0; |a| = −a si a &lt; 0.</li>
+<li>|x| ≤ b equivale a −b ≤ x ≤ b.</li>
+<li>|x − a| ≤ b equivale a a − b ≤ x ≤ a + b (intervalo [a−b, a+b]).</li>
+<li>|x − a| ≥ b equivale a x ≤ a−b o x ≥ a+b.</li>
+</ul>
+<h3 id="ejercicios-clave-algebra">Ejercicios clave — Álgebra</h3>
+<p><strong>E13 (diagnóstico P9).</strong> El lado de un cuadrado aumenta 3 cm y su área aumenta 69 cm². ¿Cuál era<br />
+el lado original?</p>
+<p>Solución: lado original x. (x+3)² = x² + 69 → x² + 6x + 9 = x² + 69 → 6x = 60 → <strong>x = 10 cm</strong>.</p>
+<p><strong>E14 (diagnóstico P10).</strong> La suma de dos números es 17 y su producto es 60. ¿Cuáles son?</p>
+<p>Solución: t² − 17t + 60 = 0 → (t − 12)(t − 5) = 0 → <strong>12 y 5</strong>.</p>
+<p><strong>E15 (diagnóstico P11).</strong> El promedio de dos números es 20 y su diferencia es 14. ¿Cuál es el mayor?</p>
+<p>Solución: (a+b)/2 = 20 → a+b = 40; a−b = 14. Sumando: 2a = 54 → a = 27; b = 13. El mayor es <strong>27</strong>.</p>
+<p><strong>E16 (diagnóstico P12).</strong> Resolver |x − 2| ≤ 5.</p>
+<p>Solución: −5 ≤ x−2 ≤ 5 → sumando 2: −3 ≤ x ≤ 7 → intervalo <strong>[−3, 7]</strong>.</p>
+<p><strong>E17 (extra).</strong> Resolver x² − 5x + 6 = 0.</p>
+<p>Solución: (x − 2)(x − 3) = 0 → <strong>x = 2 o x = 3</strong>.</p>
+<p><strong>E18 (extra).</strong> Resolver el sistema: x + y = 10; x − y = 4.</p>
+<p>Solución: sumando: 2x = 14 → x = 7; y = 3. <strong>Solución: (7, 3)</strong>.</p>
+<hr />
+<h2 id="4-funciones">4. Funciones</h2>
+<p>Prioridad: <strong>debilidad clara</strong> (25%). Refuerzo prioritario desde la base (F1 semanas 7-10).</p>
+<h3 id="41-concepto-de-funcion">4.1 Concepto de función</h3>
+<ul>
+<li>Una función asigna a cada valor de entrada (variable independiente x) exactamente un valor de<br />
+  salida (variable dependiente y = f(x)).</li>
+<li>Dominio: valores que puede tomar x. Recorrido: valores que puede tomar f(x).</li>
+<li>Se representa con tabla, gráfico, fórmula o descripción verbal.</li>
+</ul>
+<h3 id="42-funcion-lineal-y-afin">4.2 Función lineal y afín</h3>
+<ul>
+<li><strong>Lineal:</strong> f(x) = k·x (pasa por el origen). Proporcionalidad directa.</li>
+<li><strong>Afín:</strong> f(x) = mx + n. m = pendiente, n = intersección con el eje Y (ordenada al origen).</li>
+<li>Pendiente entre dos puntos (x1, y1) y (x2, y2): m = (y2 − y1)/(x2 − x1).</li>
+<li>Si m &gt; 0 crece; si m &lt; 0 decrece.</li>
+<li>Cálculo de valores: si f es afín con pendiente m, f(x2) = f(x1) + m·(x2 − x1).</li>
+</ul>
+<h3 id="43-funcion-cuadratica">4.3 Función cuadrática</h3>
+<ul>
+<li>f(x) = ax² + bx + c, con a ≠ 0.</li>
+<li>Gráfica: parábola. Si a &gt; 0 abre hacia arriba (mínimo); si a &lt; 0 abre hacia abajo (máximo).</li>
+<li>Vértice: x_v = −b/(2a); el valor es f(x_v). Es el eje de simetría.</li>
+<li>Raíces: puntos donde la parábola corta el eje X (f(x) = 0).</li>
+<li>Modelación de movimiento: h(t) = −5t² + v₀·t + h₀ (altura de un proyectil en metros con t en<br />
+  segundos; el coeficiente −5 viene de g/2 ≈ 4,9).</li>
+</ul>
+<h3 id="44-funcion-exponencial">4.4 Función exponencial</h3>
+<ul>
+<li>f(x) = a · b^x, con b &gt; 0 y b ≠ 1.</li>
+<li>Si b &gt; 1 crece (crecimiento exponencial); si 0 &lt; b &lt; 1 decrece.</li>
+<li>Se usa para duplicaciones: si una cantidad se duplica cada período, tras n períodos vale<br />
+  cantidad · 2^n.</li>
+</ul>
+<h3 id="45-modelacion">4.5 Modelación</h3>
+<ul>
+<li>Traducir un enunciado a una fórmula: identificar qué varía, la constante inicial y la tasa de<br />
+  cambio. Ejemplo: costo fijo + costo por unidad → C(x) = 4.000 + 600x.</li>
+</ul>
+<h3 id="ejercicios-clave-funciones">Ejercicios clave — Funciones</h3>
+<p><strong>E19 (diagnóstico P13).</strong> Una empresa cobra $4.000 de cargo fijo y $600 por hora de servicio.<br />
+Modelar el costo C(x) para x horas.</p>
+<p>Solución: <strong>C(x) = 4.000 + 600x</strong>.</p>
+<p><strong>E20 (diagnóstico P14).</strong> Un proyectil tiene altura h(t) = −5t² + 40t + 0 (metros, t segundos).<br />
+¿Cuál es la altura máxima?</p>
+<p>Solución: vértice en t = −b/(2a) = −40/(2·(−5)) = 4 s. h(4) = −5·16 + 40·4 = −80 + 160 = <strong>80 m</strong>.</p>
+<p><strong>E21 (diagnóstico P15).</strong> Una bacteria se duplica cada hora. Si al inicio hay 100 bacterias, ¿cuántas<br />
+hay tras 4 horas?</p>
+<p>Solución: 100 · 2⁴ = 100 · 16 = <strong>1.600</strong>.</p>
+<p><strong>E22 (diagnóstico P16).</strong> f es una función afín con f(3) = 15 y pendiente 5. Calcular f(8).</p>
+<p>Solución: f(8) = f(3) + 5·(8−3) = 15 + 25 = <strong>40</strong>.</p>
+<p><strong>E23 (extra).</strong> Encontrar la pendiente de la recta que pasa por (1, 3) y (4, 9).</p>
+<p>Solución: m = (9−3)/(4−1) = 6/3 = <strong>2</strong>.</p>
+<p><strong>E24 (extra).</strong> Un valor de $200 crece 50% cada año. ¿Cuánto vale tras 3 años?</p>
+<p>Solución: 200 · (1,5)³ = 200 · 3,375 = <strong>$675</strong>.</p>
+<hr />
+<h2 id="5-geometria">5. Geometría</h2>
+<p>Prioridad: <strong>debilidad crítica</strong> (0%). Refuerzo prioritario desde la base (F1 semanas 1-6).</p>
+<h3 id="51-angulos-y-triangulos">5.1 Ángulos y triángulos</h3>
+<ul>
+<li>La suma de los ángulos interiores de un triángulo es 180°.</li>
+<li>Ángulos entre paralelas cortadas por una transversal: alternos internos y correspondientes son<br />
+  iguales; conjugados suman 180°.</li>
+<li>Tipos: equilátero (3 lados iguales, 3 ángulos de 60°), isósceles (2 lados iguales, ángulos<br />
+  basales iguales), escaleno.</li>
+<li>Triángulo rectángulo: tiene un ángulo de 90° (catetos e hipotenusa).</li>
+<li>Congruencia: misma forma y tamaño. Semejanza: misma forma (ángulos iguales), lados proporcionales.</li>
+</ul>
+<h3 id="52-teorema-de-pitagoras">5.2 Teorema de Pitágoras</h3>
+<p>En un triángulo rectángulo: <strong>hipotenusa² = cateto1² + cateto2²</strong>.</p>
+<p>Ejemplo: catetos 6 y 8 → hipotenusa = √(36+64) = 10.</p>
+<h3 id="53-semejanza-y-escalas">5.3 Semejanza y escalas</h3>
+<ul>
+<li>Si dos figuras son semejantes con razón de semejanza k, los lados se multiplican por k y las<br />
+<strong>áreas por k²</strong>.</li>
+<li>Aplicación a planos y maquetas: medir en el dibujo y multiplicar por el factor de escala.</li>
+</ul>
+<h3 id="54-areas-y-perimetros">5.4 Áreas y perímetros</h3>
+<ul>
+<li>Cuadrado: A = lado². Rectángulo: A = base·altura. Triángulo: A = base·altura/2.</li>
+<li>Círculo: A = π·r²; circunferencia (perímetro): P = 2πr.</li>
+<li>Polígonos: descomponer en triángulos o usar fórmulas.</li>
+</ul>
+<h3 id="55-circunferencia">5.5 Circunferencia</h3>
+<ul>
+<li>Cuerda: segmento que une dos puntos de la circunferencia. El diámetro es la mayor cuerda.</li>
+<li>La distancia del centro a una cuerda y la mitad de la cuerda forman un triángulo rectángulo con<br />
+  el radio (Pitágoras).</li>
+<li>Sector circular: área = (θ/360°)·π·r² (θ en grados), o (θ/2)·r² con θ en radianes.</li>
+<li>Perímetro del sector = 2r + arco.</li>
+</ul>
+<h3 id="56-trigonometria-basica-triangulo-rectangulo">5.6 Trigonometría básica (triángulo rectángulo)</h3>
+<ul>
+<li>sen(α) = cateto opuesto / hipotenusa</li>
+<li>cos(α) = cateto adyacente / hipotenusa</li>
+<li>tan(α) = cateto opuesto / cateto adyacente</li>
+<li>Valores notables: sen 30° = 1/2; tan 45° = 1; tan 60° = √3; sen 60° = √3/2.</li>
+<li>Aplicación: altura h = distancia · tan(ángulo de elevación).</li>
+</ul>
+<h3 id="57-cuerpos-geometricos-volumenes">5.7 Cuerpos geométricos (volúmenes)</h3>
+<ul>
+<li>Prisma / cilindro: V = área de la base · altura.</li>
+<li>Pirámide / cono: V = (área de la base · altura)/3.</li>
+<li>Esfera: V = (4/3)π·r³.</li>
+</ul>
+<h3 id="ejercicios-clave-geometria">Ejercicios clave — Geometría</h3>
+<p><strong>E25 (diagnóstico P17).</strong> Desde un punto a 30 m de un árbol, el ángulo de elevación a la copa es<br />
+60°. ¿Cuál es la altura del árbol?</p>
+<p>Solución: tan(60°) = h/30 → h = 30·tan(60°) = 30·√3 = <strong>30√3 m</strong>.</p>
+<p><strong>E26 (diagnóstico P18).</strong> Un rectángulo de 12 cm × 8 cm se reduce con factor de escala 5/8.<br />
+¿Cuánto mide la base en el dibujo?</p>
+<p>Solución: base = 12 · 5/8 = <strong>7,5 cm</strong>.</p>
+<p><strong>E27 (diagnóstico P19).</strong> Una figura de área 60 m² contiene un cuarto de círculo de radio 4 m.<br />
+Calcular el área de la región restante (la sombreada).</p>
+<p>Solución: área del cuarto de círculo = π·4²/4 = 4π. Área restante = 60 − 4π = <strong>60 − 4π m²</strong>.</p>
+<p><strong>E28 (diagnóstico P20).</strong> En una circunferencia de radio 10 cm, una cuerda dista 6 cm del centro.<br />
+¿Cuánto mide la cuerda?</p>
+<p>Solución: mitad de la cuerda = √(10² − 6²) = √64 = 8 cm → cuerda completa = <strong>16 cm</strong>.</p>
+<p><strong>E29 (extra).</strong> Calcular la hipotenusa de un triángulo rectángulo con catetos 5 y 12.</p>
+<p>Solución: √(25 + 144) = √169 = <strong>13</strong>.</p>
+<p><strong>E30 (extra).</strong> Un cono tiene base de radio 3 cm y altura 9 cm. Calcular su volumen (π ≈ 3).</p>
+<p>Solución: V = (π·3²·9)/3 = (π·9·9)/3 = 27π ≈ <strong>81 cm³</strong> (con π ≈ 3).</p>
+<hr />
+<h2 id="6-estadistica-y-probabilidad">6. Estadística y probabilidad</h2>
+<p>Prioridad: <strong>fortaleza</strong> (75%). Mantener; elevar a dificultad alta en F2.</p>
+<h3 id="61-medidas-de-tendencia-central">6.1 Medidas de tendencia central</h3>
+<ul>
+<li><strong>Media (promedio):</strong> suma de datos / cantidad de datos.</li>
+<li><strong>Mediana:</strong> valor central al ordenar los datos (si hay un número par de datos, promedio de los<br />
+  dos centrales).</li>
+<li><strong>Moda:</strong> dato que más se repite.</li>
+<li>La media es sensible a valores extremos: al agregar datos altos, la media sube más que la<br />
+  mediana; por eso conviene analizar ambas.</li>
+</ul>
+<h3 id="62-probabilidad-clasica">6.2 Probabilidad clásica</h3>
+<ul>
+<li>P(evento) = casos favorables / casos totales (todos igualmente probables).</li>
+<li>Espacio muestral de dos dados: 36 resultados.</li>
+<li>Suma de eventos disjuntos: P(A o B) = P(A) + P(B).</li>
+</ul>
+<h3 id="63-probabilidad-compuesta">6.3 Probabilidad compuesta</h3>
+<ul>
+<li><strong>Con reposición</strong> (independientes): P(A y B) = P(A) · P(B).</li>
+<li><strong>Sin reposición</strong> (dependientes): la segunda probabilidad cambia porque el total y la composición<br />
+  se modifican. Ejemplo: sacar 2 bolas sin reposición de una urna con 4 rojas y 3 azules:<br />
+  P(2 rojas) = (4/7)·(3/6) = 2/7.</li>
+</ul>
+<h3 id="64-promedio-ponderado">6.4 Promedio ponderado</h3>
+<ul>
+<li>Cuando los grupos tienen distinto tamaño, el promedio total es<br />
+  (n₁·x̄₁ + n₂·x̄₂) / (n₁ + n₂).</li>
+<li>Ejemplo: 15 alumnos con promedio 5,2 y 5 con 4,0 → (15·5,2 + 5·4,0)/20 = 4,9.</li>
+</ul>
+<h3 id="ejercicios-clave-estadistica">Ejercicios clave — Estadística</h3>
+<p><strong>E31 (diagnóstico P21).</strong> Datos: 12, 14, 16, 20, 28. Comparar media y mediana.</p>
+<p>Solución: media = (12+14+16+20+28)/5 = 90/5 = 18. Mediana (dato central ordenado) = 16.<br />
+La media es mayor: el 28 &ldquo;jala&rdquo; la media hacia arriba. <strong>Media 18, mediana 16; la media sube más.</strong></p>
+<p><strong>E32 (diagnóstico P22).</strong> Se lanzan dos dados. ¿Probabilidad de que la suma sea 8?</p>
+<p>Solución: pares que suman 8: (2,6), (3,5), (4,4), (5,3), (6,2) → 5 de 36 → <strong>5/36</strong>.</p>
+<p><strong>E33 (diagnóstico P23).</strong> Una urna tiene 4 bolas rojas y 3 azules. Se sacan dos bolas sin<br />
+reposición. ¿Probabilidad de que ambas sean rojas?</p>
+<p>Solución: (4/7)·(3/6) = 12/42 = <strong>2/7</strong>.</p>
+<p><strong>E34 (diagnóstico P24).</strong> 15 estudiantes promedian 5,2 y 5 promedian 4,0. ¿Promedio del grupo?</p>
+<p>Solución: (15·5,2 + 5·4,0)/20 = (78 + 20)/20 = 98/20 = <strong>4,9</strong>.</p>
+<p><strong>E35 (extra).</strong> En una caja hay 3 fichas verdes y 2 rojas. Se saca una al azar. ¿Probabilidad de<br />
+que sea roja?</p>
+<p>Solución: 2/5 = <strong>0,4 (40%)</strong>.</p>
+<p><strong>E36 (extra).</strong> Lanzar una moneda 3 veces. ¿Probabilidad de exactamente 2 caras?</p>
+<p>Solución: resultados con 2 caras: CCL, CLC, LCC → 3 de 8 → <strong>3/8</strong>.</p>
+<hr />
+<h2 id="notas-finales">Notas finales</h2>
+<ul>
+<li>Los ejercicios marcados &ldquo;(diagnóstico P#)&rdquo; corresponden a las preguntas de la prueba diagnóstica<br />
+  M1 2026-09-24; su solución coincide con la clave oficial (<code>diagnosticos/m1-2026-09/correccion_m1.md</code>).</li>
+<li>Verificación numérica de todos los ejercicios: realizada por script el 2026-09-24.</li>
+<li>Esta guía se complementa con el plan de entrenamiento (<code>plan/entrenamiento-m1.md</code>): el orden de<br />
+  estudio semanal y los calendarios de medición están allí.</li>
+</ul>
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="guias/f1.html" class="relacionado-chip">Guía F1</a>
+<a href="guias/f2.html" class="relacionado-chip">Guía F2</a>
+<a href="guias/f3.html" class="relacionado-chip">Guía F3</a>
+<a href="guias/f4.html" class="relacionado-chip">Guía F4</a>
+<a href="guias/f5.html" class="relacionado-chip">Guía F5</a>
+<a href="entrenamiento-m1.html" class="relacionado-chip">Plan de entrenamiento</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

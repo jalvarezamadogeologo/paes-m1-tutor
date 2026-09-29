@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario detallado de entrenamiento M1 — semana a semana — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="calendario-detallado.html" class="activo">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="../material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="../material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="../material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../material/semanas/semana-01.html">Semana 1</a>
+<a href="../material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Plan</span>
+<span class="separador">›</span>
+<span>Calendario Detallado</span>
+</nav>
+        <h1 id="calendario-detallado-de-entrenamiento-m1-semana-a-semana">Calendario detallado de entrenamiento M1 — semana a semana</h1>
+<p>Proyección temporal del plan (<code>entrenamiento-m1.md</code>) desde el lunes 28-sep-2026 hasta la PAES<br />
+regular de nov-dic 2027. Elaborado 2026-09-24.</p>
+<h2 id="reglas">Reglas</h2>
+<ul>
+<li><strong>Unidad temporal:</strong> la semana (lunes a domingo referencial). El día exacto dentro de la semana<br />
+  en que se hace la sesión de 2 h es flexible.</li>
+<li><strong>Pausa de vacaciones:</strong> semanas W17-W20 (18-ene al 14-feb-2027 = segunda mitad de enero +<br />
+  primera de febrero). Sin estudio programado.</li>
+<li><strong>Consecuencia:</strong> la F2 se estira de &ldquo;ene-mar&rdquo; a &ldquo;ene-abr&rdquo; 2027 (mismas 12 semanas de estudio,<br />
+  interrumpidas por la pausa). F3 corre abr-jul, F4 jul-nov, F5 nov.</li>
+<li><strong>Guías por fase:</strong> cada fase tiene su material en <code>guias/f1.md</code> … <code>guias/f5.md</code> (F1-F2:<br />
+  teoría + ejercicios por semana; F3-F5: protocolos de ensayo y estrategia).</li>
+<li><strong>Fechas oficiales DEMRE 2027 (PAES invierno, inscripción, ensayos, PAES regular) aún no<br />
+  publicadas:</strong> las semanas marcadas con * se ajustan al calendario oficial cuando se publique.</li>
+<li><strong>Respaldo de ensayos:</strong> si en un hito marcado con * no hay ensayo DEMRE disponible, usar un<br />
+  ensayo DEMRE de años anteriores o el ensayo de respaldo propio de 65 preguntas (ver<br />
+<code>seguimiento/sistema.md</code>). Registrar siempre la fuente en <code>seguimiento/ensayos.md</code>.</li>
+<li><strong>Medición:</strong> &ldquo;MC&rdquo; = mini-control (10 preguntas del área en curso + 2 de mantenimiento de<br />
+  fortalezas); &ldquo;Ensayo&rdquo; = ensayo completo M1.</li>
+</ul>
+<hr />
+<h2 id="fase-1-base-de-geometria-y-funciones-w1-w14-28092026-03012027-14-semanas">Fase 1 — Base de Geometría y Funciones (W1-W14 · 28/09/2026 - 03/01/2027 · 14 semanas)</h2>
+<p>Objetivo: levantar Geometría y Funciones desde cero. Hito de salida: <strong>ensayo oficial DEMRE<br />
+diciembre 2026 con 800</strong> (W13).</p>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Fechas</th>
+<th>Contenido</th>
+<th>Medición / hito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W1</td>
+<td>28/09 - 04/10</td>
+<td>Geometría: ángulos y rectas (paralelas, transversal)</td>
+<td><strong>Ensayo DEMRE baseline (escala real)</strong></td>
+</tr>
+<tr>
+<td>W2</td>
+<td>05/10 - 11/10</td>
+<td>Geometría: triángulos (clasificación, suma de ángulos)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W3</td>
+<td>12/10 - 18/10</td>
+<td>Geometría: congruencia y semejanza de triángulos</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W4</td>
+<td>19/10 - 25/10</td>
+<td>Geometría: teorema de Pitágoras</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W5</td>
+<td>26/10 - 01/11</td>
+<td>Geometría: áreas y perímetros (polígonos)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W6</td>
+<td>02/11 - 08/11</td>
+<td>Geometría: problemas integrados</td>
+<td>MC Geometría</td>
+</tr>
+<tr>
+<td>W7</td>
+<td>09/11 - 15/11</td>
+<td>Funciones: concepto, dominio/recorrido, representaciones</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W8</td>
+<td>16/11 - 22/11</td>
+<td>Funciones: lineal y afín (pendiente, gráfica)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W9</td>
+<td>23/11 - 29/11</td>
+<td>Funciones: cuadrática (vértice, raíces, modelación)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W10</td>
+<td>30/11 - 06/12</td>
+<td>Funciones: modelación en contexto</td>
+<td>MC Funciones</td>
+</tr>
+<tr>
+<td>W11</td>
+<td>07/12 - 13/12</td>
+<td>Números: porcentajes, fracciones, potencias y raíces</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W12</td>
+<td>14/12 - 20/12</td>
+<td>Repaso integrado de Geometría y Funciones</td>
+<td>MC3 Números (opcional)</td>
+</tr>
+<tr>
+<td>W13</td>
+<td>21/12 - 27/12</td>
+<td><strong>Ensayo oficial DEMRE (dic 2026)</strong></td>
+<td><strong>Hito: 800</strong></td>
+</tr>
+<tr>
+<td>W14</td>
+<td>28/12 - 03/01</td>
+<td>Análisis de resultados, registro, cierre de F1</td>
+<td>Registro en ensayos.md</td>
+</tr>
+</tbody>
+</table>
+<p>Nota: si el ensayo DEMRE disponible cae a mediados de diciembre, se adelanta a W12 y W13-W14<br />
+quedan de análisis/cierre. W13-W14 coinciden con Navidad/Año Nuevo: se mantienen como semanas de<br />
+ensayo y cierre, con flexibilidad de día dentro de la semana.</p>
+<p><strong>Ensayo baseline (W1):</strong> antes de iniciar la F1 se rinde un ensayo DEMRE de años anteriores en<br />
+condiciones reales para tener el primer puntaje en escala PAES (100-1000). Sirve para calibrar la<br />
+meta de 800 desde el inicio (no solo al final de la fase) y para comparar el avance de la F1 con<br />
+una medición real. Si el tiempo de la semana no alcanza para el ensayo completo y la sesión de<br />
+Geometría, priorizar el ensayo y correr el contenido de W1 a W2 (el calendario es flexible en el<br />
+día, no acumula).</p>
+<hr />
+<h2 id="pausa-de-vacaciones-w17-w20-1801-14022027">Pausa de vacaciones (W17-W20 · 18/01 - 14/02/2027)</h2>
+<p>Sin estudio programado. Opcional: repaso muy ligero (10-15 min) de fórmulas clave de Geometría y<br />
+Funciones para no perder contacto, sin sesiones formales.</p>
+<hr />
+<h2 id="fase-2-completar-y-profundizar-w15-w16-w21-w30-0401-25042027-12-semanas-de-estudio">Fase 2 — Completar y profundizar (W15-W16 + W21-W30 · 04/01 - 25/04/2027 · 12 semanas de estudio)</h2>
+<p>Objetivo: completar Geometría y Funciones, consolidar Números y elevar fortalezas a dificultad<br />
+alta. Los ensayos nacionales DEMRE 1er ciclo (mar-abr 2027) caen dentro de esta fase y se usan<br />
+como medición.</p>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Fechas</th>
+<th>Contenido</th>
+<th>Medición / hito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W15</td>
+<td>04/01 - 10/01</td>
+<td>Geometría avanzada: circunferencia (cuerdas, ángulos, sector)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W16</td>
+<td>11/01 - 17/01</td>
+<td>Geometría avanzada: trigonometría básica (sen, cos, tan)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>[Pausa]</td>
+<td>18/01 - 14/02</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W21</td>
+<td>15/02 - 21/02</td>
+<td>Geometría avanzada: cuerpos geométricos (volúmenes)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W22</td>
+<td>22/02 - 28/02</td>
+<td>Geometría en contexto (problemas integrados)</td>
+<td>MC Geometría</td>
+</tr>
+<tr>
+<td>W23</td>
+<td>01/03 - 07/03</td>
+<td>Funciones: exponencial en profundidad</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W24</td>
+<td>08/03 - 14/03</td>
+<td>Funciones: modelación (lineal, cuadrática, exponencial)</td>
+<td>Ensayo DEMRE 1er ciclo (mar) *</td>
+</tr>
+<tr>
+<td>W25</td>
+<td>15/03 - 21/03</td>
+<td>Funciones: modelación avanzada tipo corte 800+</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W26</td>
+<td>22/03 - 28/03</td>
+<td>Repaso de Funciones</td>
+<td>MC Funciones</td>
+</tr>
+<tr>
+<td>W27</td>
+<td>29/03 - 04/04</td>
+<td>Números en profundidad (porcentajes encadenados, potencias)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W28</td>
+<td>05/04 - 11/04</td>
+<td>Proporcionalidad y Álgebra a dificultad alta</td>
+<td><strong>MC6 Prop. + Álgebra</strong></td>
+</tr>
+<tr>
+<td>W29</td>
+<td>12/04 - 18/04</td>
+<td>Estadística a dificultad alta</td>
+<td><strong>MC7 Estadística</strong></td>
+</tr>
+<tr>
+<td>W30</td>
+<td>19/04 - 25/04</td>
+<td>Ensayo completo + análisis</td>
+<td>Ensayo DEMRE 1er ciclo (abr) * / cierre F2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fase-3-ensayos-oficiales-w31-w42-2604-18072027-12-semanas">Fase 3 — Ensayos oficiales (W31-W42 · 26/04 - 18/07/2027 · 12 semanas)</h2>
+<p>Objetivo: medir en escala real, clasificar errores y reforzar dirigido. <strong>PAES de invierno (jun<br />
+2027) como ensayo oficial con puntaje válido.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Fechas</th>
+<th>Contenido</th>
+<th>Medición / hito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W31</td>
+<td>26/04 - 02/05</td>
+<td>Ensayo completo 1 + clasificación de errores por área</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W32</td>
+<td>03/05 - 09/05</td>
+<td>Refuerzo dirigido A (áreas con más errores)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W33</td>
+<td>10/05 - 16/05</td>
+<td>Ensayo completo 2</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W34</td>
+<td>17/05 - 23/05</td>
+<td>Refuerzo dirigido B</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W35</td>
+<td>24/05 - 30/05</td>
+<td>Ensayo completo 3</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W36</td>
+<td>31/05 - 06/06</td>
+<td>Refuerzo dirigido C</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W37</td>
+<td>07/06 - 13/06</td>
+<td>Ensayo completo 4</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W38</td>
+<td>14/06 - 20/06</td>
+<td>Preparación PAES de invierno (repaso ligero + estrategia)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W39</td>
+<td>21/06 - 27/06</td>
+<td><strong>PAES de invierno</strong> *</td>
+<td><strong>Hito (puntaje válido)</strong></td>
+</tr>
+<tr>
+<td>W40</td>
+<td>28/06 - 04/07</td>
+<td>Análisis de resultados de invierno</td>
+<td>Registro</td>
+</tr>
+<tr>
+<td>W41</td>
+<td>05/07 - 11/07</td>
+<td>Refuerzo según resultados de invierno</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W42</td>
+<td>12/07 - 18/07</td>
+<td>Ensayo completo 5 + cierre F3</td>
+<td>Ensayo</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fase-4-ciclo-final-w43-w59-1907-14112027-17-semanas">Fase 4 — Ciclo final (W43-W59 · 19/07 - 14/11/2027 · 17 semanas)</h2>
+<p>Objetivo: ensayos frecuentes y refuerzo dirigido rumbo a la PAES regular. Incluye inscripción<br />
+(jul-ago) y ensayos DEMRE 2do ciclo (ago-sep).</p>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Fechas</th>
+<th>Contenido</th>
+<th>Medición / hito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W43</td>
+<td>19/07 - 25/07</td>
+<td>Inscripción PAES regular * + ensayo completo 1</td>
+<td>Ensayo / inscripción</td>
+</tr>
+<tr>
+<td>W44</td>
+<td>26/07 - 01/08</td>
+<td>Refuerzo dirigido A</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W45</td>
+<td>02/08 - 08/08</td>
+<td>Refuerzo dirigido A (continuación)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W46</td>
+<td>09/08 - 15/08</td>
+<td>Ensayo completo 2</td>
+<td>Ensayo DEMRE 2do ciclo (ago) *</td>
+</tr>
+<tr>
+<td>W47</td>
+<td>16/08 - 22/08</td>
+<td>Análisis + refuerzo B</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W48</td>
+<td>23/08 - 29/08</td>
+<td>Refuerzo B</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W49</td>
+<td>30/08 - 05/09</td>
+<td>Ensayo completo 3</td>
+<td>Ensayo DEMRE 2do ciclo (sep) *</td>
+</tr>
+<tr>
+<td>W50</td>
+<td>06/09 - 12/09</td>
+<td>Análisis + refuerzo C</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W51</td>
+<td>13/09 - 19/09</td>
+<td>Refuerzo C</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W52</td>
+<td>20/09 - 26/09</td>
+<td>Ensayo completo 4</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W53</td>
+<td>27/09 - 03/10</td>
+<td>Refuerzo D</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W54</td>
+<td>04/10 - 10/10</td>
+<td>Refuerzo D</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W55</td>
+<td>11/10 - 17/10</td>
+<td>Ensayo completo 5</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W56</td>
+<td>18/10 - 24/10</td>
+<td>Análisis + refuerzo E</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W57</td>
+<td>25/10 - 31/10</td>
+<td>Refuerzo E</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W58</td>
+<td>01/11 - 07/11</td>
+<td>Ensayo completo 6</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W59</td>
+<td>08/11 - 14/11</td>
+<td>Consolidación final, revisión de errores recurrentes, cierre F4</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fase-5-ajuste-final-y-paes-w60-w62-1511-05122027-3-semanas">Fase 5 — Ajuste final y PAES (W60-W62 · 15/11 - 05/12/2027 · 3 semanas)</h2>
+<p>Objetivo: llegar descansada y con estrategia clara. <strong>Meta final: 1000 en la PAES regular.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Fechas</th>
+<th>Contenido</th>
+<th>Medición / hito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W60</td>
+<td>15/11 - 21/11</td>
+<td>Repaso ligero (fórmulas, errores recurrentes, gestión de tiempo)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>W61</td>
+<td>22/11 - 28/11</td>
+<td>Simulación completa + estrategia de examen</td>
+<td>Ensayo</td>
+</tr>
+<tr>
+<td>W62</td>
+<td>29/11 - 05/12</td>
+<td><strong>PAES regular (rendición)</strong> *</td>
+<td><strong>Hito: 1000</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="resumen-de-hitos">Resumen de hitos</h2>
+<table>
+<thead>
+<tr>
+<th>Hito</th>
+<th>Semana</th>
+<th>Fecha (referencial)</th>
+<th>Meta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ensayo DEMRE baseline</td>
+<td>W1</td>
+<td>28/09 - 04/10/2026</td>
+<td>Calibrar escala real</td>
+</tr>
+<tr>
+<td>Ensayo oficial DEMRE</td>
+<td>W13</td>
+<td>dic 2026</td>
+<td>800 M1</td>
+</tr>
+<tr>
+<td>Fin de F1</td>
+<td>W14</td>
+<td>03/01/2027</td>
+<td>Cierre y análisis</td>
+</tr>
+<tr>
+<td>Pausa de vacaciones</td>
+<td>W17-W20</td>
+<td>18/01 - 14/02/2027</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Ensayos DEMRE 1er ciclo</td>
+<td>W24-W30</td>
+<td>mar-abr 2027</td>
+<td>Medición en escala</td>
+</tr>
+<tr>
+<td>Fin de F2</td>
+<td>W30</td>
+<td>25/04/2027</td>
+<td>Cierre y análisis</td>
+</tr>
+<tr>
+<td>PAES de invierno *</td>
+<td>W39</td>
+<td>jun 2027</td>
+<td>Puntaje válido (admisión 2028)</td>
+</tr>
+<tr>
+<td>Inscripción PAES regular *</td>
+<td>W43</td>
+<td>jul-ago 2027</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Ensayos DEMRE 2do ciclo *</td>
+<td>W46-W49</td>
+<td>ago-sep 2027</td>
+<td>Medición en escala</td>
+</tr>
+<tr>
+<td>PAES regular *</td>
+<td>W62</td>
+<td>nov-dic 2027</td>
+<td><strong>1000 M1</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Fechas a confirmar con el calendario oficial DEMRE 2027 cuando se publique.</li>
+</ul>
+<h2 id="seguimiento">Seguimiento</h2>
+<ul>
+<li>Registrar cada MC y ensayo en <code>seguimiento/ensayos.md</code> (fecha, fuente, puntaje, errores por área).</li>
+<li>Criterio de avance por área (del plan): debilidad → parcial con ≥50% en MC consecutivos;<br />
+  parcial → fortaleza con ≥75%.</li>
+<li>Criterios de saneamiento ligados al calendario: Geometría ≥50% en MC1 (W6); Funciones ≥50% en<br />
+  MC2 (W10); Geometría ≥75% en MC4 (W22); Funciones ≥75% en MC5 (W26). Detalle en<br />
+<code>seguimiento/perfil-areas.md</code>.</li>
+<li>Si el hito de W13 (800) no se alcanza, recalendarizar: revisar en W14 si hace falta trasladar<br />
+  semanas de refuerzo de F2 hacia Geometría/Funciones (decision del tutor).</li>
+</ul>
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="entrenamiento-m1.html" class="relacionado-chip">Plan de entrenamiento</a>
+<a href="guias/f1.html" class="relacionado-chip">Guía F1</a>
+<a href="guias/f2.html" class="relacionado-chip">Guía F2</a>
+<a href="guias/f3.html" class="relacionado-chip">Guía F3</a>
+<a href="guias/f4.html" class="relacionado-chip">Guía F4</a>
+<a href="guias/f5.html" class="relacionado-chip">Guía F5</a>
+<a href="../calendario.html" class="relacionado-chip">Calendario interactivo</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

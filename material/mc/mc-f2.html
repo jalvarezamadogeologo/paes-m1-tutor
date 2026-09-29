@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-controles — Fase 2 (MC4-MC7) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="../../plan/entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="../../plan/calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="../../plan/guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="../../plan/guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="../../plan/guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="../../plan/guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="../../plan/guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="../../plan/guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="mc-f2.html" class="activo">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../semanas/semana-01.html">Semana 1</a>
+<a href="../semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Material</span>
+<span class="separador">›</span>
+<span>Mc</span>
+<span class="separador">›</span>
+<span>Mc F2</span>
+</nav>
+        <h1 id="mini-controles-fase-2-mc4-mc7">Mini-controles — Fase 2 (MC4-MC7)</h1>
+<p>Banco de mini-controles de la Fase 2 (W15-W30). Formato: 10 preguntas del área en curso de opción<br />
+múltiple (A-E) + 2 preguntas de mantenimiento de áreas fortaleza, 1 correcta. Clave al final de<br />
+cada MC. Usar según el calendario: MC4 en W22, MC5 en W26, MC6 en W28, MC7 en W29. El resultado<br />
+del área en curso se calcula sobre las 10 primeras; las preguntas 11-12 se registran como<br />
+mantenimiento de fortalezas.</p>
+<hr />
+<h2 id="mc4-geometria-avanzada-para-w22">MC4 — Geometría avanzada (para W22)</h2>
+<ol>
+<li>En una circunferencia de radio 13, una cuerda dista 5 del centro. ¿Cuánto mide la cuerda?<br />
+   A) 12 · B) 18 · C) 24 · D) 26 · E) 30</li>
+<li>Un sector de 90° en un círculo de radio 6. ¿Cuál es su área?<br />
+   A) 6π · B) 9π · C) 12π · D) 18π · E) 36π</li>
+<li>En un triángulo rectángulo, el cateto opuesto a α mide 6 y la hipotenusa 10. ¿Cuánto vale tan(α)?<br />
+   A) 0,5 · B) 0,6 · C) 0,75 · D) 0,8 · E) 1,25</li>
+<li>Desde un punto a 30 m de un árbol, el ángulo de elevación a la copa es 60°. ¿Cuál es la altura del árbol?<br />
+   A) 30 m · B) 30√2 m · C) 30√3 m · D) 15√3 m · E) 60 m</li>
+<li>Un cilindro tiene radio 4 y altura 10. ¿Cuál es su volumen (π ≈ 3)?<br />
+   A) 240 · B) 360 · C) 480 · D) 600 · E) 720</li>
+<li>Un cono tiene radio 3 y altura 9. ¿Cuál es su volumen (π ≈ 3)?<br />
+   A) 54 · B) 81 · C) 108 · D) 243 · E) 27</li>
+<li>Un cuadrado de lado 8 tiene inscrito un círculo. ¿Cuál es el área de la región fuera del círculo?<br />
+   A) 64 − 8π · B) 64 − 16π · C) 64 − 4π · D) 16π · E) 64π</li>
+<li>Un rectángulo de 12 × 5 se reduce con factor de escala 5/8. ¿Cuál es el área del dibujo?<br />
+   A) 20 · B) 22 · C) 23,44 · D) 25 · E) 30</li>
+<li>En un triángulo rectángulo, el cateto opuesto a α mide 6 y la hipotenusa 10. ¿Cuánto mide el cateto adyacente?<br />
+   A) 6 · B) 8 · C) 10 · D) 12 · E) 16</li>
+<li>Un triángulo rectángulo isósceles tiene catetos de 5 cm. ¿Cuánto mide la hipotenusa?<br />
+    A) 5 cm · B) 5√2 cm · C) 10 cm · D) 25 cm · E) 5√3 cm</li>
+</ol>
+<p><strong>Mantenimiento (fortalezas).</strong><br />
+11. El promedio de 5 números es 20. ¿Cuál es la suma de los 5 números?<br />
+    A) 20 · B) 100 · C) 50 · D) 25 · E) 4<br />
+12. Resolver x² − 9 = 0.<br />
+    A) 3 y −3 · B) 3 y 9 · C) −3 y 9 · D) 9 y −9 · E) 3 y 0</p>
+<p><strong>Clave MC4:</strong> 1-C, 2-B, 3-C, 4-C, 5-C, 6-B, 7-B, 8-C, 9-B, 10-B, 11-B, 12-A.</p>
+<hr />
+<h2 id="mc5-funciones-avanzadas-para-w26">MC5 — Funciones avanzadas (para W26)</h2>
+<ol>
+<li>Una población de 500 se triplica cada año. ¿Cuántos individuos hay tras 3 años?<br />
+   A) 4.500 · B) 13.500 · C) 40.500 · D) 15.000 · E) 6.500</li>
+<li>Una bacteria se duplica cada hora; al inicio hay 100. ¿Cuántas hay tras 4 horas?<br />
+   A) 400 · B) 800 · C) 1.600 · D) 3.200 · E) 8.000</li>
+<li>Un valor de $200 crece 50% cada año. ¿Cuánto vale tras 3 años?<br />
+   A) $300 · B) $450 · C) $600 · D) $675 · E) $750</li>
+<li>El costo de producir n unidades es C(n) = 2n² + 50n + 200. ¿Cuánto cuesta producir 10?<br />
+   A) 700 · B) 800 · C) 900 · D) 1.000 · E) 1.100</li>
+<li>Un cultivo crece según N(t) = 100·2^(t/2), t en horas. ¿Cuántas bacterias hay tras 6 h?<br />
+   A) 400 · B) 600 · C) 800 · D) 1.200 · E) 1.600</li>
+<li>Un rectángulo de perímetro 40 tiene un lado x. ¿Cuál es el área máxima posible?<br />
+   A) 60 · B) 80 · C) 100 · D) 120 · E) 160</li>
+<li>Si f(x) = 2^(x−1), ¿cuánto vale f(5)?<br />
+   A) 8 · B) 16 · C) 32 · D) 64 · E) 2</li>
+<li>El ingreso de una empresa es I(q) = 5.000q − 20q². ¿Qué cantidad q maximiza el ingreso?<br />
+   A) 100 · B) 125 · C) 150 · D) 200 · E) 250</li>
+<li>Si f(x) = 2x + 5, ¿cuánto vale f(8) − f(3)?<br />
+   A) 10 · B) 20 · C) 15 · D) 25 · E) 5</li>
+<li>Una empresa cobra $4.000 fijos y $600 por hora. ¿Cuánto cuesta un servicio de 5 horas?<br />
+    A) $6.000 · B) $7.000 · C) $7.600 · D) $8.000 · E) $9.000</li>
+</ol>
+<p><strong>Mantenimiento (fortalezas).</strong><br />
+11. 6 obreros hacen una obra en 12 días. ¿Cuántos días tardan 8 obreros (mismo ritmo)?<br />
+    A) 9 · B) 12 · C) 16 · D) 8 · E) 24<br />
+12. Se lanzan dos dados. ¿Cuál es la probabilidad de que la suma sea 7?<br />
+    A) 5/36 · B) 6/36 · C) 7/36 · D) 8/36 · E) 1/12</p>
+<p><strong>Clave MC5:</strong> 1-B, 2-C, 3-D, 4-C, 5-C, 6-C, 7-B, 8-B, 9-A, 10-B, 11-A, 12-B.</p>
+<hr />
+<h2 id="mc6-proporcionalidad-y-algebra-para-w28-dificultad-alta">MC6 — Proporcionalidad y Álgebra (para W28, dificultad alta)</h2>
+<ol>
+<li>8 obreros hacen 2/5 de una obra en 6 días. ¿Cuántos días tardan 5 obreros en terminar el resto?<br />
+   A) 10 · B) 12 · C) 14,4 · D) 15 · E) 16</li>
+<li>Dos números suman 12 y la diferencia de sus cuadrados es 72. ¿Cuáles son?<br />
+   A) 7 y 5 · B) 8 y 4 · C) 9 y 3 · D) 10 y 2 · E) 6 y 6</li>
+<li>5 máquinas producen 1.200 piezas en 4 horas. ¿Cuántas horas tardan 4 máquinas en producir 1.500 piezas?<br />
+   A) 5 h · B) 5 h 30 min · C) 6 h 15 min · D) 6 h 30 min · E) 7 h</li>
+<li>Se mezclan 3 kg de una aleación con 10% de cobre y 2 kg con 25%. ¿Qué porcentaje de cobre tiene la mezcla?<br />
+   A) 12% · B) 14% · C) 15% · D) 16% · E) 18%</li>
+<li>Un terreno de 40 m × 25 m se representa a escala 1:100. ¿Cuál es el área en el plano?<br />
+   A) 400 cm² · B) 1.000 cm² · C) 2.500 cm² · D) 10.000 cm² · E) 40.000 cm²</li>
+<li>En un grupo, hombres y mujeres están en razón 3:2. Si entran 2 mujeres, la nueva razón es 5:4. ¿Cuántas mujeres hay?<br />
+   A) 10 · B) 12 · C) 15 · D) 18 · E) 20</li>
+<li>El lado de un cuadrado aumenta 3 cm y su área aumenta 69 cm². ¿Cuál era el lado original?<br />
+   A) 8 cm · B) 9 cm · C) 10 cm · D) 11 cm · E) 12 cm</li>
+<li>La suma de dos números es 17 y su producto es 60. ¿Cuáles son?<br />
+   A) 8 y 9 · B) 10 y 7 · C) 12 y 5 · D) 15 y 2 · E) 6 y 11</li>
+<li>Resolver |x − 2| ≤ 5.<br />
+   A) [−3, 7] · B) [−5, 5] · C) [−7, 3] · D) [2, 5] · E) [−2, 2]</li>
+<li>El promedio de dos números es 20 y su diferencia es 14. ¿Cuál es el mayor?<br />
+    A) 24 · B) 26 · C) 27 · D) 28 · E) 30</li>
+</ol>
+<p><strong>Mantenimiento (fortalezas).</strong><br />
+11. Una bacteria se duplica cada hora; al inicio hay 50. ¿Cuántas hay tras 3 horas?<br />
+    A) 150 · B) 300 · C) 400 · D) 800 · E) 600<br />
+12. Un valor de $80 baja 25%. ¿Cuánto queda?<br />
+    A) $55 · B) $60 · C) $65 · D) $70 · E) $75</p>
+<p><strong>Clave MC6:</strong> 1-C, 2-C, 3-C, 4-D, 5-B, 6-C, 7-C, 8-C, 9-A, 10-C, 11-C, 12-B.</p>
+<hr />
+<h2 id="mc7-estadistica-para-w29-dificultad-alta">MC7 — Estadística (para W29, dificultad alta)</h2>
+<ol>
+<li>¿Cuál es la media de 12, 14, 16, 20, 28?<br />
+   A) 16 · B) 17 · C) 18 · D) 19 · E) 20</li>
+<li>¿Cuál es la mediana de 12, 14, 16, 20, 28?<br />
+   A) 14 · B) 16 · C) 18 · D) 20 · E) 15</li>
+<li>Se lanzan dos dados. ¿Cuál es la probabilidad de que la suma sea 8?<br />
+   A) 4/36 · B) 5/36 · C) 6/36 · D) 7/36 · E) 8/36</li>
+<li>Una urna tiene 4 bolas rojas y 3 azules. Se sacan dos sin reposición. ¿Probabilidad de que ambas sean rojas?<br />
+   A) 1/7 · B) 2/7 · C) 3/7 · D) 4/7 · E) 12/49</li>
+<li>15 estudiantes promedian 5,2 y 5 promedian 4,0. ¿Cuál es el promedio del grupo?<br />
+   A) 4,6 · B) 4,7 · C) 4,8 · D) 4,9 · E) 5,0</li>
+<li>El promedio de 5 números es 20. Se agrega un sexto y el promedio sube a 22. ¿Cuál es el sexto?<br />
+   A) 28 · B) 30 · C) 32 · D) 34 · E) 36</li>
+<li>Se lanzan dos dados. ¿Cuál es la probabilidad de que la suma sea menor que 5?<br />
+   A) 1/6 · B) 5/36 · C) 2/9 · D) 1/9 · E) 1/12</li>
+<li>En una caja hay 3 fichas verdes y 2 rojas. Se saca una al azar. ¿Probabilidad de roja?<br />
+   A) 1/5 · B) 2/5 · C) 3/5 · D) 1/2 · E) 2/3</li>
+<li>Se lanza una moneda 3 veces. ¿Probabilidad de exactamente 2 caras?<br />
+   A) 1/4 · B) 1/8 · C) 3/8 · D) 3/4 · E) 2/8</li>
+<li>Al agregar un dato muy alto a un conjunto de datos, ¿qué ocurre?<br />
+    A) La media sube más que la mediana · B) La mediana sube más que la media · C) Suben igual · D) No cambian · E) La media baja</li>
+</ol>
+<p><strong>Mantenimiento (fortalezas).</strong><br />
+11. Resolver la ecuación 3x − 7 = 14.<br />
+    A) 5 · B) 6 · C) 7 · D) 8 · E) 21<br />
+12. En un curso de 30 estudiantes, 18 son mujeres. ¿Cuál es la razón mujeres : hombres?<br />
+    A) 3:2 · B) 2:3 · C) 3:5 · D) 5:3 · E) 1:1</p>
+<p><strong>Clave MC7:</strong> 1-C, 2-B, 3-B, 4-B, 5-D, 6-C, 7-A, 8-B, 9-C, 10-A, 11-C, 12-A.</p>
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="../../plan/guias/f2.html" class="relacionado-chip">Guía F2</a>
+<a href="../../plan/guia-estudio-m1.html" class="relacionado-chip">Guía de estudio (compendio)</a>
+<a href="../../seguimiento/perfil-areas.html" class="relacionado-chip">Perfil de áreas</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

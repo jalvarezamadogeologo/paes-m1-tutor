@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 1 · Ángulos y rectas — Guía de estudio y práctica | PAES M1</title>
+<style>
+/* ============================================================
+   PAES M1 — Guía semanal de la estudiante
+   Pantalla: lectura amigable. @media print: A4 compacto (PDF).
+   ============================================================ */
+:root {
+  --azul: #1F3864;
+  --azul-suave: #2E5A9E;
+  --azul-claro: #EAF0FA;
+  --gris-texto: #333B48;
+  --gris-suave: #64748B;
+  --borde: #E2E8F0;
+  --ambar: #B45309;
+  --ambar-claro: #FEF3C7;
+  --verde: #15803D;
+  --verde-claro: #F0FDF4;
+  --rojo: #B91C1C;
+  --rojo-claro: #FEF2F2;
+  --blanco: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Calibri", "Segoe UI", "Arial", sans-serif;
+  color: var(--gris-texto);
+  font-size: 11pt;
+  line-height: 1.65;
+  background: #fff;
+}
+
+.guia-wrap { max-width: 860px; margin: 0 auto; padding: 26px 26px 60px; }
+
+/* Cabecera */
+.guia-header {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-suave) 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 26px 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 18px rgba(31,56,100,0.25);
+}
+.guia-header h1 { font-size: 24pt; font-weight: 700; line-height: 1.2; }
+.guia-header .subtitulo { font-size: 11.5pt; opacity: 0.94; margin-top: 6px; }
+.guia-header .meta-linea { font-size: 9.8pt; opacity: 0.82; margin-top: 12px; }
+.guia-header .pill {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 9.5pt;
+  font-weight: 600;
+  margin: 10px 6px 0 0;
+}
+
+h2 {
+  color: var(--azul);
+  font-size: 17pt;
+  font-weight: 700;
+  margin: 34px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--azul);
+}
+h3 { color: var(--azul); font-size: 13.5pt; font-weight: 700; margin: 24px 0 8px; }
+p { margin: 8px 0; }
+ul, ol { margin: 8px 0 8px 22px; }
+li { margin: 5px 0; }
+strong { color: var(--azul); }
+
+/* Bloques */
+.teoria {
+  background: var(--azul-claro);
+  border: 1px solid #C9D8F2;
+  border-left: 5px solid var(--azul);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 10px 0;
+}
+.formula {
+  background: var(--azul-claro);
+  border: 1px solid #C9D8F2;
+  border-left: 5px solid var(--azul);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin: 10px 0;
+  font-family: "Cambria Math", "Cambria", serif;
+  font-size: 11.5pt;
+  color: var(--azul);
+  line-height: 1.6;
+}
+.idea {
+  background: var(--ambar-claro);
+  border-left: 5px solid var(--ambar);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin: 10px 0;
+  font-size: 10.6pt;
+}
+.ejemplo {
+  background: var(--verde-claro);
+  border-left: 5px solid var(--verde);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin: 10px 0;
+  font-size: 10.6pt;
+}
+.ejemplo .tag { font-weight: 800; color: var(--verde); text-transform: uppercase; font-size: 8.5pt; letter-spacing: 0.6px; margin-right: 8px; }
+
+/* Ejercicios */
+.ejercicio {
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  margin: 14px 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.ej-head {
+  background: var(--azul-claro);
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--borde);
+  font-weight: 700;
+  color: var(--azul);
+  font-size: 10.5pt;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ej-head .num {
+  background: var(--azul);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 9pt;
+  padding: 2px 10px;
+}
+.ej-enun { padding: 12px 16px; font-size: 10.8pt; }
+.ej-alt { padding: 4px 16px 12px; font-size: 10.5pt; color: var(--gris-texto); }
+.ej-respuesta {
+  margin: 0 16px 14px;
+  border: 1px dashed var(--azul-suave);
+  border-radius: 8px;
+  padding: 22px 16px;
+  color: var(--gris-suave);
+  font-size: 9.8pt;
+  text-align: center;
+  background: #FAFBFD;
+}
+.ej-respuesta.doble { padding: 56px 16px; }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+thead th { background: var(--azul); color: #fff; text-align: left; padding: 8px 12px; font-weight: 600; }
+tbody td { padding: 8px 12px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+tbody tr:nth-child(even) { background: var(--azul-claro); }
+
+/* Claves (para el tutor) */
+.claves {
+  background: var(--rojo-claro);
+  border: 1px solid #F3C1C1;
+  border-left: 5px solid var(--rojo);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+.claves h3 { color: var(--rojo); }
+.claves ul { font-size: 10.5pt; }
+.aviso-tutor {
+  background: var(--ambar-claro);
+  border-left: 5px solid var(--ambar);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin: 10px 0;
+  font-size: 10.6pt;
+  font-weight: 600;
+}
+
+/* ============================================================
+   IMPRESION / PDF (A4 compacto)
+   ============================================================ */
+@media print {
+  @page { size: A4; margin: 13mm 13mm; }
+  body { font-size: 9.6pt; line-height: 1.45; }
+  .guia-wrap { max-width: none; padding: 0; }
+  .guia-header { border-radius: 8px; padding: 16px 20px; box-shadow: none; margin-bottom: 10px; }
+  .guia-header h1 { font-size: 17pt; }
+  .guia-header .subtitulo { font-size: 10pt; }
+  .guia-header .meta-linea { font-size: 8.8pt; }
+  .guia-header .pill { font-size: 8.5pt; }
+  h2 { font-size: 13pt; margin: 16px 0 7px; padding-bottom: 4px; border-bottom: 2px solid var(--azul); }
+  h3 { font-size: 11pt; margin: 12px 0 5px; }
+  .teoria, .formula, .idea, .ejemplo { border-radius: 6px; padding: 7px 11px; margin: 6px 0; font-size: 9.4pt; }
+  .formula { font-size: 10pt; }
+  .ejercicio { border-radius: 6px; margin: 7px 0; box-shadow: none; page-break-inside: avoid; }
+  .ej-head { padding: 5px 10px; font-size: 9.2pt; }
+  .ej-head .num { font-size: 8.2pt; padding: 1px 8px; }
+  .ej-enun { padding: 6px 10px; font-size: 9.4pt; }
+  .ej-alt { padding: 3px 10px 6px; font-size: 9.2pt; }
+  .ej-respuesta { margin: 0 10px 8px; padding: 14px 12px; font-size: 8.8pt; }
+  .ej-respuesta.doble { padding: 40px 12px; }
+  .claves { border-radius: 6px; padding: 8px 11px; margin: 8px 0; }
+  .claves ul { font-size: 9.2pt; }
+  table { font-size: 9pt; margin: 8px 0; }
+  thead th { padding: 5px 9px; }
+  tbody td { padding: 5px 9px; }
+  tr, .ejercicio, .teoria, .formula, .ejemplo { page-break-inside: avoid; }
+  h2, h3 { page-break-after: avoid; }
+  .claves { page-break-before: always; }
+}
+</style>
+</head>
+<body>
+<div class="guia-wrap">
+
+  <header class="guia-header">
+    <h1>Semana 1 · Ángulos y rectas</h1>
+    <div class="subtitulo">Guía de estudio y práctica — Competencia Matemática 1 (PAES)</div>
+    <div class="meta-linea">Sesión de 2 h · 28/09 - 04/10/2026 · Fase 1: Geometría básica</div>
+    <span class="pill">Tema nuevo: ángulos y rectas</span>
+    <span class="pill">Práctica: complementarios, suplementarios, paralelas</span>
+  </header>
+
+  <div class="aviso-tutor">Para el tutor: esta guía es para la estudiante. Las claves están al
+  final, en la última página (no se la entregues junto con la guía si prefieres corregirla después).</div>
+
+  <p style="margin: 12px 0;">
+    <a href="semana-01.pdf" download style="display:inline-block;background:#1F3864;color:#fff;padding:8px 18px;border-radius:20px;text-decoration:none;font-weight:700;">
+      Descargar guía en PDF
+    </a>
+  </p>
+
+  <h2>Objetivos de la semana</h2>
+  <ul>
+    <li>Comprender qué son los ángulos complementarios y suplementarios, y calcularlos.</li>
+    <li>Reconocer los ángulos que se forman al cortarse dos rectas (opuestos por el vértice y adyacentes).</li>
+    <li>Identificar los ángulos entre paralelas cortadas por una transversal (alternos, correspondientes, conjugados).</li>
+  </ul>
+
+  <h2>1. Complementarios y suplementarios</h2>
+
+  <div class="teoria">
+    <p><strong>Complementarios:</strong> dos ángulos son complementarios si <strong>suman 90°</strong>.</p>
+    <p><strong>Suplementarios:</strong> dos ángulos son suplementarios si <strong>suman 180°</strong>.</p>
+    <p>Para encontrar el complemento de un ángulo: restar de 90°. Para el suplemento: restar de 180°.</p>
+  </div>
+
+  <div class="formula">
+    Complemento de α = 90° − α<br>
+    Suplemento de α = 180° − α
+  </div>
+
+  <div class="ejemplo">
+    <span class="tag">Ejemplo resuelto</span>
+    El complemento de 35° es 90° − 35° = <strong>55°</strong>. El suplemento de 35° es 180° − 35° = <strong>145°</strong>.
+  </div>
+
+  <div class="idea">
+    💡 Truco para no confundirse: <strong>complemento</strong> = "completa" el ángulo recto de 90°;
+    <strong>suplemento</strong> = "suple" hasta la línea recta de 180°.
+  </div>
+
+  <h2>2. Ángulos al cortarse dos rectas</h2>
+
+  <div class="teoria">
+    <p>Cuando dos rectas se cortan forman una "X". Se crean cuatro ángulos:</p>
+    <ul>
+      <li><strong>Opuestos por el vértice:</strong> los que quedan enfrentados. Son <strong>iguales</strong>.</li>
+      <li><strong>Adyacentes:</strong> los que comparten un lado. Son <strong>suplementarios</strong> (suman 180°).</li>
+    </ul>
+    <p>Si un ángulo mide 42°, el opuesto por el vértice también mide 42°, y los dos adyacentes miden 138° cada uno.</p>
+  </div>
+
+  <h2>3. Paralelas cortadas por una transversal</h2>
+
+  <div class="teoria">
+    <p>Una recta (transversal) corta dos rectas paralelas. Se forman <strong>8 ángulos</strong>, pero solo hay
+    <strong>dos medidas distintas</strong>: los agudos son todos iguales, los obtusos son todos iguales, y
+    agudo + obtuso = 180°.</p>
+    <ul>
+      <li><strong>Alternos internos (forma de Z):</strong> iguales.</li>
+      <li><strong>Correspondientes (forma de F):</strong> iguales.</li>
+      <li><strong>Conjugados (forma de C):</strong> suman 180°.</li>
+    </ul>
+    <p>Si un ángulo mide 110°, su alterno interno mide 110° y su conjugado mide 180° − 110° = 70°.</p>
+  </div>
+
+  <h2>4. Ejercicios para practicar</h2>
+
+  <div class="aviso-tutor">Resolver sin ayuda. Anotar la alternativa elegida y el desarrollo (dibujo o cálculo) en el
+  espacio de cada ejercicio. Registrar el resultado (X/10) en la bitácora de la semana.</div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">1</span> Complementarios</div>
+    <div class="ej-enun">Dos ángulos son complementarios y uno mide el doble del otro. ¿Cuánto mide el ángulo mayor?</div>
+    <div class="ej-alt">A) 30° · B) 45° · C) 60° · D) 90° · E) 120°</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">2</span> Suplementarios</div>
+    <div class="ej-enun">Un ángulo mide 35°. ¿Cuánto mide su suplementario?</div>
+    <div class="ej-alt">A) 35° · B) 55° · C) 145° · D) 155° · E) 325°</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">3</span> Consecutivos</div>
+    <div class="ej-enun">Tres ángulos consecutivos suman 180°. Dos miden 50° y 70°. ¿Cuánto mide el tercero?</div>
+    <div class="ej-alt">A) 40° · B) 50° · C) 60° · D) 70° · E) 120°</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">4</span> Opuestos por el vértice</div>
+    <div class="ej-enun">Dos rectas se intersectan formando un ángulo de 42°. ¿Cuánto mide el ángulo adyacente a él?</div>
+    <div class="ej-alt">A) 42° · B) 48° · C) 90° · D) 138° · E) 318°</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">5</span> Planteo con ecuación</div>
+    <div class="ej-enun">Un ángulo mide 15° menos que el doble de su complemento. ¿Cuánto mide el ángulo?</div>
+    <div class="ej-alt">A) 35° · B) 45° · C) 55° · D) 65° · E) 75°</div>
+    <div class="ej-respuesta doble">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">6</span> Alternos internos</div>
+    <div class="ej-enun">Dos rectas paralelas son cortadas por una transversal. Un ángulo alterno interno mide 110°. ¿Cuánto mide su conjugado interno?</div>
+    <div class="ej-alt">A) 40° · B) 70° · C) 110° · D) 130° · E) 180°</div>
+    <div class="ej-respuesta">Dibujo, desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">7</span> Paralelas (formato PAES)</div>
+    <div class="ej-enun">En la figura, L1 y L2 son paralelas cortadas por una transversal. Si el ángulo α mide 65°, ¿cuánto mide el ángulo β, conjugado interno de α?</div>
+    <div class="ej-alt">A) 25° · B) 65° · C) 90° · D) 115° · E) 125°</div>
+    <div class="ej-respuesta doble">Dibujo, desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">8</span> Ángulos en la "X"</div>
+    <div class="ej-enun">Dos rectas se intersectan. Uno de los ángulos formados mide 130°. ¿Cuánto miden los otros tres?</div>
+    <div class="ej-alt">A) 130°, 50°, 50° · B) 130°, 130°, 50° · C) 50°, 50°, 50° · D) 130°, 130°, 130° · E) 65°, 65°, 65°</div>
+    <div class="ej-respuesta">Dibujo, desarrollo y respuesta</div>
+  </div>
+
+  <h2>5. Práctica de mantenimiento (fortalezas)</h2>
+
+  <div class="teoria">
+    <p>Estas preguntas repasan áreas que ya dominas (Proporcionalidad y Estadística). Resolverlas en 10 minutos.</p>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">9</span> Proporcionalidad</div>
+    <div class="ej-enun">Un auto recorre 240 km con 20 L de bencina. ¿Cuántos km recorre con 30 L (mismo consumo)?</div>
+    <div class="ej-alt">A) 300 km · B) 330 km · C) 360 km · D) 400 km · E) 480 km</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="ejercicio">
+    <div class="ej-head"><span class="num">10</span> Estadística</div>
+    <div class="ej-enun">El promedio de 12, 14, 16 y 18 es:</div>
+    <div class="ej-alt">A) 14 · B) 15 · C) 16 · D) 17 · E) 18</div>
+    <div class="ej-respuesta">Desarrollo y respuesta</div>
+  </div>
+
+  <div class="claves">
+    <h3>Claves — Semana 1 (solo para el tutor)</h3>
+    <ul>
+      <li><strong>1.</strong> C — x + 2x = 90° → x = 30° → mayor = 60°.</li>
+      <li><strong>2.</strong> C — 180° − 35° = 145°.</li>
+      <li><strong>3.</strong> C — 180° − 50° − 70° = 60°.</li>
+      <li><strong>4.</strong> D — adyacentes suman 180° → 180° − 42° = 138°.</li>
+      <li><strong>5.</strong> C — x = 2(90° − x) − 15° → 3x = 165° → x = 55°.</li>
+      <li><strong>6.</strong> B — conjugados suman 180° → 180° − 110° = 70°.</li>
+      <li><strong>7.</strong> D — conjugado interno → 180° − 65° = 115°.</li>
+      <li><strong>8.</strong> A — opuesto = 130°; adyacentes = 50° cada uno.</li>
+      <li><strong>9.</strong> C — 240/20 = 12 km/L → 12·30 = 360 km.</li>
+      <li><strong>10.</strong> B — (12+14+16+18)/4 = 60/4 = 15.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

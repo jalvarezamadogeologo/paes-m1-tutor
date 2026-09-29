@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de entrenamiento — Matemática 1 (M1) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="entrenamiento-m1.html" class="activo">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="../material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="../material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="../material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../material/semanas/semana-01.html">Semana 1</a>
+<a href="../material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Plan</span>
+<span class="separador">›</span>
+<span>Entrenamiento M1</span>
+</nav>
+        <h1 id="plan-de-entrenamiento-matematica-1-m1">Plan de entrenamiento — Matemática 1 (M1)</h1>
+<p>Basado en la prueba inicial M1 de 2026-09-24 (X/Y bruto, 50%). Elaborado 2026-09-24.</p>
+<h2 id="restricciones-y-metas">Restricciones y metas</h2>
+<ul>
+<li><strong>Horas disponibles:</strong> 2 h semanales de M1 (decisión del tutor).</li>
+<li><strong>Meta 2026 (referencia, medida en ensayos oficiales DEMRE):</strong> 800 puntos M1. La estudiante<br />
+  NO rinde la PAES 2026; su única rendición oficial es nov-dic 2027.</li>
+<li><strong>Meta 2027 (rendición oficial PAES regular nov-dic 2027, admisión 2028):</strong> 1000 puntos M1.</li>
+<li><strong>Horizonte:</strong> ~14 meses (sep 2026 - nov 2027). La estudiante cursa 3° medio en 2026 y 4° medio<br />
+  en 2027; la intensidad puede crecer el último año.</li>
+</ul>
+<h3 id="metas-escalonadas-ruta-realista-hacia-1000">Metas escalonadas (ruta realista hacia 1000)</h3>
+<p>La meta final de 1000 (tope absoluto de la escala) se aborda por tramos, cada uno con su medición:</p>
+<table>
+<thead>
+<tr>
+<th>Hito</th>
+<th>Semana</th>
+<th>Meta M1</th>
+<th>Instrumento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td>W1</td>
+<td>Puntaje real inicial</td>
+<td>Ensayo DEMRE años anteriores (condiciones reales)</td>
+</tr>
+<tr>
+<td>Fin de F1</td>
+<td>W13</td>
+<td>800</td>
+<td>Ensayo DEMRE dic 2026</td>
+</tr>
+<tr>
+<td>Fin de F2</td>
+<td>W30</td>
+<td>850-900</td>
+<td>Ensayos DEMRE 1er ciclo (mar-abr 2027)</td>
+</tr>
+<tr>
+<td>PAES de invierno</td>
+<td>W39</td>
+<td>900 (mínimo para considerar que la ruta va bien)</td>
+<td>PAES invierno 2027 (puntaje válido)</td>
+</tr>
+<tr>
+<td>Fin de F4</td>
+<td>W58</td>
+<td>950+</td>
+<td>Ensayos DEMRE 2do ciclo + ensayos propios</td>
+</tr>
+<tr>
+<td>PAES regular</td>
+<td>W62</td>
+<td><strong>1000 (aspiracional)</strong> / 950+ operativo</td>
+<td>PAES nov-dic 2027</td>
+</tr>
+</tbody>
+</table>
+<p>Regla de ajuste: cada hito se compara contra su meta de tramo; si se queda por debajo, se aplican<br />
+las reglas de <code>seguimiento/sistema.md</code> (refuerzo dirigido, recalendarización). El 1000 se trata<br />
+como aspiracional: con M1 al 20% del ponderado y corte de Medicina UCH 2026 en 931,15, un M1 de<br />
+950+ es competitivo; el 1000 absoluto no es requisito de entrada, pero cada punto de M1 suma.</p>
+<p>Nota de realismo: 800 está en el percentil superior de la escala; 1000 es el tope absoluto y exige<br />
+rendimiento casi perfecto. El corte ponderado de Medicina UCH 2026 fue 931,15 con M1 ponderando<br />
+20%; M1 es necesaria pero no suficiente (Ciencias pondera 35% y tiene su propia preparación, fuera<br />
+del alcance de este plan).</p>
+<h2 id="perfil-del-diagnostico-punto-de-partida">Perfil de la prueba inicial (punto de partida)</h2>
+<table>
+<thead>
+<tr>
+<th>Área</th>
+<th>Logro</th>
+<th>Prioridad en el plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5. Geometría</td>
+<td>0%</td>
+<td>Refuerzo prioritario desde la base</td>
+</tr>
+<tr>
+<td>4. Funciones</td>
+<td>25%</td>
+<td>Refuerzo prioritario desde la base</td>
+</tr>
+<tr>
+<td>1. Números</td>
+<td>50%</td>
+<td>Consolidar (soporta a Geometría y Funciones)</td>
+</tr>
+<tr>
+<td>2. Proporcionalidad</td>
+<td>75%</td>
+<td>Fortaleza: mantener con práctica ligera</td>
+</tr>
+<tr>
+<td>3. Álgebra</td>
+<td>75%</td>
+<td>Fortaleza: mantener con práctica ligera</td>
+</tr>
+<tr>
+<td>6. Estadística</td>
+<td>75%</td>
+<td>Fortaleza: mantener con práctica ligera</td>
+</tr>
+</tbody>
+</table>
+<h2 id="estrategia-general">Estrategia general</h2>
+<ol>
+<li><strong>Concentrar las horas en las debilidades:</strong> Geometría y Funciones reciben la mayor parte del<br />
+   tiempo de estudio; Números se consolida porque es la base de cálculo de las otras áreas.</li>
+<li><strong>No abandonar las fortalezas:</strong> en cada sesión, 20-30 min de práctica mixta con preguntas de<br />
+   Proporcionalidad, Álgebra y Estadística para no perder el nivel.</li>
+<li><strong>Enfoque por habilidad:</strong> en la prueba inicial, 19 de 24 preguntas son de &ldquo;Resolver problemas&rdquo;<br />
+   (10) y &ldquo;Modelar&rdquo; (9). El entrenamiento enfatiza problemas en contexto y modelación, no<br />
+   mecánica repetitiva.</li>
+<li><strong>Medición continua:</strong> mini-control por área cada 2 semanas y ensayo completo M1 cada 4-6<br />
+   semanas; todo registrado en <code>seguimiento/ensayos.md</code>.</li>
+<li><strong>Baseline en escala (W1):</strong> antes de la F1 se rinde un ensayo DEMRE de años anteriores en<br />
+   condiciones reales. Entrega el puntaje PAES inicial (escala 100-1000), calibra la meta de 800<br />
+   y permite comparar el avance de la F1 contra una medición real y no solo contra MC propios.</li>
+</ol>
+<h2 id="formato-de-sesion-semanal-2-h">Formato de sesión semanal (2 h)</h2>
+<table>
+<thead>
+<tr>
+<th>Bloque</th>
+<th>Duración</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repaso breve (retrieval)</td>
+<td>20 min</td>
+<td>3-4 preguntas del tema de la sesión anterior</td>
+</tr>
+<tr>
+<td>Tema nuevo con ejercicios guiados</td>
+<td>60 min</td>
+<td>Primero juntas (modelar el razonamiento), luego sola</td>
+</tr>
+<tr>
+<td>Práctica mixta</td>
+<td>30-40 min</td>
+<td>2-3 preguntas de áreas fortaleza + 1-2 de áreas débiles ya trabajadas</td>
+</tr>
+<tr>
+<td>Cierre</td>
+<td>10 min</td>
+<td>Anotar dudas y temas para la próxima sesión</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fases">Fases</h2>
+<h3 id="fase-1-base-de-geometria-y-funciones-sep-dic-2026-14-semanas-28-h">Fase 1 — Base de Geometría y Funciones (sep-dic 2026, ~14 semanas, ~28 h)</h3>
+<p>Objetivo: levantar las dos debilidades críticas desde cero y lograr 800 en el ensayo oficial<br />
+DEMRE de fin de año (diciembre 2026).</p>
+<table>
+<thead>
+<tr>
+<th>Semanas</th>
+<th>Foco</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-6</td>
+<td>Geometría básica</td>
+<td>Ángulos y rectas; triángulos (congruencia, semejanza); teorema de Pitágoras; áreas y perímetros</td>
+</tr>
+<tr>
+<td>7-10</td>
+<td>Funciones</td>
+<td>Lineal y afín (pendiente, gráfica, modelación); cuadrática (vértice, intersecciones, modelación)</td>
+</tr>
+<tr>
+<td>11-12</td>
+<td>Números + repaso</td>
+<td>Porcentajes, fracciones, potencias y raíces en contexto; repaso integrado de Geometría y Funciones</td>
+</tr>
+<tr>
+<td>13-14</td>
+<td>Ensayo oficial DEMRE</td>
+<td>Ensayo nacional oficial DEMRE de fin de año (dic 2026). Meta 800</td>
+</tr>
+</tbody>
+</table>
+<p>Hito de salida: ensayo oficial DEMRE de diciembre 2026 con 800 en M1.</p>
+<h3 id="fase-2-completar-y-profundizar-ene-abr-2027-12-semanas-de-estudio-24-h">Fase 2 — Completar y profundizar (ene-abr 2027, 12 semanas de estudio, ~24 h)</h3>
+<p>Con pausa de vacaciones del 18-ene al 14-feb (semana a semana: <code>calendario-detallado.md</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Semanas</th>
+<th>Foco</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-4</td>
+<td>Geometría avanzada</td>
+<td>Circunferencia; razones trigonométricas básicas; cuerpos geométricos (volúmenes)</td>
+</tr>
+<tr>
+<td>5-8</td>
+<td>Funciones avanzadas</td>
+<td>Exponencial (crecimiento y modelación); problemas de modelación tipo corte 800+</td>
+</tr>
+<tr>
+<td>9-12</td>
+<td>Consolidación</td>
+<td>Números en profundidad; elevar fortalezas (Proporcionalidad, Álgebra, Estadística) con preguntas de dificultad alta (tipo M2/corte 800+)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fase-3-ensayos-oficiales-abr-jul-2027-12-semanas">Fase 3 — Ensayos oficiales (abr-jul 2027, ~12 semanas)</h3>
+<ul>
+<li>Ensayos nacionales DEMRE 1er ciclo (mar-abr 2027).</li>
+<li>PAES de invierno (jun 2027) como ensayo oficial con puntaje válido.</li>
+<li>Análisis dirigido de errores: cada error se clasifica por área y se refuerza la semana siguiente.</li>
+</ul>
+<h3 id="fase-4-ciclo-final-jul-nov-2027-17-semanas">Fase 4 — Ciclo final (jul-nov 2027, ~17 semanas)</h3>
+<ul>
+<li>Inscripción PAES regular (jul-ago 2027).</li>
+<li>Ensayos nacionales DEMRE 2do ciclo (ago-sep 2027).</li>
+<li>Ensayo completo propio cada 3-4 semanas; refuerzo según errores recurrentes registrados.</li>
+</ul>
+<h3 id="fase-5-ajuste-final-nov-2027-3-semanas">Fase 5 — Ajuste final (nov 2027, ~3 semanas)</h3>
+<ul>
+<li>Repaso ligero y estrategia de examen (gestión de tiempo, orden de preguntas).</li>
+<li>Rendición PAES regular nov-dic 2027. Meta 1000.</li>
+</ul>
+<h2 id="calendario-de-medicion">Calendario de medición</h2>
+<table>
+<thead>
+<tr>
+<th>Frecuencia</th>
+<th>Instrumento</th>
+<th>Registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inicio de F1 (W1)</td>
+<td>Ensayo DEMRE baseline (años anteriores, escala real)</td>
+<td><code>seguimiento/ensayos.md</code></td>
+</tr>
+<tr>
+<td>Cada 2 semanas</td>
+<td>Mini-control por área (10 preguntas del área en curso + 2 de áreas fortaleza)</td>
+<td>Anotar en <code>seguimiento/ensayos.md</code></td>
+</tr>
+<tr>
+<td>Cada 4-6 semanas</td>
+<td>Ensayo completo M1 (DEMRE oficial o propio)</td>
+<td><code>seguimiento/ensayos.md</code></td>
+</tr>
+<tr>
+<td>Hitos</td>
+<td>Ensayo DEMRE dic 2026, invierno 2027, PAES 2027</td>
+<td><code>seguimiento/ensayos.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>Criterio de avance por área: pasar de debilidad a parcial se logra con &gt;=50% en mini-controles<br />
+consecutivos; de parcial a fortaleza con &gt;=75%.</p>
+<h3 id="criterios-de-saneamiento-por-area-ligados-al-calendario">Criterios de saneamiento por área (ligados al calendario)</h3>
+<table>
+<thead>
+<tr>
+<th>Área</th>
+<th>Criterio</th>
+<th>Medición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Geometría (0% en diagnóstico)</td>
+<td>Alcanzar ≥50%</td>
+<td>MC1 en W6 (Fin de bloque Geometría F1)</td>
+</tr>
+<tr>
+<td>Funciones (25% en diagnóstico)</td>
+<td>Alcanzar ≥50%</td>
+<td>MC2 en W10 (Fin de bloque Funciones F1)</td>
+</tr>
+<tr>
+<td>Números (50%)</td>
+<td>Consolidar a ≥75%</td>
+<td>MC3 en W12 + ensayo W13</td>
+</tr>
+<tr>
+<td>Proporcionalidad, Álgebra, Estadística (75%)</td>
+<td>Mantener ≥75%</td>
+<td>Preguntas de fortaleza en cada MC (2 por MC, desde W6) + ensayos</td>
+</tr>
+</tbody>
+</table>
+<p>Regla: si en la medición del hito el área no cumple su criterio, se activa la regla de ajuste del<br />
+<code>seguimiento/sistema.md</code> (sesión extra de refuerzo con la sección del compendio + ejercicios de la<br />
+guía correspondiente) antes de avanzar al bloque siguiente.</p>
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="calendario-detallado.html" class="relacionado-chip">Calendario detallado</a>
+<a href="guia-estudio-m1.html" class="relacionado-chip">Guía de estudio (compendio)</a>
+<a href="guias/f1.html" class="relacionado-chip">Guía F1</a>
+<a href="guias/f2.html" class="relacionado-chip">Guía F2</a>
+<a href="guias/f3.html" class="relacionado-chip">Guía F3</a>
+<a href="guias/f4.html" class="relacionado-chip">Guía F4</a>
+<a href="guias/f5.html" class="relacionado-chip">Guía F5</a>
+<a href="../seguimiento/sistema.html" class="relacionado-chip">Sistema de guía semanal</a>
+<a href="../calendario.html" class="relacionado-chip">Calendario interactivo</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

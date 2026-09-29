@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía F1 — Base de Geometría y Funciones (W1-W14) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="../entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="../calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="../guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="f1.html" class="activo">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../../material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="../../material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="../../material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="../../material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../../material/semanas/semana-01.html">Semana 1</a>
+<a href="../../material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Plan</span>
+<span class="separador">›</span>
+<span>Guias</span>
+<span class="separador">›</span>
+<span>F1</span>
+</nav>
+        <h1 id="guia-f1-base-de-geometria-y-funciones-w1-w14">Guía F1 — Base de Geometría y Funciones (W1-W14)</h1>
+<p>Fase 1 del plan de entrenamiento M1 · 28/09/2026 - 03/01/2027 · 14 semanas · 2 h semanales.<br />
+Ver calendario: <code>../calendario-detallado.md</code>. Compendio completo por área: <code>../guia-estudio-m1.md</code>.</p>
+<p>Objetivo: levantar Geometría (0%) y Funciones (25%) desde cero y consolidar Números (50%).<br />
+Hito de salida: <strong>ensayo oficial DEMRE dic 2026 con 800</strong> (W13). Antes, en W1, se rinde el<br />
+<strong>ensayo baseline DEMRE</strong> (años anteriores) para calibrar la escala real.</p>
+<h2 id="navegacion-de-la-fase">Navegación de la fase</h2>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Tema</th>
+<th>Sección del compendio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W1-W6</td>
+<td>Geometría básica</td>
+<td>5.1, 5.2, 5.3, 5.4</td>
+</tr>
+<tr>
+<td>W7-W10</td>
+<td>Funciones</td>
+<td>4.1, 4.2, 4.3, 4.5</td>
+</tr>
+<tr>
+<td>W11-W12</td>
+<td>Números + repaso</td>
+<td>1.1, 1.2, 1.3</td>
+</tr>
+<tr>
+<td>W13-W14</td>
+<td>Ensayo + cierre</td>
+<td>— (ver calendario)</td>
+</tr>
+</tbody>
+</table>
+<p>Práctica mixta (20-30 min por sesión, fortalezas): Proporcionalidad, Álgebra y Estadística —<br />
+usar los ejercicios E7-E18 y E31-E36 del compendio (<code>../guia-estudio-m1.md</code>).</p>
+<hr />
+<h2 id="bloque-a-geometria-basica-w1-w6">Bloque A — Geometría básica (W1-W6)</h2>
+<h3 id="semana-1-angulos-y-rectas">Semana 1 · Ángulos y rectas</h3>
+<p><strong>Teoría.</strong> La suma de los ángulos interiores de un triángulo es 180°. Ángulos entre paralelas<br />
+cortadas por una transversal: los alternos internos y los correspondientes son iguales; los<br />
+conjugados suman 180°. Dos ángulos son complementarios si suman 90° y suplementarios si suman 180°.</p>
+<p><strong>Ejercicios.</strong><br />
+1. Dos ángulos son complementarios y uno mide el doble del otro. ¿Cuánto mide el mayor?<br />
+   Solución: x + 2x = 90° → x = 30° → el mayor mide <strong>60°</strong>.<br />
+2. Un ángulo mide 35° y otro es suplementario. ¿Cuánto mide el segundo?<br />
+   Solución: 180° − 35° = <strong>145°</strong>.<br />
+3. Tres ángulos consecutivos suman 180°. Dos miden 50° y 70°. ¿Cuánto mide el tercero?<br />
+   Solución: 180° − 50° − 70° = <strong>60°</strong>.<br />
+4. Dos rectas paralelas son cortadas por una transversal. Un ángulo alterno interno mide 110°.<br />
+   ¿Cuánto mide su conjugado interno?<br />
+   Solución: los conjugados suman 180° → 180° − 110° = <strong>70°</strong>.<br />
+5. Un ángulo mide 20° más que su complementario. ¿Cuánto mide el ángulo mayor?<br />
+   Solución: x + (x − 20°) = 90° → 2x = 110° → <strong>55°</strong>.</p>
+<h3 id="semana-2-triangulos">Semana 2 · Triángulos</h3>
+<p><strong>Teoría.</strong> Equilátero (3 lados iguales, 3 ángulos de 60°); isósceles (2 lados iguales, ángulos<br />
+basales iguales); escaleno (3 lados distintos). Suma de ángulos = 180°.</p>
+<p><strong>Ejercicios.</strong><br />
+6. Los ángulos de un triángulo están en razón 1:2:3. ¿Cuánto mide cada uno?<br />
+   Solución: 6k = 180° → k = 30° → <strong>30°, 60°, 90°</strong>.<br />
+7. Un triángulo isósceles tiene un ángulo basal de 40°. ¿Cuánto mide el ángulo del vértice?<br />
+   Solución: 180° − 2·40° = <strong>100°</strong>.<br />
+8. Un triángulo tiene ángulos de 65° y 45°. ¿Cuánto mide el tercero?<br />
+   Solución: 180° − 65° − 45° = <strong>70°</strong>.<br />
+9. Un triángulo isósceles tiene el ángulo del vértice de 80°. ¿Cuánto mide cada ángulo basal?<br />
+   Solución: (180° − 80°)/2 = <strong>50°</strong>.<br />
+10. Los ángulos de un triángulo están en razón 2:3:4. ¿Cuánto mide el mayor?<br />
+    Solución: 9k = 180° → k = 20° → 4·20° = <strong>80°</strong>.</p>
+<h3 id="semana-3-congruencia-y-semejanza">Semana 3 · Congruencia y semejanza</h3>
+<p><strong>Teoría.</strong> Congruencia: misma forma y tamaño (lados y ángulos iguales). Semejanza: ángulos<br />
+iguales y lados proporcionales (razón de semejanza k). Si k &gt; 1 la figura se agranda. Las áreas<br />
+escalan con k².</p>
+<p><strong>Ejercicios.</strong><br />
+11. Un triángulo de lados 3, 4 y 5 es semejante a otro cuyo lado mayor mide 15. ¿Cuánto miden los<br />
+    otros lados del segundo?<br />
+    Solución: factor = 15/5 = 3 → lados = 3·3 = 9 y 4·3 = 12 → <strong>9 y 12</strong>.<br />
+12. Dos rectángulos son semejantes con razón 2. Si el menor tiene base 4 y altura 3, ¿cuál es el<br />
+    área del mayor?<br />
+    Solución: lados del mayor = 8 y 6 → área = <strong>48</strong>.<br />
+13. Un triángulo de lados 6, 8 y 10 es semejante a otro de razón 1/2. ¿Cuánto miden los lados del<br />
+    segundo?<br />
+    Solución: 6·(1/2) = 3, 8·(1/2) = 4, 10·(1/2) = 5 → <strong>3, 4 y 5</strong>.<br />
+14. Dos figuras son semejantes con razón 3. El área de la menor es 5 cm². ¿Cuál es el área de la<br />
+    mayor?<br />
+    Solución: 5·3² = 5·9 = <strong>45 cm²</strong>.<br />
+15. Un rectángulo de 6 × 4 es semejante a otro de base 18. ¿Cuál es la altura del segundo?<br />
+    Solución: factor = 18/6 = 3 → altura = 4·3 = <strong>12</strong>.</p>
+<h3 id="semana-4-teorema-de-pitagoras">Semana 4 · Teorema de Pitágoras</h3>
+<p><strong>Teoría.</strong> En un triángulo rectángulo: <strong>hipotenusa² = cateto₁² + cateto₂²</strong>. Tripletas útiles:<br />
+3-4-5, 5-12-13, 6-8-10.</p>
+<p><strong>Ejercicios.</strong><br />
+16. Una escalera de 13 m apoyada en una pared alcanza 12 m de altura. ¿A qué distancia de la pared<br />
+    está la base?<br />
+    Solución: d = √(13² − 12²) = √25 = <strong>5 m</strong>.<br />
+17. Los catetos de un triángulo rectángulo miden 6 y 8. Calcular la hipotenusa.<br />
+    Solución: √(36 + 64) = <strong>10</strong>. (Coincide con E29 del compendio.)<br />
+18. Los catetos de un triángulo rectángulo miden 5 y 12. Calcular la hipotenusa.<br />
+    Solución: √(25 + 144) = √169 = <strong>13</strong>.<br />
+19. Un triángulo rectángulo tiene hipotenusa 17 y un cateto 15. Calcular el otro cateto.<br />
+    Solución: √(289 − 225) = √64 = <strong>8</strong>.<br />
+20. Un rectángulo mide 9 × 12. ¿Cuánto mide su diagonal?<br />
+    Solución: √(81 + 144) = √225 = <strong>15</strong>.</p>
+<h3 id="semana-5-areas-y-perimetros">Semana 5 · Áreas y perímetros</h3>
+<p><strong>Teoría.</strong> Cuadrado: A = lado², P = 4·lado. Rectángulo: A = base·altura, P = 2(b+h). Triángulo:<br />
+A = b·h/2. Círculo: A = πr², P = 2πr.</p>
+<p><strong>Ejercicios.</strong><br />
+21. Un rectángulo tiene área 48 cm² y largo 8 cm. ¿Cuál es su perímetro?<br />
+    Solución: ancho = 6 → P = 2(8+6) = <strong>28 cm</strong>.<br />
+22. Un círculo de radio 3 tiene área…<br />
+    Solución: π·9 = <strong>9π ≈ 28,3</strong>.<br />
+23. Un triángulo tiene base 10 cm y altura 6 cm. ¿Cuál es su área?<br />
+    Solución: 10·6/2 = <strong>30 cm²</strong>.<br />
+24. Un cuadrado tiene perímetro 36 cm. ¿Cuál es su área?<br />
+    Solución: lado = 9 → área = 9² = <strong>81 cm²</strong>.<br />
+25. Un círculo de radio 5. ¿Cuál es su perímetro?<br />
+    Solución: 2π·5 = <strong>10π ≈ 31,4</strong>.</p>
+<h3 id="semana-6-problemas-integrados-mini-control">Semana 6 · Problemas integrados + mini-control</h3>
+<p><strong>Ejercicios.</strong><br />
+26. Un cuadrado de lado 6 tiene inscrito un círculo. ¿Área de la región fuera del círculo?<br />
+    Solución: 36 − π·3² = <strong>36 − 9π</strong>.<br />
+27. Un triángulo rectángulo isósceles tiene catetos de 5 cm. ¿Cuánto mide la hipotenusa?<br />
+    Solución: √(25+25) = <strong>5√2 cm</strong>.<br />
+28. Un círculo de radio 4 está inscrito en un cuadrado. ¿Área de la región fuera del círculo?<br />
+    Solución: cuadrado de lado 8 → 64 − π·4² = <strong>64 − 16π</strong>.<br />
+29. Un rectángulo tiene área 60 cm² y ancho 5 cm. ¿Cuál es su perímetro?<br />
+    Solución: largo = 12 → P = 2(12+5) = <strong>34 cm</strong>.</p>
+<p><strong>Mini-control (10 preguntas de Geometría + 2 de fortalezas)</strong> de los temas de W1-W6: preparar con<br />
+los ejercicios 1-29 y los E25-E30 del compendio. Registrar en <code>../../seguimiento/ensayos.md</code>.<br />
+Criterio de saneamiento: <strong>≥50% en Geometría</strong> (MC1, W6).</p>
+<hr />
+<h2 id="bloque-b-funciones-w7-w10">Bloque B — Funciones (W7-W10)</h2>
+<h3 id="semana-7-concepto-de-funcion">Semana 7 · Concepto de función</h3>
+<p><strong>Teoría.</strong> Una función asigna a cada entrada x exactamente una salida f(x). Dominio: valores de x;<br />
+recorrido: valores de f(x). Evaluar f en un valor es reemplazar x por ese valor.</p>
+<p><strong>Ejercicios.</strong><br />
+30. Si f(x) = 3x − 2, calcular f(5) y f(0).<br />
+    Solución: f(5) = 13; f(0) = <strong>−2</strong>.<br />
+31. Si f(x) = x² + 1, calcular f(3) y f(−2).<br />
+    Solución: f(3) = 10; f(−2) = <strong>5</strong>.<br />
+32. Si f(x) = 2x² − 1, calcular f(3).<br />
+    Solución: f(3) = 2·9 − 1 = <strong>17</strong>.<br />
+33. Si f(x) = x/2 + 3, calcular f(10).<br />
+    Solución: 10/2 + 3 = <strong>8</strong>.</p>
+<h3 id="semana-8-funcion-lineal-y-afin">Semana 8 · Función lineal y afín</h3>
+<p><strong>Teoría.</strong> Lineal: f(x) = kx (pasa por el origen). Afín: f(x) = mx + n (m pendiente, n ordenada al<br />
+origen). Pendiente m = (y₂ − y₁)/(x₂ − x₁). Si m &gt; 0 crece; si m &lt; 0 decrece.<br />
+Cálculo de valores: f(x₂) = f(x₁) + m·(x₂ − x₁).</p>
+<p><strong>Ejercicios.</strong><br />
+34. La recta pasa por (0, −1) y (2, 5). Escribir su ecuación.<br />
+    Solución: m = (5−(−1))/(2−0) = 3; n = −1 → <strong>f(x) = 3x − 1</strong>.<br />
+35. f es afín con f(3) = 15 y pendiente 5. Calcular f(8).<br />
+    Solución: f(8) = 15 + 5·5 = <strong>40</strong>. (E22 del compendio.)<br />
+36. La recta pasa por (0, 3) y (2, 7). Escribir su ecuación.<br />
+    Solución: m = (7−3)/(2−0) = 2; n = 3 → <strong>f(x) = 2x + 3</strong>.<br />
+37. f es afín con f(1) = 7 y pendiente 4. Calcular f(6).<br />
+    Solución: f(6) = 7 + 4·5 = <strong>27</strong>.</p>
+<h3 id="semana-9-funcion-cuadratica">Semana 9 · Función cuadrática</h3>
+<p><strong>Teoría.</strong> f(x) = ax² + bx + c (a ≠ 0): parábola. Vértice en x_v = −b/(2a); valor f(x_v). a &gt; 0<br />
+mínimo, a &lt; 0 máximo. Raíces: puntos donde corta el eje X. Proyectil: h(t) = −5t² + v₀t + h₀.</p>
+<p><strong>Ejercicios.</strong><br />
+38. f(x) = x² − 4x + 3. Calcular vértice y raíces.<br />
+    Solución: vértice x = 2, f(2) = −1; raíces: x² − 4x + 3 = 0 → (x−1)(x−3) = 0 → <strong>1 y 3</strong>.<br />
+39. Un proyectil tiene h(t) = −5t² + 40t. ¿Altura máxima?<br />
+    Solución: t = 4 → h(4) = −80 + 160 = <strong>80 m</strong>. (E20 del compendio.)<br />
+40. f(x) = x² − 6x + 8. Calcular las raíces.<br />
+    Solución: (x−2)(x−4) = 0 → <strong>2 y 4</strong>.<br />
+41. f(x) = −x² + 6x. ¿Cuál es el valor máximo?<br />
+    Solución: vértice x = 3 → f(3) = −9 + 18 = <strong>9</strong>.</p>
+<h3 id="semana-10-modelacion-mini-control">Semana 10 · Modelación + mini-control</h3>
+<p><strong>Teoría.</strong> Traducir un enunciado a una fórmula: constante inicial + tasa de cambio.<br />
+Ejemplo: costo fijo + costo por unidad → C(x) = 4.000 + 600x (E19 del compendio).</p>
+<p><strong>Ejercicios.</strong><br />
+42. Un taxi cobra $300 de bajada y $250 por km. Costo de un viaje de 8 km.<br />
+    Solución: C(8) = 300 + 250·8 = <strong>$2.300</strong>.<br />
+43. El costo de fabricar x artículos es C(x) = 2.000 + 500x. ¿Cuánto cuesta fabricar 12?<br />
+    Solución: 2.000 + 6.000 = <strong>$8.000</strong>.<br />
+44. Un estacionamiento cobra $1.000 por entrar y $500 por hora. ¿Cuánto cuesta 3 horas?<br />
+    Solución: 1.000 + 500·3 = <strong>$2.500</strong>.<br />
+45. El costo de fabricar x artículos es C(x) = 1.500 + 300x. ¿Cuánto cuesta fabricar 20?<br />
+    Solución: 1.500 + 300·20 = <strong>$7.500</strong>.</p>
+<p><strong>Mini-control (10 preguntas de Funciones + 2 de fortalezas)</strong> de W7-W10 (concepto, lineal/afín,<br />
+cuadrática, modelación). Criterio de saneamiento: <strong>≥50% en Funciones</strong> (MC2, W10).</p>
+<hr />
+<h2 id="bloque-c-numeros-repaso-w11-w12">Bloque C — Números + repaso (W11-W12)</h2>
+<h3 id="semana-11-numeros-en-contexto">Semana 11 · Números en contexto</h3>
+<p><strong>Teoría.</strong> Conjuntos numéricos (racional vs. irracional); potencias y raíces (a^m·a^n = a^(m+n),<br />
+a^(−n) = 1/a^n, a^(1/n) = ⁿ√a); porcentajes (aumentar p% = ·(1+p/100), disminuir = ·(1−p/100);<br />
+encadenados no se suman).</p>
+<p><strong>Ejercicios.</strong><br />
+46. Calcular (2/3 + 1/4) · 12.<br />
+    Solución: (8/12 + 3/12)·12 = 11/12·12 = <strong>11</strong>.<br />
+47. ¿Qué porcentaje de 250 es 40?<br />
+    Solución: 40/250 = 0,16 = <strong>16%</strong>.<br />
+48. Simplificar √50.<br />
+    Solución: √(25·2) = <strong>5√2</strong> (irracional).<br />
+49. Calcular 3⁻² · 3⁴.<br />
+    Solución: 3² = <strong>9</strong>.<br />
+50. Un artículo cuesta $25.000 y sube 20%. ¿Cuánto cuesta ahora?<br />
+    Solución: 25.000·1,20 = <strong>$30.000</strong>.<br />
+51. Calcular (√9)⁻¹ · 6.<br />
+    Solución: 3⁻¹ · 6 = 6/3 = <strong>2</strong>.</p>
+<h3 id="semana-12-repaso-integrado-de-geometria-y-funciones">Semana 12 · Repaso integrado de Geometría y Funciones</h3>
+<p><strong>Ejercicios integrados.</strong><br />
+52. Un rectángulo de 12 cm de base tiene área 96 cm². Si se reduce a escala 1/2, ¿cuál es el área<br />
+    del dibujo?<br />
+    Solución: altura = 8; área dibujo = 96·(1/2)² = <strong>24 cm²</strong>.<br />
+53. f(x) = 2x + 5. ¿Para qué x se cumple f(x) = 21?<br />
+    Solución: 2x + 5 = 21 → x = <strong>8</strong>.<br />
+54. Un cuadrado tiene lado x. Si su perímetro es 28, ¿cuánto mide su diagonal?<br />
+    Solución: lado = 7 → diagonal = <strong>7√2</strong>.<br />
+55. El precio de un artículo es $P. Sube 10% y luego baja 10%. ¿Variación neta?<br />
+    Solución: P·1,1·0,9 = P·0,99 → <strong>disminuye 1%</strong>.<br />
+56. Un triángulo rectángulo tiene catetos 6 y 8. ¿Cuál es su área?<br />
+    Solución: 6·8/2 = <strong>24</strong>.<br />
+57. f(x) = x² − 1. Calcular f(4) − f(2).<br />
+    Solución: f(4) = 15; f(2) = 3 → 15 − 3 = <strong>12</strong>.</p>
+<hr />
+<h2 id="cierre-de-fase-w13-w14">Cierre de fase (W13-W14)</h2>
+<ul>
+<li><strong>W13:</strong> ensayo oficial DEMRE (dic 2026) — hito 800. Condiciones reales: cronómetro, sin<br />
+  interrupciones, formato PAES.</li>
+<li><strong>W14:</strong> analizar errores con la matriz del compendio (por área y habilidad), registrar en<br />
+<code>../../seguimiento/ensayos.md</code> y cerrar la fase.</li>
+</ul>
+<p>Criterio de avance: Geometría y Funciones deben pasar de &ldquo;debilidad clara&rdquo; a al menos &ldquo;parcial&rdquo;<br />
+(≥50% en el MC correspondiente y en el ensayo) antes de terminar la fase. Si el hito de W13 queda<br />
+bajo 800, revisar en W14 y trasladar semanas de refuerzo de F2 hacia Geometría/Funciones (regla de<br />
+<code>../../seguimiento/sistema.md</code>).</p>
+<hr />
+<h1 id="material-de-tutoria-guia-del-tutor-semana-a-semana">Material de Tutoría — Guía del tutor semana a semana</h1>
+<p>Este material es para el tutor. Cada bloque contiene: conceptos a enseñar,<br />
+tipos de ejercicio PAES con formato de pregunta, errores comunes a anticipar,<br />
+pregunta de verificación y referencias al material.</p>
+<h2 id="semana-1">Semana 1</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Complementarios y suplementarios</strong> — dos ángulos son complementarios si suman 90° y suplementarios si suman 180°. Definir con la pregunta-gancho: &ldquo;¿cuánto le falta a 35° para llegar a 90°? ¿y para 180°?&rdquo;. Ejemplo numérico: complementario de 35° = 55°; suplementario de 35° = 145°. <strong>No confundir:</strong> complemento con suplemento (el error más común de esta semana); asociar &ldquo;complemento = completa el cuadrado de 90°&rdquo; como mnemotecnia.</li>
+<li><strong>Opuestos por el vértice y adyacentes</strong> — cuando dos rectas se cortan, los ángulos opuestos por el vértice son iguales y los adyacentes suman 180°. Ejemplo: si uno mide 42°, el opuesto mide 42° y los otros dos 138°. Dibujar la &ldquo;X&rdquo; y colorear los pares.</li>
+<li><strong>Paralelas cortadas por transversal</strong> — aparecen solo DOS medidas distintas entre los 8 ángulos: los agudos iguales entre sí, los obtusos iguales entre sí, y agudo + obtuso = 180°. Enseñar las letras guía: <strong>Z</strong> (alternos internos, iguales), <strong>F</strong> (correspondientes, iguales), <strong>C</strong> (conjugados, suman 180°). Ejemplo: un ángulo de 110° → su alterno 110°, su conjugado 70°. <strong>No confundir:</strong> creer que los 8 ángulos son iguales; no identificar qué par se está mirando (exigir que la estudiante diga el nombre del par antes de calcular).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Ángulos entre paralelas (Representar).</strong> <em>&ldquo;En la figura, las rectas L1 y L2 son paralelas y son cortadas por una transversal. Si el ángulo α mide 65°, ¿cuánto mide el ángulo β, conjugado interno de α?&rdquo;</em><br />
+  A) 25° · B) 65° · C) 90° · D) 115° · E) 125°<br />
+<strong>Solución a modelar:</strong> identificar el par (conjugados internos, la &ldquo;C&rdquo;) → conjugados suman 180° → 180° − 65° = 115°. <strong>Clave D.</strong> Modelar el paso de nombrar el par ANTES de calcular; descartar B (el distractor &ldquo;son iguales&rdquo; corresponde a alternos, no a conjugados).</li>
+<li><strong>Tipo 2 — Planteo con ecuación (Modelar).</strong> <em>&ldquo;Un ángulo mide 15° menos que el doble de su complemento. ¿Cuánto mide el ángulo?&rdquo;</em><br />
+  A) 35° · B) 45° · C) 55° · D) 65° · E) 75°<br />
+<strong>Solución a modelar:</strong> ángulo = x, complemento = 90° − x → x = 2(90° − x) − 15° → x = 180° − 2x − 15° → 3x = 165° → x = 55°. <strong>Clave C.</strong> Verificar siempre contra el enunciado: complemento 35°, 2·35° − 15° = 55° ✓. Modelar la verificación como paso obligatorio, no opcional.</li>
+<li><strong>Tipo 3 — Opuestos por el vértice (Aplicar).</strong> <em>&ldquo;Dos rectas se intersectan formando un ángulo de 42°. ¿Cuánto mide el ángulo adyacente a él?&rdquo;</em><br />
+  A) 42° · B) 48° · C) 90° · D) 138° · E) 318°<br />
+<strong>Solución a modelar:</strong> adyacentes en una recta suman 180° → 180° − 42° = 138°. <strong>Clave D.</strong> La alternativa A es el opuesto por el vértice (distractor: confundir adyacente con opuesto).</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Confundir complemento con suplemento (responder 55° cuando piden el suplementario de 35°).</li>
+<li>En paralelas, usar &ldquo;iguales&rdquo; para TODOS los pares (responder 65° en el Tipo 1).</li>
+<li>No saber de qué ángulo se habla cuando no hay figura: enseñar a dibujar SIEMPRE un esquema rápido (la estudiante dejó en blanco las de Geometría de la prueba inicial: dibujar es la puerta de entrada).</li>
+<li>Errores de álgebra al plantear (Tipo 2): olvidar distribuir el 2 en 2(90° − x).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Dos rectas paralelas son cortadas por una transversal y uno de los ángulos mide 130°. ¿Cuánto miden los otros siete?&rdquo; (Esperado: tres de 130° y cuatro de 50°, con justificación por pares. Si responde esto bien, la semana quedó.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 1-5 (práctica de la sesión, después del modelado).</li>
+<li>Compendio: sección 5.1 (solo la parte de ángulos y rectas).</li>
+<li>Práctica mixta (fortalezas): E7 y E8 (Proporcionalidad), E31 (Estadística).</li>
+<li>MC: estas preguntas reaparecen en MC1 (preguntas 1-2, W6).</li>
+</ul>
+<hr />
+<h2 id="semana-2">Semana 2</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Suma de ángulos interiores = 180°</strong> — regla madre de todo el bloque. Ejemplo: 65° + 45° + x = 180° → x = 70°. <strong>No confundir:</strong> aplicar 180° a cuadriláteros (ellos suman 360°).</li>
+<li><strong>Clasificación por lados y por ángulos</strong> — equilátero (3 lados iguales, 3 ángulos de 60°), isósceles (2 lados iguales), escaleno (3 distintos); acutángulo, rectángulo, obtusángulo. Ejemplo: un triángulo 30°-60°-90° es escaleno y rectángulo a la vez (las dos clasificaciones son independientes).</li>
+<li><strong>Isósceles: ángulos basales iguales</strong> — los ángulos basales son los dos iguales (junto a la base); el del vértice = 180° − 2·(basal). Ejemplo: basal 40° → vértice 100°. <strong>No confundir:</strong> cuál ángulo es el repetido; enseñar a marcar los lados iguales en la figura y deducir los ángulos iguales frente a ellos.</li>
+<li><strong>Ángulo exterior = suma de los dos interiores no adyacentes</strong> — atajo PAES de alto rendimiento: el exterior en C mide A + B. Ejemplo: A = 50°, B = 60° → exterior en C = 110°. Justificar: interior C = 70°, exterior = 180° − 70° = 110°.</li>
+<li><strong>Desigualdad triangular</strong> — la suma de dos lados siempre debe ser mayor que el tercero; si no, el triángulo no existe. Ejemplo: 2, 3, 6 NO forman triángulo (2 + 3 &lt; 6); 3, 4, 5 sí (3 + 4 &gt; 5).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Ángulo exterior (Aplicar).</strong> <em>&ldquo;En el triángulo ABC, el ángulo A mide 50° y el ángulo B mide 60°. ¿Cuánto mide el ángulo exterior en el vértice C?&rdquo;</em><br />
+  A) 60° · B) 70° · C) 110° · D) 120° · E) 130°<br />
+<strong>Solución a modelar:</strong> vía corta: exterior = A + B = 110°. Vía larga de respaldo: interior C = 180° − 110° = 70° → exterior = 180° − 70° = 110°. <strong>Clave C.</strong> Mostrar ambas vías y que coinciden; el distractor B (70°) es el interior.</li>
+<li><strong>Tipo 2 — Existencia del triángulo (Resolver problemas).</strong> <em>&ldquo;¿Con cuál de los siguientes tríos de medidas NO se puede construir un triángulo?&rdquo;</em><br />
+  A) 3, 4, 5 · B) 5, 5, 8 · C) 2, 3, 6 · D) 4, 5, 6 · E) 7, 8, 9<br />
+<strong>Solución a modelar:</strong> revisar solo la suma de los dos menores contra el mayor: A) 3+4 &gt; 5 ✓; B) 5+5 &gt; 8 ✓; C) 2+3 = 5 &lt; 6 ✗. <strong>Clave C.</strong> Enseñar el atajo: basta verificar dos menores vs. mayor.</li>
+<li><strong>Tipo 3 — Isósceles con planteo (Modelar).</strong> <em>&ldquo;En un triángulo isósceles, el ángulo del vértice mide el triple que un ángulo basal. ¿Cuánto mide el ángulo del vértice?&rdquo;</em><br />
+  A) 36° · B) 72° · C) 100° · D) 108° · E) 120°<br />
+<strong>Solución a modelar:</strong> basal = x, vértice = 3x → x + x + 3x = 180° → 5x = 180° → x = 36° → vértice = 108°. <strong>Clave D.</strong> Distractor A (36°) es el basal: enseñar a releer QUÉ pide la pregunta antes de marcar.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Responder el ángulo interior cuando piden el exterior (y viceversa): el distractor está diseñado para eso.</li>
+<li>En isósceles, dividir 180° − vértice entre 2 cuando el dato es el basal, o al revés.</li>
+<li>No revisar la desigualdad triangular y asumir que cualquier trío sirve.</li>
+<li>Planteo: poner 3x como basal en vez de vértice (leer mal cuál ángulo es &ldquo;el triple&rdquo;).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Un triángulo isósceles tiene un ángulo de 100°. ¿Cuánto miden los otros dos?&rdquo; (Esperado: 40° y 40°, y la justificación clave: el de 100° NO puede ser basal porque dos de 100° ya suman 200° &gt; 180°. Esta pregunta detecta comprensión real, no memoria.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 6-10.</li>
+<li>Compendio: sección 5.1.</li>
+<li>Práctica mixta: E9 y E10 (Proporcionalidad), E32 (Estadística).</li>
+<li>Repaso de apertura (20 min): rehacer ejercicios 1, 4 y 5 de W1 sin mirar la solución.</li>
+</ul>
+<hr />
+<h2 id="semana-3">Semana 3</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Congruencia = misma forma Y tamaño</strong> — dos triángulos son congruentes si se pueden superponer exactamente. Criterios: <strong>LLL</strong> (tres lados iguales), <strong>LAL</strong> (dos lados y el ángulo ENTRE ellos), <strong>ALA</strong> (dos ángulos y el lado común). Ejemplo: lados 5 y 7 con ángulo entre ellos de 40° → LAL. <strong>No confundir:</strong> LAL exige que el ángulo esté ENTRE los dos lados; &ldquo;dos lados y un ángulo cualquiera&rdquo; NO garantiza congruencia.</li>
+<li><strong>Semejanza = misma forma, tamaño proporcional</strong> — ángulos iguales, lados multiplicados por la razón k. Ejemplo: 3-4-5 y 9-12-15 son semejantes con k = 3. Si k &gt; 1 se agranda; k &lt; 1 se achica.</li>
+<li><strong>Escalamiento de perímetros y áreas</strong> — los lados y el perímetro escalan por k; el área escala por <strong>k²</strong>. Ejemplo: k = 3 → área 9 veces mayor. Esta es LA idea más evaluada de la semana. <strong>No confundir:</strong> multiplicar el área por k (error típico) en vez de k².</li>
+<li><strong>Teorema de Tales (paralela a un lado)</strong> — una recta paralela a un lado de un triángulo crea un triángulo menor semejante al original, y la razón se toma desde el VÉRTICE común: AD/AB (no AD/DB). Ejemplo: AD = 3, DB = 6 → AB = 9 → razón 3/9 = 1/3.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Tales con paralela (Aplicar).</strong> <em>&ldquo;En el triángulo ABC, el segmento DE es paralelo a BC, con D sobre AB. Si AD = 3, DB = 6 y DE = 4, ¿cuánto mide BC?&rdquo;</em><br />
+  A) 8 · B) 9 · C) 12 · D) 16 · E) 18<br />
+<strong>Solución a modelar:</strong> AB = AD + DB = 9 → razón = 3/9 = 1/3 → DE/BC = 1/3 → BC = 4·3 = 12. <strong>Clave C.</strong> El distractor A (8) sale de usar AD/DB = 1/2: mostrar explícitamente por qué se usa el lado COMPLETO AB.</li>
+<li><strong>Tipo 2 — Áreas con razón de semejanza (Resolver problemas).</strong> <em>&ldquo;Dos triángulos semejantes tienen sus lados en razón 2:3. Si el área del menor es 20 cm², ¿cuál es el área del mayor?&rdquo;</em><br />
+  A) 30 cm² · B) 40 cm² · C) 45 cm² · D) 60 cm² · E) 90 cm²<br />
+<strong>Solución a modelar:</strong> k = 3/2 → área × k² = 9/4 → 20 · 9/4 = 45 cm². <strong>Clave C.</strong> El distractor A (30) es 20 · 3/2: el error de escalar el área por k.</li>
+<li><strong>Tipo 3 — Criterios de congruencia (Conocer).</strong> <em>&ldquo;Dos triángulos tienen dos lados de 5 cm y 7 cm, y el ángulo comprendido entre ellos de 40°. ¿Qué criterio garantiza que son congruentes?&rdquo;</em><br />
+  A) LLL · B) ALA · C) LAL · D) AA · E) No se puede saber<br />
+<strong>Solución a modelar:</strong> dos lados + ángulo ENTRE ellos → LAL. <strong>Clave C.</strong> Aclarar que AA es criterio de SEMEJANZA, no de congruencia (distractor D).</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Escalar el área por k en vez de k² (anticiparlo diciendo: &ldquo;el área es de dos dimensiones, por eso el factor se aplica dos veces&rdquo;).</li>
+<li>En Tales, usar AD/DB en vez de AD/AB.</li>
+<li>Confundir congruente (k = 1, mismo tamaño) con semejante (cualquier k).</li>
+<li>Creer que basta &ldquo;que se vean parecidos&rdquo;: exigir verificar ángulos o proporciones.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Si la razón de semejanza entre dos figuras es 1:2, ¿en qué razón están sus perímetros? ¿y sus áreas?&rdquo; (Esperado: 1:2 y 1:4.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 11-15.</li>
+<li>Compendio: secciones 5.1 y 5.3; E26 (escala 5/8, semejanza aplicada).</li>
+<li>Práctica mixta: E11 (Proporcionalidad), E33 (Estadística).</li>
+<li>Repaso de apertura: ejercicios 6, 7 y 9 de W2 (isósceles).</li>
+</ul>
+<hr />
+<h2 id="semana-4">Semana 4</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>El teorema y su condición de uso</strong> — SOLO en triángulos rectángulos: hipotenusa² = cateto₁² + cateto₂². La hipotenusa es SIEMPRE el lado mayor, el que está frente al ángulo de 90°. Ejemplo: catetos 6 y 8 → c² = 36 + 64 = 100 → c = 10. <strong>No confundir:</strong> usar el teorema en triángulos que no son rectángulos (preguntar primero: &ldquo;¿dónde está el ángulo de 90°?&rdquo;).</li>
+<li><strong>Tripletas pitagóricas</strong> — 3-4-5, 5-12-13, 6-8-10, 8-15-17, y sus múltiplos (9-12-15). Reconocerlas ahorra el cálculo completo en la prueba.</li>
+<li><strong>Despeje inverso (buscar un cateto)</strong> — cateto = √(hipotenusa² − otro cateto²). Ejemplo: hipotenusa 17, cateto 15 → √(289 − 225) = √64 = 8. <strong>No confundir:</strong> sumar en vez de restar cuando se busca un cateto.</li>
+<li><strong>Recíproco del teorema</strong> — si a² + b² = c², el triángulo ES rectángulo. Ejemplo: 7, 24, 25 → 49 + 576 = 625 ✓. Sirve para preguntas de &ldquo;¿cuál de estos triángulos es rectángulo?&rdquo;.</li>
+<li><strong>Aplicaciones estándar</strong> — diagonal del rectángulo (d = √(b² + h²)); diagonal del cuadrado (d = lado·√2); altura del triángulo equilátero de lado L: h = √(L² − (L/2)²) = L√3/2. Ejemplo: equilátero de lado 6 → h = √27 = 3√3.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Contexto escalera/poste (Resolver problemas).</strong> <em>&ldquo;Una escalera de 10 m se apoya en un muro, con su base a 6 m del muro. ¿A qué altura del muro llega la escalera?&rdquo;</em><br />
+  A) 4 m · B) 6 m · C) 8 m · D) 12 m · E) 16 m<br />
+<strong>Solución a modelar:</strong> dibujar el triángulo (muro ⊥ suelo) → la escalera es la HIPOTENUSA (10), la distancia al muro es un cateto (6) → h = √(100 − 36) = √64 = 8 m. <strong>Clave C.</strong> Modelar la traducción enunciado → figura: es el paso que la estudiante no hizo en la prueba inicial.</li>
+<li><strong>Tipo 2 — Altura de equilátero (Representar).</strong> <em>&ldquo;¿Cuánto mide la altura de un triángulo equilátero de lado 6 cm?&rdquo;</em><br />
+  A) 3 cm · B) 3√3 cm · C) 6√3 cm · D) 9 cm · E) 3√2 cm<br />
+<strong>Solución a modelar:</strong> la altura parte la base en dos de 3 → h = √(36 − 9) = √27 = √(9·3) = 3√3 cm. <strong>Clave B.</strong> Enseñar a simplificar raíces (√27 = 3√3) porque las alternativas vienen simplificadas.</li>
+<li><strong>Tipo 3 — Ahorro por la diagonal (Modelar).</strong> <em>&ldquo;Un terreno rectangular mide 30 m × 40 m. Si una persona lo cruza por la diagonal en vez de caminar por dos lados, ¿cuántos metros se ahorra?&rdquo;</em><br />
+  A) 10 m · B) 15 m · C) 20 m · D) 25 m · E) 30 m<br />
+<strong>Solución a modelar:</strong> diagonal = √(900 + 1600) = √2500 = 50 m; por los lados = 30 + 40 = 70 m; ahorro = 20 m. <strong>Clave C.</strong> Mostrar que la pregunta tiene 3 pasos y que cada paso es fácil: el desafío PAES es la cadena, no el cálculo.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Sumar los catetos sin elevar al cuadrado (6 + 8 = 14 en vez de 10): el distractor clásico.</li>
+<li>Dejar la respuesta en c² (responder 100 en vez de 10): insistir en &ldquo;el último paso es la raíz&rdquo;.</li>
+<li>Aplicar el teorema sin verificar que hay ángulo recto.</li>
+<li>No simplificar la raíz y no reconocer la alternativa correcta (3√3 vs √27).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;¿Es rectángulo un triángulo de lados 8, 15 y 17?&rdquo; (Esperado: sí, porque 64 + 225 = 289 = 17². Evalúa el recíproco y la ubicación de la hipotenusa en un solo paso.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 16-20.</li>
+<li>Compendio: sección 5.2; E29.</li>
+<li>Práctica mixta: E13 y E14 (Álgebra), E34 (Estadística).</li>
+<li>Repaso de apertura: ejercicios 11 y 14 de W3 (semejanza y k²).</li>
+</ul>
+<hr />
+<h2 id="semana-5">Semana 5</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Fórmulas base</strong> — cuadrado: A = lado², P = 4·lado. Rectángulo: A = b·h, P = 2(b+h). Triángulo: A = b·h/2. Círculo: A = πr², P (circunferencia) = 2πr. Agregar trapecio: A = (B + b)·h/2, entendido como &ldquo;promedio de bases por altura&rdquo;. Ejemplo numérico para cada una antes de mezclar.</li>
+<li><strong>Área vs. perímetro</strong> — el área mide superficie (cm²) y el perímetro contorno (cm). Ejemplo anti-confusión: un rectángulo 8 × 6 tiene A = 48 cm² y P = 28 cm: números y unidades distintos. <strong>No confundir:</strong> reportar perímetro cuando piden área (releer la pregunta subrayando la palabra &ldquo;área&rdquo; o &ldquo;perímetro&rdquo;).</li>
+<li><strong>Radio, no diámetro</strong> — en A = πr² y P = 2πr se usa el RADIO; si el dato es el diámetro, dividir por 2 primero. Ejemplo: diámetro 10 → r = 5 → A = 25π.</li>
+<li><strong>Figuras compuestas y regiones sombreadas</strong> — estrategia: descomponer en figuras conocidas y SUMAR (figura armada) o RESTAR (región con un hoyo: sombreada = total − interior). Ejemplo madre: cuadrado de lado 10 con círculo inscrito → radio 5 → sombreada = 100 − 25π.</li>
+<li><strong>Problemas inversos</strong> — dada el área, encontrar un lado o la altura: despejar de la fórmula. Ejemplo: A = 48, largo = 8 → ancho = 6 → y si piden perímetro, P = 28 (cadena de dos pasos).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Inverso desde el área (Resolver problemas).</strong> <em>&ldquo;El área de un triángulo es 24 cm² y su base mide 8 cm. ¿Cuánto mide su altura?&rdquo;</em><br />
+  A) 3 cm · B) 4 cm · C) 6 cm · D) 8 cm · E) 12 cm<br />
+<strong>Solución a modelar:</strong> A = b·h/2 → 24 = 8·h/2 = 4h → h = 6 cm. <strong>Clave C.</strong> El distractor A (3) es olvidar el 1/2 (24/8 = 3): nombrar el error en voz alta.</li>
+<li><strong>Tipo 2 — Región sombreada (Representar).</strong> <em>&ldquo;Un cuadrado de lado 10 cm tiene inscrito un círculo. ¿Cuál es el área de la región del cuadrado que queda fuera del círculo?&rdquo;</em><br />
+  A) 100 − 10π cm² · B) 100 − 25π cm² · C) 100 − 50π cm² · D) 100 − 100π cm² · E) 25π cm²<br />
+<strong>Solución a modelar:</strong> el círculo inscrito tiene diámetro = lado → r = 5 → sombreada = 100 − π·5² = 100 − 25π. <strong>Clave B.</strong> Distractor A usa r = √10 o &ldquo;radio 10 mal dividido&rdquo;; D usa r = 10 (diámetro como radio).</li>
+<li><strong>Tipo 3 — Vereda alrededor (Modelar).</strong> <em>&ldquo;Un jardín rectangular de 12 m × 5 m se rodea completamente por una vereda de 1 m de ancho. ¿Cuál es el área de la vereda?&rdquo;</em><br />
+  A) 34 m² · B) 36 m² · C) 38 m² · D) 40 m² · E) 42 m²<br />
+<strong>Solución a modelar:</strong> la vereda agrega 1 m A CADA LADO → total (12+2) × (5+2) = 14 × 7 = 98 → vereda = 98 − 60 = 38 m². <strong>Clave C.</strong> Distractor A/B: agregar solo 1 m en total por dimensión (13 × 6 = 78 → 18, o variantes). Dibujar el marco es obligatorio aquí.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Olvidar el 1/2 en el triángulo (el error más frecuente del bloque).</li>
+<li>Usar el diámetro como radio en el círculo.</li>
+<li>En marcos/veredas, sumar el ancho una sola vez por dimensión en vez de dos.</li>
+<li>Mezclar unidades (cm con m) sin convertir antes de multiplicar.</li>
+<li>Entregar un número cuando la alternativa correcta viene en π (o al revés): enseñar a revisar el formato de las alternativas ANTES de calcular.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Si duplicas el radio de un círculo, ¿qué pasa con su área? ¿y con su perímetro?&rdquo; (Esperado: área ×4, perímetro ×2. Conecta con k² de W3 y prepara semejanza de cuerpos en F2.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 21-25.</li>
+<li>Compendio: sección 5.4; E27 (área restante).</li>
+<li>Práctica mixta: E15 (Álgebra), E35 (Estadística).</li>
+<li>Repaso de apertura: ejercicios 16 y 19 de W4 (Pitágoras inverso).</li>
+</ul>
+<hr />
+<h2 id="semana-6">Semana 6</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<p>Semana de INTEGRACIÓN: no hay conceptos nuevos. Enseñar el MÉTODO de ataque de problemas de 2-3 pasos:</p>
+<ol>
+<li><strong>Leer → dibujar → marcar datos</strong> — toda pregunta de Geometría parte con un dibujo con los datos encima. Sin excepciones.</li>
+<li><strong>Identificar la cadena</strong> — preguntarse &ldquo;¿qué necesito para calcular lo que piden?&rdquo; y trabajar hacia atrás. Ejemplo: piden perímetro y dan área → falta un lado → lo saco del área → luego perímetro.</li>
+<li><strong>Verificar unidades y formato</strong> — antes de marcar: ¿la respuesta debe ir en cm o m? ¿en π o en número?</li>
+<li><strong>Banco de problemas encadenados típicos:</strong> rectángulo con área → perímetro; cuadrado ↔ diagonal (d = lado·√2 y área = d²/2); figura con círculo inscrito; escala + área (conectar con k²).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Perímetro desde Pitágoras (Resolver problemas).</strong> <em>&ldquo;Un triángulo rectángulo tiene catetos de 6 cm y 8 cm. ¿Cuál es su perímetro?&rdquo;</em><br />
+  A) 20 cm · B) 22 cm · C) 24 cm · D) 26 cm · E) 48 cm<br />
+<strong>Solución a modelar:</strong> hipotenusa = √(36+64) = 10 → P = 6 + 8 + 10 = 24 cm. <strong>Clave C.</strong> Distractor E (48) es el área ×2 o 6·8: la pregunta mezcla conceptos a propósito.</li>
+<li><strong>Tipo 2 — Diagonal del cuadrado (Aplicar).</strong> <em>&ldquo;La diagonal de un cuadrado mide 10 cm. ¿Cuál es su área?&rdquo;</em><br />
+  A) 25 cm² · B) 50 cm² · C) 100 cm² · D) 50√2 cm² · E) 200 cm²<br />
+<strong>Solución a modelar:</strong> d² = lado² + lado² = 2·lado² → lado² = 100/2 = 50 → área = lado² = 50 cm². <strong>Clave B.</strong> Atajo: área del cuadrado = d²/2. Distractor C (100) es usar la diagonal como lado.</li>
+<li><strong>Tipo 3 — Escala y área (Modelar).</strong> <em>&ldquo;En un plano a escala 1:50, una sala rectangular mide 8 cm × 6 cm. ¿Cuál es el área real de la sala?&rdquo;</em><br />
+  A) 4,8 m² · B) 12 m² · C) 24 m² · D) 48 m² · E) 120 m²<br />
+<strong>Solución a modelar:</strong> medidas reales: 8·50 = 400 cm = 4 m; 6·50 = 300 cm = 3 m → área = 12 m². <strong>Clave B.</strong> Alternativa por k²: 48 cm² · 50² = 120.000 cm² = 12 m². Mostrar ambas y la conversión 1 m² = 10.000 cm². Distractor D (48): no escalar; A (4,8): escalar solo una dimensión.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Bajo presión de tiempo (MC), saltarse el dibujo y elegir el distractor de &ldquo;un solo paso&rdquo;.</li>
+<li>Conversiones de unidades al final (cm² → m² dividir por 10.000, no por 100).</li>
+<li>En el MC: no dejar en blanco — enseñar a marcar la mejor candidata y seguir (entrenar desde ya la regla de F5).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>El propio MC1 es la verificación. Al corregir, pedir que la estudiante EXPLIQUE en voz alta por qué falló cada pregunta errada (autoexplicación antes de que el tutor corrija).</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 26-29 + rehacer los ejercicios marcados como difíciles de W1-W5.</li>
+<li>Compendio: <strong>E25-E30 como reintento de la prueba inicial</strong> (los 6 ítems de Geometría que dejó en blanco o erró: resolverlos ahora es el termómetro real del bloque).</li>
+<li>MC: <strong>MC1 completo</strong> (30-40 min, en la franja de práctica mixta; sin ayuda; corregir con la clave y registrar X/10). Criterio de saneamiento: <strong>≥50% en Geometría</strong>.</li>
+<li>Práctica mixta: las preguntas 11-12 del MC1 ya cubren fortalezas esta semana.</li>
+</ul>
+<hr />
+<h2 id="semana-7">Semana 7</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Qué es una función</strong> — una regla que asigna a CADA entrada x exactamente UNA salida f(x). La metáfora de la máquina: entra un número, sale otro, siempre el mismo para la misma entrada. Ejemplo: f(x) = 2x + 1 → f(3) = 7, y 3 siempre da 7. <strong>No confundir:</strong> dos entradas distintas SÍ pueden tener la misma salida (f(x) = x²: f(3) = f(−3) = 9); lo prohibido es una entrada con dos salidas.</li>
+<li><strong>Notación f(x) y evaluación</strong> — f(5) significa &ldquo;reemplazar x por 5&rdquo;, NO multiplicar. Ejemplo con negativos (el punto débil): f(x) = x² + 1 → f(−2) = (−2)² + 1 = 5. Regla: paréntesis siempre al reemplazar negativos.</li>
+<li><strong>Variable independiente y dependiente</strong> — x es la que se elige; y = f(x) es la que resulta. En contexto: tiempo → independiente; costo → dependiente.</li>
+<li><strong>Dominio y recorrido (nivel M1)</strong> — dominio: los x permitidos. Ejemplos: f(x) = 3/(x − 2) → todos los reales excepto 2 (no se puede dividir por 0); f(x) = √x → x ≥ 0. Recorrido: los valores que puede tomar f(x). Mantener ligero: solo restricciones evidentes.</li>
+<li><strong>Las 4 representaciones</strong> — la MISMA función vista como tabla, fórmula, gráfico y enunciado. Ejercicio central de la sesión: construir las 4 para f(x) = 2x + 1. En el gráfico: eje X = entrada, eje Y = salida; leer puntos como pares (entrada, salida).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Evaluar con signos (Aplicar).</strong> <em>&ldquo;Si f(x) = 2x² − 3x + 1, ¿cuánto vale f(−1)?&rdquo;</em><br />
+  A) 0 · B) 2 · C) 4 · D) 6 · E) −4<br />
+<strong>Solución a modelar:</strong> f(−1) = 2·(−1)² − 3·(−1) + 1 = 2·1 + 3 + 1 = 6. <strong>Clave D.</strong> Los distractores A y E salen de signos mal manejados (−3·(−1) = −3, o (−1)² = −1). Modelar el uso de paréntesis como escudo anti-errores.</li>
+<li><strong>Tipo 2 — Dominio con restricción (Representar).</strong> <em>&ldquo;¿Cuál es el dominio de la función f(x) = 3/(x − 2)?&rdquo;</em><br />
+  A) Todos los reales · B) Todos los reales excepto 2 · C) Todos los reales excepto −2 · D) x &gt; 2 · E) x ≥ 0<br />
+<strong>Solución a modelar:</strong> el denominador no puede ser 0 → x − 2 ≠ 0 → x ≠ 2. <strong>Clave B.</strong> Distractor C: signo equivocado al despejar.</li>
+<li><strong>Tipo 3 — ¿Es o no es función? (Conocer).</strong> <em>&ldquo;¿Cuál de las siguientes relaciones NO es una función?&rdquo;</em><br />
+  A) A cada persona se le asigna su número de cédula · B) A cada número se le asigna su mitad · C) A cada número entero positivo se le asignan sus divisores · D) A cada auto se le asigna su patente · E) A cada mes del año se le asigna su cantidad de días<br />
+<strong>Solución a modelar:</strong> revisar cada una preguntando &ldquo;¿alguna entrada tiene más de una salida?&rdquo;. En C: el 6 tiene divisores 1, 2, 3 y 6 → cuatro salidas → NO es función. <strong>Clave C.</strong> Este tipo entrena la definición, no el cálculo.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Leer f(3) como &ldquo;f por 3&rdquo; (la notación es nueva para la estudiante: dedicarle 5 min explícitos).</li>
+<li>(−2)² = −4: el error de signo más probable del bloque (apareció en la prueba inicial con la cuadrática).</li>
+<li>Confundir &ldquo;¿cuánto vale f(3)?&rdquo; con &ldquo;¿para qué x se cumple f(x) = 3?&rdquo;: son preguntas inversas; practicar ambas.</li>
+<li>Creer que cualquier curva dibujada es función (mencionar el test de la recta vertical solo como imagen intuitiva, sin formalizar).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Si f(x) = x², ¿es cierto que f(3) = f(−3)? ¿Eso contradice la definición de función?&rdquo; (Esperado: sí, 9 = 9, y NO la contradice: la misma salida para entradas distintas está permitida; lo prohibido es una entrada con dos salidas.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 30-33.</li>
+<li>Compendio: sección 4.1.</li>
+<li>Práctica mixta: E16 (Álgebra), E36 (Estadística).</li>
+<li>Repaso de apertura: 3 preguntas del MC1 erradas (si las hubo) o ejercicios 22 y 25 de W5.</li>
+</ul>
+<hr />
+<h2 id="semana-8">Semana 8</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Lineal vs. afín</strong> — lineal: f(x) = kx, pasa por el origen (es la proporcionalidad directa que la estudiante ya domina: hacer explícita esa conexión). Afín: f(x) = mx + n, la recta general.</li>
+<li><strong>Pendiente m</strong> — cuánto sube (o baja) y por cada 1 que avanza x. Entre dos puntos: m = (y₂ − y₁)/(x₂ − x₁). Ejemplo: (1, 3) y (4, 9) → m = 6/3 = 2. Signo: m &gt; 0 crece, m &lt; 0 decrece, m = 0 horizontal. <strong>No confundir:</strong> invertir la razón (Δx/Δy): enseñar &ldquo;primero las y, arriba&rdquo; y verificar con el sentido (¿la recta sube? entonces m debe ser positiva).</li>
+<li><strong>Intercepto n (coeficiente de posición)</strong> — el valor de y cuando x = 0; donde la recta corta el eje Y. En contexto: es el valor INICIAL o el costo FIJO. Ejemplo: en C(x) = 4.000 + 600x, el 4.000 es n.</li>
+<li><strong>Encontrar la ecuación</strong> — dados dos puntos: 1) calcular m; 2) reemplazar UN punto en y = mx + n para despejar n; 3) escribir la ecuación y VERIFICAR con el otro punto. Ejemplo: (2, 5) y (4, 11) → m = 3 → 5 = 6 + n → n = −1 → y = 3x − 1 (verificar: 3·4 − 1 = 11 ✓).</li>
+<li><strong>Evaluación rápida</strong> — si f es afín: f(x₂) = f(x₁) + m·(x₂ − x₁). Ejemplo (el patrón de la prueba inicial que quedó en blanco): f(3) = 15, m = 5 → f(8) = 15 + 5·5 = 40.</li>
+<li><strong>Gráfica rápida</strong> — marcar n en el eje Y y desde ahí &ldquo;avanzar 1, subir m&rdquo; para obtener el segundo punto y trazar.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Ecuación desde dos puntos (Aplicar).</strong> <em>&ldquo;¿Cuál es la ecuación de la recta que pasa por los puntos (2, 5) y (4, 11)?&rdquo;</em><br />
+  A) y = 2x + 1 · B) y = 3x − 1 · C) y = 3x + 5 · D) y = 6x − 7 · E) y = −3x + 11<br />
+<strong>Solución a modelar:</strong> m = (11 − 5)/(4 − 2) = 3 → 5 = 3·2 + n → n = −1 → y = 3x − 1. <strong>Clave B.</strong> Modelar la verificación con el segundo punto; el distractor C (n = 5) es usar la y del punto como intercepto.</li>
+<li><strong>Tipo 2 — Modelar un cobro (Modelar).</strong> <em>&ldquo;Una empresa de internet cobra $10.000 de instalación y $15.000 por cada mes de servicio. ¿Qué función modela el costo total después de m meses?&rdquo;</em><br />
+  A) C(m) = 15.000 + 10.000m · B) C(m) = 10.000 + 15.000m · C) C(m) = 25.000m · D) C(m) = 10.000m + 15.000m · E) C(m) = 15.000m − 10.000<br />
+<strong>Solución a modelar:</strong> identificar fijo (instalación, se paga una vez) = n = 10.000; variable (mensual) = pendiente = 15.000 → C(m) = 10.000 + 15.000m. <strong>Clave B.</strong> Distractor A: fijo y variable intercambiados (el error a anticipar en contexto).</li>
+<li><strong>Tipo 3 — Leer una situación gráfica (Representar).</strong> <em>&ldquo;Un estanque tiene 2 m de agua y su nivel sube 0,5 m por hora. ¿Cuál es el nivel después de 6 horas?&rdquo;</em><br />
+  A) 3 m · B) 4 m · C) 5 m · D) 6 m · E) 8 m<br />
+<strong>Solución a modelar:</strong> N(t) = 2 + 0,5t → N(6) = 2 + 3 = 5 m. <strong>Clave C.</strong> Distractor A (3) olvida el nivel inicial: es n = 2 lo que se omite.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Invertir la pendiente: (x₂ − x₁)/(y₂ − y₁).</li>
+<li>Usar la coordenada y de un punto como si fuera n (n solo es la y cuando x = 0).</li>
+<li>En contexto, intercambiar el valor fijo con la tasa (distractor diseñado exactamente para eso).</li>
+<li>En f(x₂) = f(x₁) + m(x₂ − x₁), usar m·x₂ directo ignorando que la recta no pasa por el origen.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Una recta tiene pendiente −2 y pasa por el origen. ¿Cuánto vale y cuando x = 5? ¿La función crece o decrece?&rdquo; (Esperado: y = −10; decrece. Verifica lineal, signo de m y evaluación en un solo ítem.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 34-37.</li>
+<li>Compendio: sección 4.2; E19 (ya la resolvió bien en la prueba inicial: usarla de ancla de confianza), E22 (el patrón que quedó en blanco), E23.</li>
+<li>Práctica mixta: E17 y E18 (Álgebra).</li>
+<li>Repaso de apertura: ejercicios 30 y 32 de W7 (evaluar funciones).</li>
+</ul>
+<hr />
+<h2 id="semana-9">Semana 9</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Forma y gráfica</strong> — f(x) = ax² + bx + c (a ≠ 0) dibuja una parábola. a &gt; 0: abre hacia arriba → tiene MÍNIMO; a &lt; 0: abre hacia abajo → tiene MÁXIMO. Ejemplo visual: x² vs. −x². <strong>No confundir:</strong> el signo de a con el del vértice; a define la APERTURA, no la posición.</li>
+<li><strong>Vértice</strong> — x_v = −b/(2a), y el valor extremo es f(x_v). El vértice es un PUNTO (x_v, f(x_v)) y el eje de simetría es la recta x = x_v. Ejemplo: f(x) = x² − 4x + 3 → x_v = 4/2 = 2, f(2) = 4 − 8 + 3 = −1 → vértice (2, −1). <strong>No confundir:</strong> la pregunta puede pedir la coordenada x del vértice, el valor mínimo/máximo (que es f(x_v)), o el punto completo: son TRES respuestas distintas de la misma parábola. (La estudiante erró la del proyectil en la prueba inicial: probablemente calculó t = 4 y marcó esa alternativa sin evaluar h(4).)</li>
+<li><strong>Raíces (ceros)</strong> — donde la parábola corta el eje X: resolver f(x) = 0 por factorización. Ejemplo: x² − 4x + 3 = (x−1)(x−3) → x = 1 y x = 3. Interpretación: los puntos (1, 0) y (3, 0).</li>
+<li><strong>Intercepto con el eje Y</strong> — es c (evaluar f(0)). Ejemplo: en x² − 4x + 3, corta al eje Y en 3.</li>
+<li><strong>Modelo del proyectil</strong> — h(t) = −5t² + v₀t + h₀: la altura máxima se alcanza en el vértice (t = v₀/10), y el tiempo de vuelo es la segunda raíz. Ejemplo: h(t) = −5t² + 40t → t = 4 s, h(4) = 80 m.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Valor mínimo (Aplicar).</strong> <em>&ldquo;¿Cuál es el valor mínimo de la función f(x) = x² − 6x + 5?&rdquo;</em><br />
+  A) −4 · B) 3 · C) 5 · D) −9 · E) 0<br />
+<strong>Solución a modelar:</strong> a = 1 &gt; 0 → tiene mínimo en el vértice → x_v = 6/2 = 3 → f(3) = 9 − 18 + 5 = −4. <strong>Clave A.</strong> Distractor B (3): la coordenada x del vértice; distractor C (5): el intercepto c. Mostrar que los distractores son las &ldquo;respuestas parciales&rdquo; del mismo problema.</li>
+<li><strong>Tipo 2 — Proyectil (Modelar).</strong> <em>&ldquo;Se lanza una pelota y su altura, en metros, es h(t) = −5t² + 20t + 1, con t en segundos. ¿Cuál es la altura máxima que alcanza?&rdquo;</em><br />
+  A) 1 m · B) 2 m · C) 20 m · D) 21 m · E) 25 m<br />
+<strong>Solución a modelar:</strong> vértice en t = −20/(2·(−5)) = 2 s → h(2) = −5·4 + 40 + 1 = 21 m. <strong>Clave D.</strong> Distractor B (2) es el INSTANTE, no la altura: subrayar en el enunciado la palabra &ldquo;altura&rdquo;. Este es exactamente el error de la prueba inicial (P14).</li>
+<li><strong>Tipo 3 — Raíces como puntos de corte (Representar).</strong> <em>&ldquo;¿En qué puntos la parábola f(x) = x² − 2x − 3 corta al eje X?&rdquo;</em><br />
+  A) (0, −1) y (0, 3) · B) (−1, 0) y (3, 0) · C) (1, 0) y (−3, 0) · D) (0, −3) · E) (3, 0) solamente<br />
+<strong>Solución a modelar:</strong> f(x) = 0 → (x − 3)(x + 1) = 0 → x = 3 y x = −1 → puntos (−1, 0) y (3, 0). <strong>Clave B.</strong> Distractor D (0, −3) es el corte con el eje Y: enseñar a distinguir &ldquo;corta eje X&rdquo; (y = 0) de &ldquo;corta eje Y&rdquo; (x = 0).</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Calcular x_v y marcarlo como respuesta cuando piden el VALOR máximo/mínimo (error de la prueba inicial: tratarlo como tema central de la sesión).</li>
+<li>Signo en x_v = −b/(2a): olvidar el menos, o errar con a negativo (escribir la fórmula siempre antes de reemplazar).</li>
+<li>Factorización con signos invertidos: (x−3)(x+1) vs. (x+3)(x−1) — verificar expandiendo.</li>
+<li>Creer que c es el valor máximo/mínimo (c es solo el corte con el eje Y).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;f(x) = −x² + 4x − 1: ¿abre hacia arriba o hacia abajo? ¿Tiene máximo o mínimo? ¿En qué valor de x ocurre?&rdquo; (Esperado: abre hacia abajo, máximo, en x = 2. No pedir f(2) si el tiempo está corto; pedirlo si va bien.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 38-41.</li>
+<li>Compendio: sección 4.3; E20 (proyectil de la prueba inicial, rehacer con la estudiante paso a paso).</li>
+<li>Práctica mixta: E7 (Proporcionalidad), E33 (Estadística).</li>
+<li>Repaso de apertura: ejercicios 34 y 35 de W8 (ecuación de la recta y f(x₂) = f(x₁) + mΔx).</li>
+</ul>
+<hr />
+<h2 id="semana-10">Semana 10</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Traducción enunciado → fórmula</strong> — el procedimiento de 3 preguntas: ¿qué es fijo? (→ n) ¿qué varía y a qué tasa? (→ m) ¿qué letra representa qué? Ejemplo madre: costo fijo $4.000 + $600 por hora → C(x) = 4.000 + 600x.</li>
+<li><strong>Interpretación de parámetros</strong> — al revés: dada C(x) = 8.000 + 50x, decir qué significan 8.000 (costo fijo) y 50 (costo por unidad/minuto). La PAES evalúa ambos sentidos.</li>
+<li><strong>Uso del modelo</strong> — una vez planteado, tres preguntas posibles: evaluar (C(8)), invertir (¿para qué x vale C(x) = 65.000?), comparar dos modelos (¿desde cuántas unidades conviene A sobre B?).</li>
+<li><strong>Panorama de elección de modelo (puente a F2)</strong> — tasa constante → afín; fenómeno con máximo/mínimo → cuadrática; multiplicación por factor fijo → exponencial (adelanto de W23, solo nombrarlo).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Invertir el modelo (Modelar).</strong> <em>&ldquo;Un gimnasio cobra $5.000 de inscripción y $12.000 por mes. Si una persona pagó $65.000 en total, ¿cuántos meses estuvo inscrita?&rdquo;</em><br />
+  A) 4 · B) 5 · C) 6 · D) 7 · E) 12<br />
+<strong>Solución a modelar:</strong> C(m) = 5.000 + 12.000m = 65.000 → 12.000m = 60.000 → m = 5. <strong>Clave B.</strong> Modelar la distinción: &ldquo;evaluar&rdquo; (encontrar C dado m) vs. &ldquo;invertir&rdquo; (encontrar m dado C).</li>
+<li><strong>Tipo 2 — Interpretar un parámetro (Conocer/Modelar).</strong> <em>&ldquo;El costo de un plan telefónico es C(x) = 8.000 + 50x, donde x es la cantidad de minutos usados. ¿Qué representa el número 50?&rdquo;</em><br />
+  A) El costo fijo mensual · B) El costo por cada minuto · C) El total de minutos del plan · D) El costo de 50 minutos · E) El gasto máximo del plan<br />
+<strong>Solución a modelar:</strong> 50 multiplica a x (los minutos) → es el costo POR minuto. <strong>Clave B.</strong> Verificar con unidades: 50 pesos · x minutos = pesos ✓. Enseñar el chequeo dimensional como herramienta.</li>
+<li><strong>Tipo 3 — Comparación de dos ofertas (Resolver problemas).</strong> <em>&ldquo;La tienda A cobra $2.000 de costo fijo más $300 por unidad. La tienda B cobra $350 por unidad, sin costo fijo. ¿Desde cuántas unidades compradas conviene la tienda A?&rdquo;</em><br />
+  A) 40 · B) 41 · C) 50 · D) 60 · E) 35<br />
+<strong>Solución a modelar:</strong> A &lt; B → 2.000 + 300x &lt; 350x → 2.000 &lt; 50x → x &gt; 40 → conviene desde 41 unidades. <strong>Clave B.</strong> Distractor A (40): el punto de equilibrio, donde cuestan IGUAL (&ldquo;conviene&rdquo; exige estrictamente mayor). Discutir el matiz del &ldquo;desde&rdquo;.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Intercambiar costo fijo y tasa al plantear.</li>
+<li>Responder la variable (x) cuando piden el valor de la función (f(x)), o al revés: subrayar qué pide el enunciado.</li>
+<li>En comparaciones, dar el punto de equilibrio como respuesta cuando la pregunta pide &ldquo;desde cuándo conviene&rdquo; (equilibrio + 1).</li>
+<li>En el MC2, los mismos errores de W9: vértice a medias, signos al evaluar.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>El MC2 es la verificación de la semana. Antes de aplicarlo, pregunta oral de calentamiento: &ldquo;En C(x) = 300 + 250x, ¿cuánto cuestan 0 km? ¿Qué significa ese valor?&rdquo; ($300; la bajada de bandera / costo fijo).</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 42-45.</li>
+<li>Compendio: sección 4.5; E19, E22.</li>
+<li>MC: <strong>MC2 completo</strong> (30-40 min; registrar X/10). Criterio de saneamiento: <strong>≥50% en Funciones</strong>.</li>
+<li>Práctica mixta: preguntas 11-12 del MC2.</li>
+</ul>
+<hr />
+<h2 id="semana-11">Semana 11</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Porcentaje como factor multiplicativo</strong> — aumentar p% = multiplicar por (1 + p/100); disminuir = ·(1 − p/100). Ejemplo: $25.000 con +20% → 25.000·1,20 = 30.000. El porcentaje de algo también es multiplicar: 40 de 250 → 40/250 = 0,16 = 16%.</li>
+<li><strong>Porcentajes encadenados NO se suman</strong> — cada porcentaje se aplica sobre el valor YA modificado. Ejemplo madre (su error de la prueba inicial, P1): sube 20% y baja 20% → 1,20·0,80 = 0,96 → baja 4%. <strong>No confundir:</strong> &ldquo;+20 − 20 = 0&rdquo;: el error conceptual exacto a desarmar esta semana.</li>
+<li><strong>Fracciones: operación y comparación</strong> — sumar con común denominador ((2/3 + 1/4)·12 = 11); comparar pasando a decimal con 3-4 cifras (2/3 ≈ 0,667; 5/7 ≈ 0,714; 3/4 = 0,75).</li>
+<li><strong>Potencias: las 4 reglas de trabajo</strong> — a^m·a^n = a^(m+n); a^m/a^n = a^(m−n); a^(−n) = 1/a^n; a⁰ = 1. Ejemplos: 2³·2⁵/2⁶ = 2² = 4; 3⁻²·3⁴ = 3² = 9. <strong>No confundir:</strong> a^(−n) NO es un número negativo: es el recíproco.</li>
+<li><strong>Raíces y clasificación</strong> — simplificar extrayendo cuadrados: √50 = √(25·2) = 5√2. Racional vs. irracional: decimal finito o periódico → racional; raíz de no-cuadrado (√8, √50) → irracional. Ejemplo de frontera: √9 = 3 ES racional (la raíz de un cuadrado perfecto).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Descuento sobre descuento (Resolver problemas).</strong> <em>&ldquo;Una tienda ofrece un 30% de descuento y luego un 20% adicional sobre el precio ya rebajado. ¿Cuál es el descuento total equivalente?&rdquo;</em><br />
+  A) 50% · B) 44% · C) 46% · D) 40% · E) 56%<br />
+<strong>Solución a modelar:</strong> 0,70·0,80 = 0,56 → paga el 56% → descuento total 44%. <strong>Clave B.</strong> Distractor A (50%): la suma directa, el error a nombrar explícitamente.</li>
+<li><strong>Tipo 2 — Potencias combinadas (Aplicar).</strong> <em>&ldquo;¿Cuál es el valor de (2⁻³ · 2⁵)/2²?&rdquo;</em><br />
+  A) 0 · B) 1 · C) 2 · D) 4 · E) 1/2<br />
+<strong>Solución a modelar:</strong> exponentes: −3 + 5 − 2 = 0 → 2⁰ = 1. <strong>Clave B.</strong> Distractor A: creer que 2⁰ = 0 (anticiparlo preguntando &ldquo;¿cuánto es 2¹? ¿2²? ¿qué patrón sigue al bajar el exponente?&rdquo; → dividir por 2 → 2⁰ = 1).</li>
+<li><strong>Tipo 3 — Clasificar números (Conocer).</strong> <em>&ldquo;De los números √9, √10 y π, ¿cuál(es) es(son) racional(es)?&rdquo;</em><br />
+  A) Solo √9 · B) √9 y √10 · C) Los tres · D) Solo π · E) Ninguno<br />
+<strong>Solución a modelar:</strong> √9 = 3 exacto → racional; √10 no es exacto → irracional; π → irracional. <strong>Clave A.</strong> El criterio no es &ldquo;tiene raíz&rdquo; sino &ldquo;¿el resultado es exacto/fraccionario?&rdquo;.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Sumar porcentajes encadenados (su error P1 de la prueba inicial: dedicarle el ejemplo madre con números concretos, $100 → $120 → $96).</li>
+<li>2⁰ = 0; 2⁻¹ = −2: errores de exponente cero y negativo.</li>
+<li>Creer que toda raíz es irracional (√9) o que todo número con raíz escrita es irracional (√16).</li>
+<li>Ordenar fracciones por intuición (&ldquo;7/8 es casi 1, debe ser el mayor&rdquo;) sin pasar a decimal: exigir el decimal de respaldo.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;¿Qué es mayor: aumentar 10% y luego 20%, o aumentar 30% de una vez?&rdquo; (Esperado: el encadenado, porque 1,10·1,20 = 1,32 &gt; 1,30. Contra-intuitivo y verifica la multiplicatividad.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 46-51.</li>
+<li>Compendio: secciones 1.1-1.3; E1-E6 (E1 y E4 fueron sus errores de la prueba inicial: rehacerlos con la estudiante).</li>
+<li>Práctica mixta: E12 (Proporcionalidad), E35 (Estadística).</li>
+<li>Repaso de apertura: 2 preguntas erradas del MC2 + E20 (proyectil).</li>
+</ul>
+<hr />
+<h2 id="semana-12">Semana 12</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<p>Semana de CONSOLIDACIÓN: no hay conceptos nuevos. Priorizar según lo que haya fallado en MC1/MC2:</p>
+<ol>
+<li><strong>Repaso dirigido por evidencia</strong> — revisar con la estudiante el registro de MC1 y MC2: los 2-3 tipos de error más frecuentes mandan la sesión (sesión de 60 min dedicada a esos, no a un repaso genérico).</li>
+<li><strong>Problemas puente entre áreas</strong> — la PAES mezcla: geometría que exige plantear ecuación; área de rectángulo como cuadrática; porcentajes dentro de geometría. Enseñar a no asustarse cuando una pregunta &ldquo;cambia de área&rdquo; a mitad de camino.</li>
+<li><strong>Autochequeo antes de marcar</strong> — checklist de 3 pasos: ¿respondí lo que piden (no algo intermedio)? ¿las unidades son las de la alternativa? ¿el orden de magnitud tiene sentido?</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Isósceles + Pitágoras + área (Resolver problemas).</strong> <em>&ldquo;Un triángulo isósceles tiene base 10 cm y lados iguales de 13 cm. ¿Cuál es su área?&rdquo;</em><br />
+  A) 30 cm² · B) 60 cm² · C) 65 cm² · D) 120 cm² · E) 78 cm²<br />
+<strong>Solución a modelar:</strong> la altura parte la base en 5 y 5 → h = √(169 − 25) = √144 = 12 → A = 10·12/2 = 60 cm². <strong>Clave B.</strong> Cadena de 3 pasos; distractor D (120) olvida el /2; C (65) usa el lado como altura.</li>
+<li><strong>Tipo 2 — Porcentaje inverso (Resolver problemas, dificultad alta).</strong> <em>&ldquo;El precio de un producto es $P. Si aumenta 25%, ¿en qué porcentaje debe disminuir el nuevo precio para volver a $P?&rdquo;</em><br />
+  A) 25% · B) 20% · C) 15% · D) 30% · E) 10%<br />
+<strong>Solución a modelar:</strong> nuevo precio = 1,25P → factor para volver: 1/1,25 = 0,80 → debe bajar 20%. <strong>Clave B.</strong> Distractor A (25%): la intuición ingenua. Este es el patrón &ldquo;el porcentaje de vuelta es distinto&rdquo;: memorizar la idea, no el número.</li>
+<li><strong>Tipo 3 — Área como función (Modelar, puente Geometría↔Funciones).</strong> <em>&ldquo;Un rectángulo tiene lados que miden x y 10 − x centímetros. ¿Cuál es el área máxima posible?&rdquo;</em><br />
+  A) 10 cm² · B) 20 cm² · C) 25 cm² · D) 50 cm² · E) 100 cm²<br />
+<strong>Solución a modelar:</strong> A(x) = x(10 − x) = −x² + 10x → vértice x_v = −10/(−2) = 5 → A(5) = 25 cm² (es el cuadrado). <strong>Clave C.</strong> Conectar explícitamente con W9: la cuadrática vive dentro de la geometría.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Fatiga de fin de fase: sesiones de diciembre con Navidad encima — mantener el MC3 ligero y opcional como dice el calendario; no forzar doble carga.</li>
+<li>En los puentes entre áreas, abandonar la pregunta al ver que &ldquo;mezcla temas&rdquo;: normalizar que TODAS las preguntas de corte alto son puentes.</li>
+<li>Recaída en errores ya corregidos (porcentaje encadenado, vértice a medias): si reaparecen, marcarlos en el registro como recurrentes para F2.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;De todo lo de Geometría y Funciones de estas 12 semanas, ¿cuáles son tus 3 fórmulas que más se te olvidan?&rdquo; (Auto-reporte; anotarlas en el registro: son la primera página del repaso de F2.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F1: ejercicios 52-57 + rehacer los marcados como difíciles de W1-W11.</li>
+<li>Compendio: repaso libre de 4.1-4.3 y 5.1-5.4 según los errores detectados.</li>
+<li>MC: <strong>MC3 opcional</strong> (si el tiempo y la energía lo permiten; criterio: Números ≥75%).</li>
+<li>Cierre: preparar condiciones del <strong>ensayo DEMRE de W13</strong> (cronómetro, 65 preguntas, sin interrupciones).</li>
+</ul>
+<hr />
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="f2.html" class="relacionado-chip">Guía F2 (siguiente)</a>
+<a href="../guia-estudio-m1.html" class="relacionado-chip">Guía de estudio (compendio)</a>
+<a href="../calendario-detallado.html" class="relacionado-chip">Calendario detallado</a>
+<a href="../../material/mc/mc-f1.html" class="relacionado-chip">Mini-controles F1 (MC1-MC3)</a>
+<a href="../entrenamiento-m1.html" class="relacionado-chip">Plan de entrenamiento</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

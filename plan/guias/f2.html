@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía F2 — Completar y profundizar (W15-W16 + W21-W30) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="../../README.html">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="../../metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="../entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="../calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="../guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="f2.html" class="activo">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="../../material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="../../material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="../../material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="../../material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="../../material/semanas/semana-01.html">Semana 1</a>
+<a href="../../material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="../../calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        <nav class="breadcrumb">
+<a href="../../index.html">Inicio</a>
+<span class="separador">›</span>
+<span>Plan</span>
+<span class="separador">›</span>
+<span>Guias</span>
+<span class="separador">›</span>
+<span>F2</span>
+</nav>
+        <h1 id="guia-f2-completar-y-profundizar-w15-w16-w21-w30">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</h1>
+<p>Fase 2 del plan de entrenamiento M1 · 04/01 - 25/04/2027 · 12 semanas de estudio (con pausa de<br />
+vacaciones 18/01 - 14/02/2027) · 2 h semanales.<br />
+Ver calendario: <code>../calendario-detallado.md</code>. Compendio completo por área: <code>../guia-estudio-m1.md</code>.</p>
+<p>Objetivo: completar Geometría y Funciones (debilidades), consolidar Números y elevar<br />
+Proporcionalidad, Álgebra y Estadística (fortalezas) a dificultad alta.<br />
+Hitos de medición: ensayos nacionales DEMRE 1er ciclo (mar-abr 2027). Metas de tramo: 850-900 al<br />
+cierre de la fase (W30).</p>
+<h2 id="navegacion-de-la-fase">Navegación de la fase</h2>
+<table>
+<thead>
+<tr>
+<th>Semana</th>
+<th>Tema</th>
+<th>Sección del compendio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W15, W16, W21, W22</td>
+<td>Geometría avanzada</td>
+<td>5.5, 5.6, 5.7</td>
+</tr>
+<tr>
+<td>W23-W26</td>
+<td>Funciones avanzadas</td>
+<td>4.4, 4.5</td>
+</tr>
+<tr>
+<td>W27-W30</td>
+<td>Consolidación</td>
+<td>1, 2, 3, 6 (dificultad alta)</td>
+</tr>
+</tbody>
+</table>
+<p>Práctica mixta (20-30 min por sesión): mantener fortalezas con ejercicios del compendio.</p>
+<hr />
+<h2 id="bloque-a-geometria-avanzada-w15-w16-w21-w22">Bloque A — Geometría avanzada (W15, W16, W21, W22)</h2>
+<h3 id="semana-15-circunferencia">Semana 15 · Circunferencia</h3>
+<p><strong>Teoría.</strong> Cuerda: segmento que une dos puntos de la circunferencia; el diámetro es la mayor<br />
+cuerda. La distancia del centro a una cuerda y la mitad de la cuerda forman un triángulo<br />
+rectángulo con el radio (Pitágoras). Sector circular: área = (θ/360°)·πr² (θ en grados).<br />
+Perímetro del sector = 2r + arco.</p>
+<p><strong>Ejercicios.</strong><br />
+1. En una circunferencia de radio 13, una cuerda dista 5 del centro. ¿Cuánto mide la cuerda?<br />
+   Solución: mitad = √(169 − 25) = √144 = 12 → cuerda = <strong>24</strong>.<br />
+2. Un sector de 90° en un círculo de radio 6. ¿Área del sector?<br />
+   Solución: (90/360)·π·36 = <strong>9π ≈ 28,3</strong>.<br />
+3. En una circunferencia de radio 17, una cuerda dista 8 del centro. ¿Cuánto mide la cuerda?<br />
+   Solución: mitad = √(289 − 64) = √225 = 15 → cuerda = <strong>30</strong>.<br />
+4. Un sector de 120° en un círculo de radio 3. ¿Área del sector?<br />
+   Solución: (120/360)·π·9 = (1/3)·9π = <strong>3π ≈ 9,4</strong>.</p>
+<h3 id="semana-16-trigonometria-basica">Semana 16 · Trigonometría básica</h3>
+<p><strong>Teoría.</strong> En un triángulo rectángulo: sen(α) = opuesto/hipotenusa; cos(α) = adyacente/hipotenusa;<br />
+tan(α) = opuesto/adyacente. Valores notables: sen 30° = 1/2; tan 45° = 1; tan 60° = √3;<br />
+sen 60° = √3/2. Aplicación: altura = distancia · tan(ángulo).</p>
+<p><strong>Ejercicios.</strong><br />
+5. En un triángulo rectángulo, el cateto opuesto a α mide 6 y la hipotenusa 10. Calcular sen(α) y<br />
+   tan(α).<br />
+   Solución: sen(α) = 6/10 = 0,6; cateto adyacente = √(100−36) = 8 → tan(α) = 6/8 = <strong>0,75</strong>.<br />
+6. Desde un punto a 30 m de un árbol, el ángulo de elevación es 60°. ¿Altura del árbol?<br />
+   Solución: h = 30·tan 60° = <strong>30√3 m</strong>. (E25 del compendio.)<br />
+7. En un triángulo rectángulo, el cateto adyacente a α mide 8 y la hipotenusa 10. Calcular cos(α)<br />
+   y sen(α).<br />
+   Solución: cos(α) = 8/10 = 0,8; opuesto = √(100−64) = 6 → sen(α) = <strong>0,6</strong>.<br />
+8. Desde un punto a 50 m de un edificio, el ángulo de elevación es 45°. ¿Altura del edificio?<br />
+   Solución: h = 50·tan 45° = 50·1 = <strong>50 m</strong>.</p>
+<p><em>(Pausa de vacaciones W17-W20: sin estudio programado.)</em></p>
+<h3 id="semana-21-cuerpos-geometricos-volumenes">Semana 21 · Cuerpos geométricos (volúmenes)</h3>
+<p><strong>Teoría.</strong> Prisma/cilindro: V = área de la base · altura. Pirámide/cono: V = (área base · altura)/3.<br />
+Esfera: V = (4/3)πr³. Cilindro: V = πr²h. Cono: V = (πr²h)/3.</p>
+<p><strong>Ejercicios.</strong><br />
+9. Un cilindro de radio 4 y altura 10. Calcular su volumen (π ≈ 3).<br />
+   Solución: 3·16·10 = <strong>480</strong>.<br />
+10. Un cono de radio 3 y altura 9. Calcular su volumen (π ≈ 3).<br />
+    Solución: (3·9·9)/3 = <strong>81</strong>. (E30 del compendio.)<br />
+11. Una esfera de radio 3. Calcular su volumen (π ≈ 3).<br />
+    Solución: (4/3)·3·27 = <strong>108</strong>.<br />
+12. Una pirámide de base cuadrada 4 × 4 y altura 12. Calcular su volumen.<br />
+    Solución: (16·12)/3 = <strong>64</strong>.</p>
+<h3 id="semana-22-geometria-en-contexto-mini-control">Semana 22 · Geometría en contexto + mini-control</h3>
+<p><strong>Ejercicios integrados.</strong><br />
+13. Un cuadrado de lado 8 tiene inscrito un círculo. ¿Área de la región fuera del círculo?<br />
+    Solución: 64 − π·16 = <strong>64 − 16π</strong>.<br />
+14. Un rectángulo de 12 × 5 se reduce con factor 5/8. ¿Área del dibujo?<br />
+    Solución: 12·(5/8) = 7,5 y 5·(5/8) = 3,125 → área ≈ <strong>23,44</strong>. (Alternativa: 60·(5/8)² =<br />
+    60·25/64 = 23,4375.)<br />
+15. Un cilindro de radio 3 y altura 7. Calcular su volumen (π ≈ 3).<br />
+    Solución: 3·9·7 = <strong>189</strong>.<br />
+16. Un cono de radio 2 y altura 12. Calcular su volumen (π ≈ 3).<br />
+    Solución: (3·4·12)/3 = <strong>48</strong>.</p>
+<p><strong>Mini-control (10 preguntas de Geometría avanzada + 2 de fortalezas)</strong> de W15-W22 (circunferencia,<br />
+trigonometría, volúmenes). Criterio de saneamiento: <strong>≥75% en Geometría</strong> (MC4, W22).</p>
+<hr />
+<h2 id="bloque-b-funciones-avanzadas-w23-w26">Bloque B — Funciones avanzadas (W23-W26)</h2>
+<h3 id="semana-23-funcion-exponencial">Semana 23 · Función exponencial</h3>
+<p><strong>Teoría.</strong> f(x) = a·b^x con b &gt; 0, b ≠ 1. b &gt; 1 crece; 0 &lt; b &lt; 1 decrece. Duplicaciones/<br />
+triplicaciones: si una cantidad se multiplica por k cada período, tras n períodos vale a·kⁿ.</p>
+<p><strong>Ejercicios.</strong><br />
+17. Una población de 500 se triplica cada año. ¿Cuántos individuos hay tras 3 años?<br />
+    Solución: 500·3³ = <strong>13.500</strong>.<br />
+18. Una bacteria se duplica cada hora; al inicio hay 100. ¿Cuántas tras 4 horas?<br />
+    Solución: 100·2⁴ = <strong>1.600</strong>. (E21 del compendio.)<br />
+19. Una población de 800 se duplica cada año. ¿Cuántos individuos hay tras 5 años?<br />
+    Solución: 800·2⁵ = 800·32 = <strong>25.600</strong>.<br />
+20. Un cultivo de 1.000 bacterias se reduce a la mitad cada hora. ¿Cuántas tras 3 horas?<br />
+    Solución: 1.000·(1/2)³ = 1.000/8 = <strong>125</strong>.</p>
+<h3 id="semana-24-modelacion-con-funciones">Semana 24 · Modelación con funciones</h3>
+<p><strong>Teoría.</strong> Combinar lineal, cuadrática y exponencial en problemas de contexto. Identificar: tasa de<br />
+cambio constante → lineal; variación cuadrática (área, proyectil) → cuadrática; multiplicación<br />
+por un factor fijo → exponencial. Medición: ensayo DEMRE 1er ciclo (mar) si está disponible.</p>
+<p><strong>Ejercicios.</strong><br />
+21. Un valor de $200 crece 50% cada año. ¿Cuánto vale tras 3 años?<br />
+    Solución: 200·(1,5)³ = <strong>$675</strong>. (E24 del compendio.)<br />
+22. El costo de producir n unidades es C(n) = 2n² + 50n + 200. Calcular el costo de 10 unidades y<br />
+    el costo medio por unidad.<br />
+    Solución: C(10) = 200 + 500 + 200 = <strong>900</strong>; costo medio = 900/10 = <strong>90</strong>.<br />
+23. Un valor de $400 crece 25% cada año. ¿Cuánto vale tras 2 años?<br />
+    Solución: 400·(1,25)² = 400·1,5625 = <strong>$625</strong>.<br />
+24. La altura de un proyectil es h(t) = −5t² + 60t (metros, t segundos). ¿Altura máxima?<br />
+    Solución: vértice t = 60/10 = 6 → h(6) = −180 + 360 = <strong>180 m</strong>.</p>
+<h3 id="semana-25-modelacion-avanzada-tipo-corte-800">Semana 25 · Modelación avanzada (tipo corte 800+)</h3>
+<p><strong>Ejercicios.</strong><br />
+25. Un cultivo crece según N(t) = 100·2^(t/2) con t en horas. ¿Cuántas bacterias hay tras 6 h?<br />
+    Solución: N(6) = 100·2³ = <strong>800</strong>.<br />
+26. Un rectángulo de perímetro fijo 40 tiene un lado x. Expresar su área y hallar el máximo.<br />
+    Solución: A(x) = x(20 − x) = −x² + 20x; vértice en x = 10 → área máxima = <strong>100</strong> (cuadrado de<br />
+    lado 10).<br />
+27. Un cultivo crece según N(t) = 50·3^(t/2) con t en horas. ¿Cuántas bacterias hay tras 4 h?<br />
+    Solución: N(4) = 50·3² = <strong>450</strong>.<br />
+28. Un rectángulo de perímetro fijo 24 tiene un lado x. Expresar su área y hallar el máximo.<br />
+    Solución: A(x) = x(12 − x) = −x² + 12x; vértice en x = 6 → área máxima = <strong>36</strong> (cuadrado de<br />
+    lado 6).</p>
+<h3 id="semana-26-repaso-de-funciones-mini-control">Semana 26 · Repaso de Funciones + mini-control</h3>
+<p><strong>Ejercicios integrados.</strong><br />
+29. f(x) = 2^(x−1). Calcular f(5).<br />
+    Solución: 2⁴ = <strong>16</strong>.<br />
+30. Una empresa vende q unidades con ingreso I(q) = 5.000q − 20q². ¿Cantidad que maximiza el<br />
+    ingreso?<br />
+    Solución: vértice q = 5.000/40 = <strong>125</strong>.<br />
+31. f(x) = 3^(x−2). Calcular f(4).<br />
+    Solución: 3² = <strong>9</strong>.<br />
+32. Una empresa vende q unidades con ingreso I(q) = 4.000q − 10q². ¿Cantidad que maximiza el<br />
+    ingreso?<br />
+    Solución: vértice q = 4.000/20 = <strong>200</strong>.</p>
+<p><strong>Mini-control (10 preguntas de Funciones avanzadas + 2 de fortalezas)</strong> de W23-W26 (exponencial y<br />
+modelación). Criterio de saneamiento: <strong>≥75% en Funciones</strong> (MC5, W26).</p>
+<hr />
+<h2 id="bloque-c-consolidacion-a-dificultad-alta-w27-w30">Bloque C — Consolidación a dificultad alta (W27-W30)</h2>
+<p><strong>Objetivo:</strong> Números en profundidad y elevar Proporcionalidad, Álgebra y Estadística a preguntas<br />
+tipo corte 800+ (nivel M2). Ejercicios de dificultad alta; soluciones paso a paso.</p>
+<h3 id="semana-27-numeros-en-profundidad">Semana 27 · Números en profundidad</h3>
+<p><strong>Ejercicios.</strong><br />
+33. Un precio baja 10% y luego sube 10%. ¿Variación neta?<br />
+    Solución: 0,9·1,1 = 0,99 → <strong>disminuye 1%</strong>.<br />
+34. Ordenar de menor a mayor: 7/8, 0,88, 11/12.<br />
+    Solución: 7/8 = 0,875; 11/12 ≈ 0,9167 → <strong>7/8 &lt; 0,88 &lt; 11/12</strong>.<br />
+35. Un precio baja 20% y luego sube 25%. ¿Variación neta?<br />
+    Solución: 0,8·1,25 = 1,00 → <strong>no varía</strong>.<br />
+36. Calcular (√25)⁻² · 20.<br />
+    Solución: 5⁻² · 20 = 20/25 = <strong>0,8</strong>.</p>
+<h3 id="semana-28-proporcionalidad-y-algebra-a-dificultad-alta">Semana 28 · Proporcionalidad y Álgebra a dificultad alta</h3>
+<p><strong>Ejercicios.</strong><br />
+37. 8 obreros hacen 2/5 de una obra en 6 días. ¿Cuántos días tardan 5 obreros en terminar el<br />
+    resto?<br />
+    Solución: tasa por obrero-día = (2/5)/(8·6) = 1/120 de la obra. Resto = 3/5 con 5 obreros:<br />
+    t = (3/5)/(5/120) = (3/5)·24 = <strong>14,4 días</strong>.<br />
+38. Dos números suman 12 y la diferencia de sus cuadrados es 72. ¿Cuáles son?<br />
+    Solución: a² − b² = (a+b)(a−b) = 12(a−b) = 72 → a−b = 6 → resolviendo: <strong>a = 9, b = 3</strong>.<br />
+39. El producto de dos números es 48 y su suma es 14. ¿Cuáles son?<br />
+    Solución: t² − 14t + 48 = 0 → (t−6)(t−8) = 0 → <strong>6 y 8</strong>.<br />
+40. Resolver |x − 3| ≤ 4.<br />
+    Solución: −4 ≤ x−3 ≤ 4 → <strong>−1 ≤ x ≤ 7</strong> → <strong>[−1, 7]</strong>.</p>
+<h3 id="semana-29-estadistica-a-dificultad-alta">Semana 29 · Estadística a dificultad alta</h3>
+<p><strong>Ejercicios.</strong><br />
+41. El promedio de 5 números es 20. Se agrega un sexto número y el promedio sube a 22. ¿Cuál es el<br />
+    sexto?<br />
+    Solución: suma₅ = 100; suma₆ = 132 → sexto = <strong>32</strong>.<br />
+42. Se lanzan dos dados. ¿Probabilidad de que la suma sea menor que 5?<br />
+    Solución: sumas 2, 3, 4 → (1,1); (1,2)(2,1); (1,3)(2,2)(3,1) = 6 de 36 → <strong>1/6</strong>.<br />
+43. En una urna hay 6 bolas rojas y 4 azules. Se sacan dos sin reposición. ¿Probabilidad de que<br />
+    ambas sean azules?<br />
+    Solución: (4/10)·(3/9) = 12/90 = <strong>2/15</strong>.<br />
+44. El promedio de 4 números es 15. Se agregan dos números y el promedio baja a 13. ¿Cuál es el<br />
+    promedio de los dos nuevos?<br />
+    Solución: suma₄ = 60; suma₆ = 78 → los dos nuevos suman 18 → promedio = <strong>9</strong>.</p>
+<h3 id="semana-30-ensayo-completo-cierre-de-fase">Semana 30 · Ensayo completo + cierre de fase</h3>
+<ul>
+<li>Ensayo completo M1 (usar el ensayo DEMRE 1er ciclo de abril si está disponible; respaldo: ensayo<br />
+  propio de 65 preguntas si no aparece).</li>
+<li>Analizar errores, registrar en <code>../../seguimiento/ensayos.md</code> y cerrar la fase.</li>
+<li>Comparar el puntaje con la meta de tramo 850-900 (W30).</li>
+</ul>
+<p>Criterio de avance: las áreas débiles (Geometría, Funciones) deben haber alcanzado al menos 75% en<br />
+los MC de la fase; las fortalezas deben mantenerse ≥75% con las preguntas de dificultad alta.</p>
+<h1 id="material-de-tutoria-guia-del-tutor-semana-a-semana">Material de Tutoría — Guía del tutor semana a semana</h1>
+<p>Este material es para el tutor. Cada bloque contiene: conceptos a enseñar,<br />
+tipos de ejercicio PAES con formato de pregunta, errores comunes a anticipar,<br />
+pregunta de verificación y referencias al material.</p>
+<h2 id="semana-15">Semana 15</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Vocabulario con figura</strong> — radio, diámetro (la mayor de las cuerdas), cuerda, arco, secante, tangente. Propiedad clave de la tangente: es PERPENDICULAR al radio en el punto de contacto. Dibujar todo en una misma circunferencia grande.</li>
+<li><strong>Cuerda y distancia al centro (el patrón Pitágoras)</strong> — la distancia del centro a la cuerda cae en el punto MEDIO de la cuerda y forma un triángulo rectángulo con el radio: r² = d² + (cuerda/2)². Ejemplo: r = 13, d = 5 → media cuerda = 12 → cuerda = 24. <strong>No confundir:</strong> responder la media cuerda como si fuera la cuerda completa (el último paso es duplicar).</li>
+<li><strong>Arco y sector circular</strong> — la fracción del círculo es θ/360°: largo de arco = (θ/360°)·2πr; área del sector = (θ/360°)·πr². Perímetro del sector = arco + 2 radios (el &ldquo;borde de la rebanada&rdquo; incluye los dos radios). Ejemplo: sector de 90° con r = 6 → área = 9π. <strong>No confundir:</strong> olvidar sumar los dos radios al perímetro del sector.</li>
+<li><strong>Ángulo del centro vs. ángulo inscrito</strong> — el inscrito (vértice EN la circunferencia) mide la MITAD del central que subtiende el mismo arco. Ejemplo: central 80° → inscrito 40°. Caso famoso: todo ángulo inscrito que subtiende un diámetro mide 90°.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Inverso de la cuerda (Aplicar).</strong> <em>&ldquo;En una circunferencia de radio 10 cm, una cuerda mide 16 cm. ¿A qué distancia del centro se encuentra la cuerda?&rdquo;</em><br />
+  A) 4 cm · B) 6 cm · C) 8 cm · D) 10 cm · E) 12 cm<br />
+<strong>Solución a modelar:</strong> media cuerda = 8 → d = √(100 − 64) = √36 = 6 cm. <strong>Clave B.</strong> Distractor C (8): la media cuerda confundida con la distancia. Dibujar SIEMPRE el triángulo (radio, distancia, media cuerda) antes de calcular.</li>
+<li><strong>Tipo 2 — Sector en contexto (Resolver problemas).</strong> <em>&ldquo;Una pizza de radio 12 cm se corta en 6 trozos iguales. ¿Cuál es el área de cada trozo?&rdquo;</em><br />
+  A) 12π cm² · B) 24π cm² · C) 36π cm² · D) 48π cm² · E) 72π cm²<br />
+<strong>Solución a modelar:</strong> cada trozo es un sector de 360°/6 = 60° → área = (60/360)·π·144 = 144π/6 = 24π cm². <strong>Clave B.</strong> Alternativa directa: área total / 6. Mostrar que ambas vías son lo mismo.</li>
+<li><strong>Tipo 3 — Ángulo inscrito (Aplicar).</strong> <em>&ldquo;En una circunferencia, un ángulo del centro mide 80°. ¿Cuánto mide un ángulo inscrito que subtiende el mismo arco?&rdquo;</em><br />
+  A) 20° · B) 40° · C) 80° · D) 120° · E) 160°<br />
+<strong>Solución a modelar:</strong> inscrito = central/2 = 40°. <strong>Clave B.</strong> Distractor E (160°): doblar en vez de dividir (invertir la relación).</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Usar el diámetro como radio (recaída del error de W5: reaparece fuerte en circunferencia).</li>
+<li>No duplicar la media cuerda al final del cálculo.</li>
+<li>Perímetro del sector sin los dos radios.</li>
+<li>Invertir la relación central/inscrito (doblar en vez de dividir).</li>
+<li>Volver de vacaciones (W16 fue la última sesión antes de la pausa&hellip; no: W15-W16 son ANTES de la pausa; la dificultad real es que W15 cae la primera semana de enero, post-Año Nuevo: abrir la sesión con 10 min extra de reactivación de F1 si la estudiante viene fría).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Una circunferencia tiene radio 10. Hay una cuerda que mide 20. ¿Qué cuerda es y a qué distancia del centro está?&rdquo; (Esperado: es el diámetro; distancia 0; pasa por el centro. Si responde esto, entendió el triángulo límite.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 1-4.</li>
+<li>Compendio: sección 5.5; E28 (cuerda de la prueba inicial, en blanco originalmente: verificar que ahora sale sola).</li>
+<li>Práctica mixta: E10 (Proporcionalidad), E18 (Álgebra).</li>
+<li>Repaso de apertura: reactivación de F1 — E27 (área restante) y una de Pitágoras (guía F1, ejercicio 19).</li>
+</ul>
+<hr />
+<h2 id="semana-16">Semana 16</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Las tres razones</strong> — en un triángulo rectángulo, respecto de un ángulo α: sen(α) = opuesto/hipotenusa; cos(α) = adyacente/hipotenusa; tan(α) = opuesto/adyacente. Mnemotecnia: <strong>SOH-CAH-TOA</strong> (o en español: &ldquo;seno-opuesto, coseno-adyacente, ambas sobre hipotenusa; tangente es opuesto sobre adyacente&rdquo;).</li>
+<li><strong>Opuesto y adyacente dependen del ángulo de referencia</strong> — es la idea crítica: el mismo cateto es opuesto a un ángulo y adyacente al otro. Ejercicio central: en el triángulo 6-8-10, calcular sen, cos y tan de AMBOS ángulos agudos y notar que sen(α) = cos(90° − α).</li>
+<li><strong>Valores notables (sin calculadora)</strong> — tabla mínima: sen 30° = 1/2; sen 45° = √2/2; sen 60° = √3/2; tan 45° = 1; tan 60° = √3; tan 30° = √3/3. Con cos: notar que cos 30° = sen 60° y viceversa (la tabla se aprende a la mitad de precio).</li>
+<li><strong>Ángulos de elevación y depresión</strong> — elevación: desde la horizontal hacia ARRIBA; depresión: desde la horizontal hacia ABAJO (el ángulo de depresión desde lo alto = ángulo de elevación desde abajo, por alternos internos). Aplicación madre: h = distancia · tan(ángulo). Ejemplo: 30 m, 60° → h = 30√3 m.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Razón desde lados (Aplicar).</strong> <em>&ldquo;En un triángulo rectángulo, la hipotenusa mide 10 y un cateto mide 6. ¿Cuánto vale el seno del ángulo opuesto a ese cateto?&rdquo;</em><br />
+  A) 0,5 · B) 0,6 · C) 0,75 · D) 0,8 · E) 1,33<br />
+<strong>Solución a modelar:</strong> sen = opuesto/hipotenusa = 6/10 = 0,6. <strong>Clave B.</strong> Distractor D (0,8): usar el otro cateto (8/10, el coseno del ángulo); C (0,75): la tangente. Mostrar que las alternativas son las 3 razones del mismo triángulo: la pregunta evalúa elegir la correcta.</li>
+<li><strong>Tipo 2 — Rampa/elevación (Resolver problemas).</strong> <em>&ldquo;Una rampa de 20 m de largo forma un ángulo de 30° con el suelo. ¿Qué altura alcanza su extremo superior?&rdquo;</em><br />
+  A) 5 m · B) 10 m · C) 10√3 m · D) 17,3 m · E) 20 m<br />
+<strong>Solución a modelar:</strong> la rampa es la hipotenusa; la altura es el cateto OPUESTO al ángulo → sen 30° = h/20 → h = 20·(1/2) = 10 m. <strong>Clave B.</strong> Distractor C: usar tan o cos en vez de sen. Modelar la pregunta de control: &ldquo;¿qué lado conozco y cuál busco, respecto del ángulo?&rdquo; → eso elige la razón.</li>
+<li><strong>Tipo 3 — Ángulo de depresión (Representar).</strong> <em>&ldquo;Desde lo alto de un faro de 40 m se observa un bote con un ángulo de depresión de 45°. ¿A qué distancia del pie del faro está el bote?&rdquo;</em><br />
+  A) 20 m · B) 40 m · C) 40√2 m · D) 80 m · E) 40√3 m<br />
+<strong>Solución a modelar:</strong> dibujar la horizontal desde el faro; por alternos internos, el ángulo de elevación desde el bote también es 45° → tan 45° = 40/d → d = 40/1 = 40 m. <strong>Clave B.</strong> El paso crítico es el dibujo con la horizontal punteada: sin él, la depresión no se entiende.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Invertir opuesto y adyacente (sobre todo cuando la figura está rotada).</li>
+<li>Elegir la razón por intuición en vez de por análisis (&ldquo;conozco hipotenusa y busco opuesto → sen&rdquo;).</li>
+<li>Confundir el ángulo de depresión (medirlo desde la vertical o desde el suelo).</li>
+<li>No saber los valores notables: la tabla se memoriza esta semana, con repaso de 5 min en las 3 sesiones siguientes.</li>
+<li>Creer que sen(60°) = 2·sen(30°) (las razones no son lineales): descartarlo con el contraejemplo numérico.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Si el ángulo de elevación aumenta (manteniendo la misma distancia al objeto), ¿la altura calculada aumenta o disminuye? ¿Por qué?&rdquo; (Esperado: aumenta, porque tan crece entre 0° y 90°. Verifica comprensión de la tangente como razón creciente, no solo la fórmula.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 5-8.</li>
+<li>Compendio: sección 5.6; E25 (árbol de la prueba inicial, en blanco: rehacer al final de la sesión).</li>
+<li>Práctica mixta: E8 (Proporcionalidad), E14 (Álgebra).</li>
+<li>Nota de calendario: después de esta semana viene la pausa W17-W20 — dejar anotada la tabla de valores notables como &ldquo;repaso opcional de 10 min&rdquo; de vacaciones.</li>
+</ul>
+<hr />
+<h2 id="semana-21">Semana 21</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Reactivación post-pausa (primero que todo)</strong> — abrir la sesión con 15-20 min de reactivación de W15-W16 (una cuerda, un sector, una tangente de elevación): 4 semanas sin estudio borran lo recién aprendido si no se reactiva. ESTO es parte del diseño, no un extra.</li>
+<li><strong>Volumen = espacio ocupado</strong> — se mide en unidades CÚBICAS. Idea unificadora: prisma y cilindro son &ldquo;bases apiladas&rdquo;: V = área de la base · altura. Cubo: a³.</li>
+<li><strong>Pirámide y cono: el factor 1/3</strong> — la pirámide/cono de igual base y altura que el prisma/cilindro tiene UN TERCIO de su volumen: V = (A_base · h)/3. Ejemplo: cono r = 3, h = 9 → (π·9·9)/3 = 27π ≈ 81 (con π ≈ 3). <strong>No confundir:</strong> olvidar el /3 es EL error de esta semana (el distractor siempre es el volumen sin dividir).</li>
+<li><strong>Esfera</strong> — V = (4/3)πr³. Ejemplo: r = 3 → (4/3)·π·27 = 36π ≈ 108 (con π ≈ 3). Notar: es r³, no r².</li>
+<li><strong>Área de superficie (mención breve)</strong> — para cubo y prisma: sumar las caras. Cilindro: tapas 2πr² + lateral 2πr·h (el lateral es un rectángulo &ldquo;desenrollado&rdquo; de ancho 2πr). Solo si el tiempo da; lo central es volumen.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Cilindro directo (Aplicar).</strong> <em>&ldquo;Un estanque cilíndrico tiene radio de base 2 m y altura 3 m. ¿Cuál es su volumen?&rdquo;</em><br />
+  A) 6π m³ · B) 8π m³ · C) 12π m³ · D) 18π m³ · E) 24π m³<br />
+<strong>Solución a modelar:</strong> V = πr²h = π·4·3 = 12π m³. <strong>Clave C.</strong> Distractor A: usar r sin elevar al cuadrado; E: usar el diámetro (4) como radio.</li>
+<li><strong>Tipo 2 — Cono vs. cilindro (Conocer/Resolver).</strong> <em>&ldquo;Un cono y un cilindro tienen la misma base y la misma altura. Si el volumen del cilindro es 300 cm³, ¿cuál es el volumen del cono?&rdquo;</em><br />
+  A) 100 cm³ · B) 150 cm³ · C) 200 cm³ · D) 300 cm³ · E) 900 cm³<br />
+<strong>Solución a modelar:</strong> cono = cilindro/3 = 100 cm³. <strong>Clave A.</strong> Sin cálculo pesado: evalúa la IDEA del factor 1/3.</li>
+<li><strong>Tipo 3 — Empaque de cubos (Modelar).</strong> <em>&ldquo;Una caja cúbica de arista 30 cm se quiere llenar con cajitas cúbicas de arista 10 cm. ¿Cuántas cajitas caben como máximo?&rdquo;</em><br />
+  A) 3 · B) 9 · C) 27 · D) 30 · E) 90<br />
+<strong>Solución a modelar:</strong> por cada dimensión caben 30/10 = 3 → total = 3·3·3 = 27. <strong>Clave C.</strong> Distractor A (3): el error de pensar linealmente. Mostrar también la vía por volúmenes: 27.000/1.000 = 27 ✓ — las dos deben coincidir.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Olvidar el /3 en cono y pirámide (anticiparlo: &ldquo;si tu resultado no tiene distractor gemelo ×3, desconfía&rdquo;).</li>
+<li>r³ vs. r² en la esfera; radio vs. diámetro en todo (tercera aparición del error: registrarlo como recurrente si vuelve).</li>
+<li>División lineal en problemas de empaque (30/10 = 3).</li>
+<li>Mezcla de unidades (cm³ ↔ m³ ↔ litros): recordar 1 L = 1.000 cm³ si aparece en contexto.</li>
+<li>Atrofia post-vacaciones: si W15-W16 no se reactivan, los MC de W22 los sufrirán.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Si duplicas el radio de una esfera, ¿cuántas veces aumenta su volumen?&rdquo; (Esperado: 8 veces, porque el radio está al cubo. Cierra el patrón k, k², k³ del año: líneas → áreas → volúmenes.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 9-12.</li>
+<li>Compendio: sección 5.7; E30.</li>
+<li>Práctica mixta: E9 (Proporcionalidad + escala), E11.</li>
+<li>Repaso de apertura: REACTIVACIÓN post-pausa — guía F2 ejercicios 2 y 6 (sector y árbol), en voz alta juntos.</li>
+</ul>
+<hr />
+<h2 id="semana-22">Semana 22</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<p>Semana de INTEGRACIÓN de toda la Geometría (F1 + F2):</p>
+<ol>
+<li><strong>El método de ataque, ahora con todo el repertorio</strong> — dibujar, marcar datos, elegir entre: ángulos/triángulos, Pitágoras, semejanza, áreas, circunferencia, trigonometría, volúmenes. La habilidad nueva es ELEGIR la herramienta, no aplicarla.</li>
+<li><strong>Problemas de 2 herramientas</strong> — los de corte alto combinan: circunferencia + proporcionalidad (vueltas de una rueda), semejanza + volumen (escala cúbica), cilindro a medias.</li>
+<li><strong>Regla de escala cúbica</strong> — modelo a escala 1:k → volúmenes en razón k³. Cierre del arco k → k² → k³.</li>
+<li><strong>Repaso quirúrgico pre-MC</strong> — revisar juntos los distractores típicos de MC4: media cuerda, tan vs. sen, factor 1/3, círculo inscrito (64 − 16π con r = 4 cuando el lado es 8).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Medio cilindro (Resolver problemas).</strong> <em>&ldquo;Un vaso cilíndrico de radio 3 cm y altura 10 cm contiene agua hasta la mitad de su altura. ¿Qué volumen de agua contiene?&rdquo;</em><br />
+  A) 15π cm³ · B) 30π cm³ · C) 45π cm³ · D) 90π cm³ · E) 135π cm³<br />
+<strong>Solución a modelar:</strong> el agua forma un cilindro de r = 3 y h = 5 → V = π·9·5 = 45π cm³. <strong>Clave C.</strong> Alternativa: mitad del volumen total (90π/2). Distractor D: el volumen total.</li>
+<li><strong>Tipo 2 — Vueltas de rueda (Modelar, circunferencia + proporcionalidad).</strong> <em>&ldquo;Una rueda tiene radio 25 cm. ¿Cuántas vueltas completas debe dar para recorrer 100π metros?&rdquo;</em><br />
+  A) 100 · B) 200 · C) 250 · D) 400 · E) 500<br />
+<strong>Solución a modelar:</strong> perímetro = 2π·0,25 m = 0,5π m (¡convertir cm a m PRIMERO!) → vueltas = 100π/0,5π = 200. <strong>Clave B.</strong> El π se cancela: enseñar que cuando todo está en π, se trabaja con π hasta el final. Distractor sin conversión de unidades: 100π/50π = 2 o similares.</li>
+<li><strong>Tipo 3 — Escala y volumen (Aplicar, k³).</strong> <em>&ldquo;Un modelo a escala 1:10 de un estanque tiene un volumen de 2 litros. ¿Cuál es el volumen del estanque real?&rdquo;</em><br />
+  A) 20 L · B) 200 L · C) 2.000 L · D) 20.000 L · E) 60 L<br />
+<strong>Solución a modelar:</strong> k = 10 → volumen × k³ = 1.000 → 2·1.000 = 2.000 L. <strong>Clave C.</strong> Distractor B (k²), distractor A (k): el mismo error de W3 una dimensión más arriba.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Conversión de unidades en medio del problema (25 cm → 0,25 m): el punto frágil del Tipo 2.</li>
+<li>Aplicar k² al volumen (recaída): la regla es &ldquo;exponente = número de dimensiones&rdquo;.</li>
+<li>En el MC4, los distractores conocidos: planificar con la estudiante la estrategia &ldquo;último paso antes de marcar&rdquo; (¿dupliqué la media cuerda? ¿dividí por 3 el cono?).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>El MC4 es la verificación. Calentamiento oral previo: &ldquo;Nombra las 3 fórmulas de volumen y dime cuál lleva /3, cuál 4/3 y cuál nada.&rdquo;</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 13-16.</li>
+<li>Compendio: E26, E27, E28 (reintento de los ítems de la prueba inicial si aún hay dudas).</li>
+<li>MC: <strong>MC4 completo</strong>. Criterio de saneamiento: <strong>≥75% en Geometría</strong>. Si no se alcanza: regla de ajuste del sistema (sesión extra con la sección del compendio correspondiente antes de seguir a Funciones avanzadas).</li>
+<li>Práctica mixta: preguntas 11-12 del MC4.</li>
+</ul>
+<hr />
+<h2 id="semana-23">Semana 23</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>La estructura f(x) = a·b^x</strong> — a = valor INICIAL (lo que vale cuando x = 0); b = factor por el que se MULTIPLICA en cada período. Ejemplo madre: 100 bacterias que se duplican → N(t) = 100·2^t. <strong>No confundir:</strong> a·b^x con (a·b)^x; y evaluar bien f(0) = a (no 0).</li>
+<li><strong>Crecimiento vs. decrecimiento</strong> — b &gt; 1 crece; 0 &lt; b &lt; 1 decrece. Ejemplo de decrecimiento: 1.000 que se reduce a la mitad → 1.000·(1/2)^t. La base NUNCA es negativa en estos modelos: &ldquo;pierde 10%&rdquo; → b = 0,9 (no −0,1).</li>
+<li><strong>Conexión con porcentajes</strong> — crecer 5% por período → b = 1,05; decrecer 10% → b = 0,90. Es la SEMANA 11 disfrazada: mostrar que ya sabe esto (200·(1,5)³ = 675 lo resolvió en E24).</li>
+<li><strong>El período vs. el tiempo (el punto fino)</strong> — &ldquo;se duplica cada 2 horas&rdquo; con t en horas → exponente t/2: N(t) = a·2^(t/2). Ejemplo: a = 200, se triplica cada 2 h → tras 6 h: 200·3³ = 5.400 (6 h = 3 períodos). <strong>No confundir:</strong> usar el tiempo total como exponente cuando el período es distinto de 1 (el error del MC5, distractor 200·3⁶).</li>
+<li><strong>Exponencial vs. lineal (la distinción conceptual)</strong> — lineal SUMA lo mismo cada paso; exponencial MULTIPLICA por lo mismo. Demostración con tabla paralela: f(x) = 2x vs. g(x) = 2^x para x = 1..10 → 20 vs. 1.024. Esta distinción es el corazón de las preguntas de modelación de W24.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Período distinto de 1 (Aplicar).</strong> <em>&ldquo;Una población de 200 bacterias se triplica cada 2 horas. ¿Cuántas bacterias hay después de 6 horas?&rdquo;</em><br />
+  A) 1.800 · B) 3.600 · C) 5.400 · D) 10.800 · E) 46.656<br />
+<strong>Solución a modelar:</strong> 6 h = 3 períodos de 2 h → 200·3³ = 200·27 = 5.400. <strong>Clave C.</strong> Distractor E (200·3⁶): usar las 6 horas como exponente. Enseñar el paso explícito &ldquo;¿cuántos períodos caben en el tiempo total?&rdquo;.</li>
+<li><strong>Tipo 2 — Modelar depreciación (Modelar).</strong> <em>&ldquo;Una máquina pierde un 10% de su valor cada año. Si costó $1.000.000, ¿qué expresión representa su valor después de t años?&rdquo;</em><br />
+  A) 1.000.000·(1,1)^t · B) 1.000.000 − 100.000t · C) 1.000.000·(0,9)^t · D) 1.000.000·(0,1)^t · E) 900.000^t<br />
+<strong>Solución a modelar:</strong> pierde 10% → conserva 90% → b = 0,9 → V(t) = 1.000.000·(0,9)^t. <strong>Clave C.</strong> Distractor B: el modelo lineal (resta fija) — la confusión conceptual central; D: quedarse con lo que PIERDE en vez de lo que CONSERVA.</li>
+<li><strong>Tipo 3 — Reloj y duplicación (Resolver problemas).</strong> <em>&ldquo;Un cultivo de bacterias se duplica cada 30 minutos. Si a las 10:00 hay 500 bacterias, ¿cuántas habrá a las 12:00 del mismo día?&rdquo;</em><br />
+  A) 2.000 · B) 4.000 · C) 8.000 · D) 16.000 · E) 32.000<br />
+<strong>Solución a modelar:</strong> 2 horas = 4 períodos de 30 min → 500·2⁴ = 500·16 = 8.000. <strong>Clave C.</strong> Distractor A: contar 2 períodos (uno por hora); modelar el conteo de períodos con los dedos si hace falta: 10:30, 11:00, 11:30, 12:00 → 4 duplicaciones.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>El exponente como tiempo bruto cuando el período es distinto (principal error nuevo del bloque).</li>
+<li>f(0) = 0 en vez de a (recaída de W7: 3·2⁰ = 3, no 0).</li>
+<li>Base negativa o resta fija para &ldquo;pierde 10%&rdquo;.</li>
+<li>Aritmética de potencias chicas (2⁴ = 8 en vez de 16): repasar 2¹..2⁶ y 3¹..3⁴ de memoria.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;¿Qué diferencia hay entre f(x) = 2x y g(x) = 2^x? Evalúa ambas en x = 10.&rdquo; (Esperado: 20 y 1.024; una suma 2 cada vez, la otra multiplica por 2 cada vez. Si lo explica con sus palabras, la distinción quedó.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 17-20.</li>
+<li>Compendio: sección 4.4; E21 (la de la prueba inicial, que erró: rehacer juntos al inicio del tema nuevo), E24.</li>
+<li>Práctica mixta: E15 (Álgebra), E34 (Estadística).</li>
+<li>Repaso de apertura: guía F2 ejercicio 13 (círculo inscrito) y una de trigonometría (ejercicio 8).</li>
+</ul>
+<hr />
+<h2 id="semana-24">Semana 24</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>El árbol de decisión de modelos</strong> — ante un enunciado, preguntar en orden: ¿cambia por SUMA fija por unidad? → afín (mx + n). ¿Se MULTIPLICA por un factor fijo por período? → exponencial (a·b^x). ¿Hay un máximo/mínimo o un fenómeno de ida y vuelta (proyectil, área, ingreso)? → cuadrática. Este esquema ES el contenido de la semana: practicarlo hasta que salga solo.</li>
+<li><strong>Lectura de parámetros en contexto</strong> — en cada modelo: ¿qué significa cada número? (n = valor inicial/fijo; m = tasa; a = valor inicial; b = factor; vértice = óptimo). Misma habilidad de W10, ahora con 3 modelos.</li>
+<li><strong>Planteo de cuadrática desde geometría/contexto</strong> — construir la expresión ANTES de optimizar: área de rectángulo con un lado en función del otro (x(x+2) = x² + 2x).</li>
+<li><strong>Nota de medición</strong> — esta semana puede caer el ensayo DEMRE 1er ciclo (marzo, marcado con * en el calendario): si se aplica, reemplaza la práctica mixta y el análisis sigue el protocolo de F3 (clasificar errores por área y habilidad).</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Elegir el modelo (Modelar).</strong> <em>&ldquo;Un estanque contiene 50 litros de agua y se llena a razón de 4 litros por minuto. ¿Qué función modela el volumen de agua después de t minutos?&rdquo;</em><br />
+  A) V(t) = 50·4^t · B) V(t) = 50 + 4t · C) V(t) = 50t + 4 · D) V(t) = 54t · E) V(t) = 50·(1,04)^t<br />
+<strong>Solución a modelar:</strong> cambio por suma fija (4 L cada minuto) → afín; valor inicial 50 → V(t) = 50 + 4t. <strong>Clave B.</strong> Los distractores A y E son exponenciales: la trampa de asociar &ldquo;llenar/crecer&rdquo; con exponencial sin mirar SI suma o multiplica.</li>
+<li><strong>Tipo 2 — Reconocer el fenómeno exponencial (Conocer/Modelar).</strong> <em>&ldquo;¿Cuál de las siguientes situaciones se modela con una función exponencial?&rdquo;</em><br />
+  A) El costo de un viaje en taxi según los kilómetros · B) La altura de una pelota lanzada hacia arriba según el tiempo · C) Una población de bacterias que se duplica cada hora · D) El sueldo de una persona con un aumento fijo anual de $20.000 · E) El perímetro de un cuadrado según la medida de su lado<br />
+<strong>Solución a modelar:</strong> revisar cada una con el árbol: A) afín (bajada + por km); B) cuadrática; C) multiplicación por factor 2 → EXPONENCIAL ✓; D) lineal; E) lineal. <strong>Clave C.</strong> Este tipo entrena la clasificación pura, sin cálculo.</li>
+<li><strong>Tipo 3 — Cuadrática desde contexto geométrico (Modelar).</strong> <em>&ldquo;Un terreno rectangular tiene un lado de x metros y el otro lado mide 2 metros más que el primero. ¿Qué expresión representa el área del terreno?&rdquo;</em><br />
+  A) 2x + 2 · B) x² + 2x · C) 2x² · D) x² + 2 · E) 4x + 4<br />
+<strong>Solución a modelar:</strong> lados x y x + 2 → A(x) = x(x + 2) = x² + 2x. <strong>Clave B.</strong> Distractor E (4x + 4): el perímetro, no el área; A: suma de lados. Releer &ldquo;área&rdquo; vs. &ldquo;perímetro&rdquo;.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Asociar &ldquo;crece&rdquo; automáticamente con exponencial (la trampa del Tipo 1: mirar si suma o multiplica).</li>
+<li>Interpretar &ldquo;se duplica cada 2 años&rdquo; como b = 2 con exponente t (es t/2).</li>
+<li>Al plantear cuadráticas de geometría, confundir área con perímetro.</li>
+<li>Parálisis ante enunciados largos: entrenar la lectura en dos pasadas (primera: ¿qué fenómeno es?; segunda: ¿qué datos numéricos tengo?).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Dame un ejemplo de la vida diaria para cada uno de los tres modelos: lineal, cuadrático, exponencial.&rdquo; (Si produce los tres sola, el árbol de decisión está instalado. Ejemplos esperados: taxi/planilla; pelota/área con perímetro fijo; bacterias/interés compuesto.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 21-24.</li>
+<li>Compendio: sección 4.5 + repaso global de 4.2-4.4; E19-E24 (seleccionar los que sigan costando).</li>
+<li>Medición: si hay <strong>ensayo DEMRE 1er ciclo</strong> disponible, aplicarlo en condiciones reales y registrar en <code>seguimiento/ensayos.md</code>.</li>
+<li>Repaso de apertura: ejercicios 18 y 20 de W23 (exponencial creciente y decreciente).</li>
+</ul>
+<hr />
+<h2 id="semana-25">Semana 25</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Optimización con restricción (el patrón rey del corte alto)</strong> — cuando hay perímetro/recurso fijo: 1) escribir la restricción (2x + y = 60); 2) despejar una variable (y = 60 − 2x); 3) armar la función objetivo (A(x) = x(60 − 2x)); 4) vértice. Regla de oro: con perímetro fijo y 4 lados, el óptimo es el CUADRADO; con 3 lados (pared), NO es cuadrado (x = 15, y = 30: el lado paralelo a la pared es el doble).</li>
+<li><strong>La pared cambia la restricción</strong> — el error conceptual a desarmar: con una pared existente se cercan 3 lados, no 4: la restricción es 2x + y = 60, no 2x + 2y = 60. Dibujar la pared SIEMPRE.</li>
+<li><strong>Exponencial con término aditivo</strong> — modelos tipo T(t) = 80·(1/2)^(t/10) + 20 (enfriamiento hacia una temperatura ambiente): la parte exponencial decae y el +20 queda. Evaluar: primero la exponencial, DESPUÉS sumar el 20.</li>
+<li><strong>Ingreso = precio × cantidad</strong> — cuando la cantidad depende del precio: I(p) = p·(300 − 10p) → cuadrática con máximo en p = 15. Enseñar a construir I(p) antes de buscar el vértice.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Corral con pared (Resolver problemas, dificultad alta).</strong> <em>&ldquo;Con 60 m de malla se quiere cercar un corral rectangular aprovechando una pared existente, de modo que solo se cercan 3 lados. ¿Cuál es el área máxima posible del corral?&rdquo;</em><br />
+  A) 225 m² · B) 400 m² · C) 450 m² · D) 600 m² · E) 900 m²<br />
+<strong>Solución a modelar:</strong> 2x + y = 60 → y = 60 − 2x → A(x) = x(60 − 2x) = −2x² + 60x → x_v = −60/(−4) = 15 → y = 30 → A = 15·30 = 450 m². <strong>Clave C.</strong> Distractor A (225): usar 2x + 2y = 60 (cuadrado de 15); mostrar ambas situaciones y por qué difieren.</li>
+<li><strong>Tipo 2 — Enfriamiento (Aplicar, dificultad alta).</strong> <em>&ldquo;La temperatura de un líquido sigue el modelo T(t) = 80·(1/2)^(t/10) + 20, en °C, con t en minutos. ¿Cuál es la temperatura del líquido a los 10 minutos?&rdquo;</em><br />
+  A) 40 °C · B) 45 °C · C) 50 °C · D) 60 °C · E) 80 °C<br />
+<strong>Solución a modelar:</strong> t/10 = 1 → (1/2)¹ = 1/2 → 80·(1/2) = 40 → 40 + 20 = 60 °C. <strong>Clave D.</strong> Distractor A (40): olvidar el +20 (el paso final); enseñar el orden: exponencial primero, suma después.</li>
+<li><strong>Tipo 3 — Precio que maximiza el ingreso (Modelar, dificultad alta).</strong> <em>&ldquo;Un empresario estima que si cobra $p por cada entrada, asistirán (300 − 10p) personas a su evento. ¿Qué precio maximiza el ingreso?&rdquo;</em><br />
+  A) $10 · B) $15 · C) $20 · D) $25 · E) $30<br />
+<strong>Solución a modelar:</strong> I(p) = p(300 − 10p) = −10p² + 300p → p_v = −300/(−20) = 15. <strong>Clave B.</strong> Verificación con sentido: a $15 asisten 150 → ingreso $2.250; a $10 asisten 200 → $2.000; a $20 asisten 100 → $2.000. El vértice queda confirmado por vecindad.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Restricción con 4 lados cuando el problema tiene pared (el error definitorio de la semana).</li>
+<li>Olvidar el término aditivo (+20) en modelos de enfriamiento.</li>
+<li>En ingreso, buscar el precio que maximiza la CANTIDAD de asistentes en vez del ingreso (son vértices distintos).</li>
+<li>Signo del vértice con a negativo (recaída de W9: reinstalar &ldquo;escribir la fórmula antes de reemplazar&rdquo;).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Con un perímetro fijo, ¿qué rectángulo tiene área máxima? ¿Y si uno de los lados es una pared que no se cerca, sigue siendo cuadrado?&rdquo; (Esperado: el cuadrado; NO, con pared el lado paralelo a la estudiante queda el doble de los otros. La segunda respuesta distingue memoria de comprensión.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 25-28.</li>
+<li>Compendio: E20, E22, E24 (como base) + releer 4.3 (vértice) si falla el cálculo de x_v.</li>
+<li>Práctica mixta: E13, E17 (Álgebra, factorización que alimenta la cuadrática).</li>
+<li>Repaso de apertura: ejercicio 23 de W24 + tabla de decisión de modelos en 2 min.</li>
+</ul>
+<hr />
+<h2 id="semana-26">Semana 26</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<p>Semana de CONSOLIDACIÓN de todo el bloque de Funciones (W7-W10 + W23-W25):</p>
+<ol>
+<li><strong>Mapa completo de Funciones en una página</strong> — construirlo CON la estudiante (no entregarlo hecho): concepto/evaluación → afín (m, n, dos puntos) → cuadrática (vértice, raíces, intercepto) → exponencial (a, b, período) → árbol de decisión de modelos. Este mapa es el insumo del repaso de F5.</li>
+<li><strong>Los 4 errores personales de Funciones</strong> — revisar el registro: MC2, ensayo W13 y sesiones; listar los que son DE LA ESTUDIANTE (probablemente: vértice a medias, signos con negativos, f(0) en exponencial, período como exponente). La sesión se centra en esos.</li>
+<li><strong>f(0) y el valor inicial</strong> — f(0) = a en a·b^x; f(0) = n en mx + n; f(0) = c en ax² + bx + c. Un patrón: evaluar en 0 siempre muestra &ldquo;el valor inicial&rdquo;.</li>
+<li><strong>Velocidad de reconocimiento</strong> — práctica cronometrada ligera: 8 preguntas variadas de Funciones en 16 min (~2 min/pregunta), entrenando la identificación rápida del tipo.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Evaluar en cero (Aplicar, trampa clásica).</strong> <em>&ldquo;Si f(x) = 3·2^x, ¿cuánto vale f(0)?&rdquo;</em><br />
+  A) 0 · B) 1 · C) 2 · D) 3 · E) 6<br />
+<strong>Solución a modelar:</strong> f(0) = 3·2⁰ = 3·1 = 3. <strong>Clave D.</strong> Distractores A (2⁰ = 0), E (3·2¹ o 3·2·0→confusión), C (2⁰ = 2). Pregunta de 30 segundos si el concepto está; de error seguro si no.</li>
+<li><strong>Tipo 2 — Pendiente desde dos evaluaciones (Aplicar).</strong> <em>&ldquo;Una función afín cumple f(2) = 7 y f(5) = 16. ¿Cuál es su pendiente?&rdquo;</em><br />
+  A) 2 · B) 3 · C) 7/2 · D) 9 · E) 16/5<br />
+<strong>Solución a modelar:</strong> los datos SON dos puntos: (2, 7) y (5, 16) → m = (16 − 7)/(5 − 2) = 9/3 = 3. <strong>Clave B.</strong> La traducción &ldquo;f(2) = 7&rdquo; → punto (2, 7) es el paso que la PAES evalúa aquí.</li>
+<li><strong>Tipo 3 — Eje de simetría (Aplicar).</strong> <em>&ldquo;¿Cuál es la ecuación del eje de simetría de la parábola f(x) = 2x² − 8x + 1?&rdquo;</em><br />
+  A) x = −2 · B) x = 2 · C) x = 4 · D) x = 8 · E) x = 1<br />
+<strong>Solución a modelar:</strong> x_v = −(−8)/(2·2) = 8/4 = 2 → eje: x = 2. <strong>Clave B.</strong> Distractor A: error de signo; C: usar 2a = 2 en vez de 4. Notar que piden &ldquo;la ecuación del eje&rdquo; (x = 2), no el vértice (2, f(2)): formatos distintos de respuesta.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Mezcla de conceptos entre modelos (aplicar vértice a una exponencial, pendiente a una cuadrática): el mapa de la página es la vacuna.</li>
+<li>Velocidad: bajo tiempo, recaen los errores ya superados (signos, vértice a medias). Si pasa, la estrategia es más práctica cronometrada, no más teoría.</li>
+<li>En el MC5: los distractores son los errores ya vistos (200·3⁶ estilo); revisar la clave DESPUÉS de corregir y que la estudiante identifique &ldquo;qué error representa cada distractor que casi elijo&rdquo;.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>El MC5 es la verificación. Calentamiento: &ldquo;En una función afín, ¿qué letra es el valor inicial? ¿Y en una exponencial? ¿Y en una cuadrática?&rdquo; (n; a; c.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 29-32.</li>
+<li>MC: <strong>MC5 completo</strong>. Criterio de saneamiento: <strong>≥75% en Funciones</strong>. Si no se alcanza: regla de ajuste (sesión extra con compendio 4.4/4.5 antes de W27).</li>
+<li>Rehacer: las preguntas erradas del MC2 (W10) como comparación de progreso (motivador medible).</li>
+<li>Práctica mixta: preguntas 11-12 del MC5.</li>
+</ul>
+<hr />
+<h2 id="semana-27">Semana 27</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Porcentajes encadenados, nivel 2</strong> — variaciones distintas (baja 10%, sube 20%: 0,9·1,2 = 1,08 → sube 8%); encontrar la variación total; y el caso inverso (¿qué bajada deshace una subida del 25%? → 1/1,25 = 0,8 → 20%). Es la consolidación del error P1 de la prueba inicial, llevado a nivel experto.</li>
+<li><strong>Raíces de decimales y fracciones</strong> — √0,25 = 0,5 (porque 0,5² = 0,25); √(9/16) = 3/4. Regla anti-pánico: verificar elevando al cuadrado. <strong>No confundir:</strong> creer que la raíz de un decimal &ldquo;no existe&rdquo; o que siempre es más chica en el sentido errado: para números ENTRE 0 y 1, la raíz es MAYOR que el número (√0,25 = 0,5 &gt; 0,25).</li>
+<li><strong>Exponentes sobre fracciones</strong> — (1/2)⁻² = 2² = 4; (2/3)⁻¹ = 3/2. El exponente negativo INVIERTE la fracción.</li>
+<li><strong>Potencias como ecuación</strong> — 2^x = 32 → x = 5; 3^x = 1/9 → x = −2. Conexión directa con la exponencial de W23 (despejar el exponente cuando la base calza).</li>
+<li><strong>Comparación fina de fracciones/decimales</strong> — 7/8 = 0,875 vs. 0,88 vs. 11/12 ≈ 0,917: decimales de 3 cifras como árbitro universal.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Variaciones sucesivas distintas (Resolver problemas).</strong> <em>&ldquo;Una población disminuye un 10% el primer año y un 20% el segundo año. ¿Cuál es la disminución total en los dos años?&rdquo;</em><br />
+  A) 30% · B) 28% · C) 27% · D) 26% · E) 32%<br />
+<strong>Solución a modelar:</strong> 0,90·0,80 = 0,72 → queda el 72% → disminución total 28%. <strong>Clave B.</strong> Distractor A (30%): la suma directa; a esta altura la estudiante debe ser la que explica POR QUÉ no se suma (que lo diga la estudiante, no el tutor).</li>
+<li><strong>Tipo 2 — Raíz de decimal (Aplicar).</strong> <em>&ldquo;¿Cuál es el valor de √0,25?&rdquo;</em><br />
+  A) 0,05 · B) 0,5 · C) 0,125 · D) 0,625 · E) No existe<br />
+<strong>Solución a modelar:</strong> buscar el número que al cuadrado da 0,25 → 0,5² = 0,25 ✓ → √0,25 = 0,5. <strong>Clave B.</strong> Distractor E: la creencia de que los decimales no tienen raíz; A: dividir entre 2 dos veces / confusión con 0,05².</li>
+<li><strong>Tipo 3 — Ecuación exponencial simple (Aplicar).</strong> <em>&ldquo;Si 2^x = 32, ¿cuánto vale x?&rdquo;</em><br />
+  A) 4 · B) 5 · C) 6 · D) 16 · E) 8<br />
+<strong>Solución a modelar:</strong> escribir 32 como potencia de 2: 2, 4, 8, 16, 32 → 2⁵ → x = 5. <strong>Clave B.</strong> La tabla de potencias de 2 y 3 de memoria (2¹..2⁶, 3¹..3⁴) es la herramienta; si no está, construirla a mano en 1 minuto.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Recaída en la suma de porcentajes (es su error fundacional: si reaparece aquí, marcarlo como recurrente definitivo en el registro).</li>
+<li>(1/2)⁻² = −4 o = 1/4: el exponente negativo invierte, no cambia el signo ni deja la fracción igual.</li>
+<li>Raíz de decimal: pánico y opción &ldquo;no existe&rdquo;.</li>
+<li>Aritmética rápida bajo presión (0,9·0,8 = 7,2 en vez de 0,72): el punto decimal importa; verificar por orden de magnitud.</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;Sin calcular exactamente: ¿cuál es mayor, 0,9² u 0,9? ¿Por qué?&rdquo; (Esperado: 0,9, porque multiplicar un número entre 0 y 1 por sí mismo lo achica. La intuición de &ldquo;elevar agranda&rdquo; solo vale para números mayores que 1: esta pregunta repara esa intuición.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 33-36.</li>
+<li>Compendio: secciones 1.1-1.3; E1-E6 (segunda pasada; E1 debe salir en menos de 1 min ya).</li>
+<li>Refuerzo extra si se necesita: MC8 (Números, banco F3-F4) como tarea.</li>
+<li>Repaso de apertura: una exponencial (guía F2 ejercicio 25) + una de vértice (ejercicio 30).</li>
+</ul>
+<hr />
+<h2 id="semana-28">Semana 28</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Regla de tres compuesta con tasa unitaria</strong> — el método robusto: calcular la TASA por unidad (piezas por máquina-hora; obra por obrero-día) y luego escalar. Ejemplo: 6 máquinas, 480 piezas, 5 h → tasa = 480/(6·5) = 16 piezas por máquina-hora → 4 máquinas, 800 piezas: t = 800/(16·4) = 12,5 h. Este método nunca falla, a diferencia de la intuición de &ldquo;directa/inversa&rdquo; que se confunde con 3 magnitudes.</li>
+<li><strong>Diferencia de cuadrados como atajo</strong> — a² − b² = (a+b)(a−b): si suman 16 y la diferencia de cuadrados es 48 → 16(a−b) = 48 → a−b = 3 → sistema a+b = 16, a−b = 3 → a = 9,5 y b = 6,5. El atajo convierte un problema de segundo grado en uno de primer grado.</li>
+<li><strong>Sistemas en contexto y suma/producto</strong> — repaso elevado: suma y diferencia; suma y producto (t² − St + P = 0). Velocidad: estos deben salir en 90 segundos.</li>
+<li><strong>Valor absoluto como DISTANCIA</strong> — |x − a| ≤ b significa &ldquo;x está a lo más b unidades de a&rdquo; → intervalo [a−b, a+b]; |x − a| ≥ b → fuera del intervalo. La interpretación geométrica (recta numérica) es lo que la PAES evalúa; la mecánica es secundaria.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Compuesta con tasa (Resolver problemas, dificultad alta).</strong> <em>&ldquo;6 máquinas producen 480 piezas en 5 horas. Manteniendo el mismo ritmo, ¿cuántas horas tardan 4 máquinas en producir 800 piezas?&rdquo;</em><br />
+  A) 8 h · B) 10 h · C) 12,5 h · D) 15 h · E) 16 h<br />
+<strong>Solución a modelar:</strong> tasa = 480/(6·5) = 16 piezas por máquina-hora → capacidad de 4 máquinas = 64 piezas/hora → t = 800/64 = 12,5 h. <strong>Clave C.</strong> Modelar la escritura de la tasa unitaria como PASO EXPLÍCITO (no mental): es lo que ordena todo el problema.</li>
+<li><strong>Tipo 2 — Diferencia de cuadrados (Aplicar, dificultad alta).</strong> <em>&ldquo;Dos números suman 16 y la diferencia de sus cuadrados es 48. ¿Cuáles son los números?&rdquo;</em><br />
+  A) 10 y 6 · B) 12 y 4 · C) 9,5 y 6,5 · D) 11 y 5 · E) 8 y 8<br />
+<strong>Solución a modelar:</strong> a² − b² = (a+b)(a−b) = 16(a−b) = 48 → a−b = 3 → con a+b = 16: 2a = 19 → a = 9,5, b = 6,5. <strong>Clave C.</strong> Verificación: 90,25 − 42,25 = 48 ✓. Enseñar que la respuesta decimal NO es señal de error (romper el sesgo de &ldquo;las respuestas son enteras&rdquo;).</li>
+<li><strong>Tipo 3 — Valor absoluto con lectura geométrica (Aplicar).</strong> <em>&ldquo;La solución de |x − 5| &lt; 2 es:&rdquo;</em><br />
+  A) x &lt; 3 o x &gt; 7 · B) 3 &lt; x &lt; 7 · C) x &lt; 7 · D) −7 &lt; x &lt; −3 · E) x &gt; 3<br />
+<strong>Solución a modelar:</strong> &ldquo;x está a menos de 2 unidades del 5&rdquo; → entre 3 y 7 → 3 &lt; x &lt; 7. <strong>Clave B.</strong> Distractor A: la lectura de ≥ (fuera del intervalo). Dibujar la recta numérica con el centro 5 y el radio 2: una imagen resuelve la familia completa.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>En la compuesta, mezclar qué es directa y qué es inversa (la tasa unitaria lo<br />
+</task_result><br />
+</task></li>
+</ul>
+<hr />
+<hr />
+<h2 id="semana-29">Semana 29</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<ol>
+<li><strong>Media, mediana y moda en presencia de datos atípicos</strong> — la media es sensible a valores<br />
+   extremos, la mediana no. Cuando hay un dato muy alto o muy bajo, la mediana describe mejor el<br />
+   centro. Ejemplo: 12, 14, 16, 20, 80 → media = 28,4; mediana = 16. <strong>No confundir:</strong> asumir que<br />
+   &ldquo;promedio&rdquo; siempre responde bien; preguntar SIEMPRE qué medida pide el enunciado.</li>
+<li><strong>Probabilidad con conteo ordenado</strong> — lanzar dos dados: 36 resultados equiprobables; contar<br />
+   los favorables por tabla (no de memoria). Sumas posibles y su conteo (2:1, 3:2, 4:3, 5:4, 6:5,<br />
+   7:6, 8:5, &hellip;). <strong>No confundir:</strong> contar (1,2) y (2,1) como uno solo cuando son dos casos<br />
+   distintos.</li>
+<li><strong>Probabilidad sin reposición</strong> — la segunda extracción cambia el total y la composición:<br />
+   P(A y B) = (a/n)·((a−1)/(n−1)). Ejemplo: 6 rojas y 4 azules, dos azules sin reposición =<br />
+   (4/10)·(3/9) = 2/15. <strong>No confundir:</strong> usar la misma probabilidad en ambas extracciones<br />
+   (eso es con reposición).</li>
+<li><strong>Promedio ponderado y promedio &ldquo;inverso&rdquo;</strong> — dado el promedio global y los subgrupos,<br />
+   encontrar el dato faltante. Ejemplo: promedio 4 números = 15; agrego 2 y baja a 13 → los dos<br />
+   nuevos suman 78 − 60 = 18 → promedio 9. <strong>No confundir:</strong> promediar promedios sin ponderar por<br />
+   tamaño de grupo.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<ul>
+<li><strong>Tipo 1 — Media con dato extremo (Resolver problemas).</strong> <em>&ldquo;Los datos son 5, 7, 9, 11 y 28.<br />
+  ¿Cuál afirmación es correcta?&rdquo;</em><br />
+  A) La media y la mediana son iguales · B) La mediana es mayor que la media · C) La media es<br />
+  mayor que la mediana · D) Ambas son 12 · E) No se puede comparar<br />
+<strong>Solución a modelar:</strong> media = (5+7+9+11+28)/5 = 60/5 = 12; mediana (ordenado) = 9 → la media<br />
+  es mayor porque el 28 &ldquo;jala&rdquo; la media. <strong>Clave C.</strong> Modelar el paso de calcular AMBAS antes de<br />
+  comparar; el distractor A aparece si solo se calcula la media.</li>
+<li><strong>Tipo 2 — Conteo de suma de dados (Representar).</strong> <em>&ldquo;Se lanzan dos dados. ¿Cuál es la<br />
+  probabilidad de que la suma sea menor que 6?&rdquo;</em><br />
+  A) 10/36 · B) 12/36 · C) 15/36 · D) 18/36 · E) 5/36<br />
+<strong>Solución a modelar:</strong> sumas 2, 3, 4, 5 → conteo: 1 + 2 + 3 + 4 = 10 → 10/36. <strong>Clave A.</strong><br />
+  Enseñar la pirámide de conteos de la tabla de 6×6; el distractor B (12/36) es sumar mal o<br />
+  contar la suma 6 también.</li>
+<li><strong>Tipo 3 — Sin reposición (Modelar).</strong> <em>&ldquo;Una caja tiene 3 fichas verdes y 5 rojas. Se sacan dos<br />
+  sin reposición. ¿Cuál es la probabilidad de que ambas sean rojas?&rdquo;</em><br />
+  A) (5/8)·(5/8) · B) (5/8)·(4/7) · C) (3/8)·(2/7) · D) (5/8)·(3/7) · E) (5/8)·(4/8)<br />
+<strong>Solución a modelar:</strong> primera roja 5/8; queda 4 rojas de 7 → (5/8)·(4/7). <strong>Clave B.</strong> El<br />
+  distractor A es el error de &ldquo;con reposición&rdquo;; E usa el total sin actualizar.</li>
+</ul>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Calcular solo la media y decidir sin mirar la mediana.</li>
+<li>Contar pares ordenados de memoria sin la tabla (equivocarse en sumas 6 y 7).</li>
+<li>En sin reposición, no actualizar el denominador.</li>
+<li>Promediar promedios de grupos de distinto tamaño sin ponderar.</li>
+<li>En el MC7, leer rápido &ldquo;menor que 5&rdquo; y contar el 5 (límite inclusivo/exclusivo).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>&ldquo;En una urna hay 2 rojas y 3 azules. Saco dos SIN reposición. ¿Cuál es la probabilidad de sacar<br />
+una roja y luego una azul?&rdquo; (Esperado: (2/5)·(3/4) = 6/20 = 3/10, y que explique por qué el<br />
+denominador baja a 4.)</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Guía F2: ejercicios 41-44.</li>
+<li>Compendio: sección 6.1-6.4; E31-E36 (segunda pasada; E33 y E34 deben salir en menos de 1 min).</li>
+<li>MC: <strong>MC7 completo</strong> (30-40 min; registrar X/10). Criterio de saneamiento: <strong>fortalezas ≥75%</strong>.</li>
+<li>Repaso de apertura: ejercicios 37 y 38 de W28 (compuesta y diferencia de cuadrados).</li>
+</ul>
+<hr />
+<h2 id="semana-30">Semana 30</h2>
+<p><strong>1. Conceptos a enseñar (priorizados)</strong></p>
+<p>Semana de CIERRE de fase: no hay conceptos nuevos. El tutor gestiona el ensayo completo y su<br />
+análisis:</p>
+<ol>
+<li><strong>Condiciones del ensayo</strong> — cronómetro, 65 preguntas, sin interrupciones, sin ayuda. Explicar<br />
+   que es una MEDICIÓN de la fase, no un examen: los datos sirven para ajustar F3.</li>
+<li><strong>Protocolo post-ensayo en 3 pasos</strong> — (1) autoexplicación: que la estudiante explique cada error antes<br />
+   de corregir; (2) clasificación por área y habilidad (matriz de F3); (3) selección de los 2-3<br />
+   errores más frecuentes para el plan de refuerzo de F3.</li>
+<li><strong>Lectura del puntaje</strong> — si el ensayo entrega escala (100-1000), comparar con la meta de tramo<br />
+   850-900. Si entrega bruto (X/65), anotar el bruto y comparar contra ensayos de la misma métrica.</li>
+<li><strong>Puente a F3</strong> — el resultado define las prioridades: áreas bajo 75% entran a F3 como refuerzo<br />
+   dirigido; áreas sobre 75% entran como mantenimiento.</li>
+</ol>
+<p><strong>2. Tipos de ejercicio PAES (con formato de pregunta)</strong></p>
+<p>No hay tipos nuevos: es ensayo completo. El tutor prepara las 2-3 preguntas de repaso según los<br />
+errores detectados en W28-W29 (compuesta, diferencia de cuadrados, conteo de dados, sin reposición)<br />
+como calentamiento previo de 20 min.</p>
+<p><strong>3. Errores comunes a anticipar</strong></p>
+<ul>
+<li>Bajo presión de tiempo: dejar preguntas en blanco en vez de marcar la mejor candidata (regla de<br />
+  F5; practicarla ya).</li>
+<li>No gestionar el tiempo: quedarse atascada en preguntas difíciles y perder las fáciles del final.</li>
+<li>Fatiga: ensayo en la semana 30 puede caer cerca de fin de abril; programar el ensayo en un día<br />
+  con energía disponible.</li>
+<li>Recaídas de errores corregidos en F1 (vértice a medias, porcentajes encadenados): si reaparecen,<br />
+  marcarlos como recurrentes en el registro (son prioridad de F3).</li>
+</ul>
+<p><strong>4. Pregunta de verificación</strong></p>
+<p>El propio ensayo es la verificación. Al corregir, pedirle que clasifique la estudiante misma cada error<br />
+usando la matriz de F3 (área, habilidad, tipo) ANTES de que el tutor confirme: así entrena el<br />
+metaconocimiento para F3-F4.</p>
+<p><strong>5. Referencias al material</strong></p>
+<ul>
+<li>Ensayo DEMRE 1er ciclo (abril) o respaldo propio de 65 preguntas (regla de <code>sistema.md</code>).</li>
+<li>Compendio: repaso libre según errores del ensayo.</li>
+<li>Registro: <code>../../seguimiento/ensayos.md</code> (fecha, fuente, bruto/escala, errores por área).</li>
+<li>Cierre: comparar W30 vs. baseline de W1 para medir el avance real de la fase; preparar la guía<br />
+  F3 con las prioridades detectadas.</li>
+</ul>
+<hr />
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="f1.html" class="relacionado-chip">Guía F1 (anterior)</a>
+<a href="f3.html" class="relacionado-chip">Guía F3 (siguiente)</a>
+<a href="../guia-estudio-m1.html" class="relacionado-chip">Guía de estudio (compendio)</a>
+<a href="../calendario-detallado.html" class="relacionado-chip">Calendario detallado</a>
+<a href="../../material/mc/mc-f2.html" class="relacionado-chip">Mini-controles F2 (MC4-MC7)</a>
+<a href="../entrenamiento-m1.html" class="relacionado-chip">Plan de entrenamiento</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

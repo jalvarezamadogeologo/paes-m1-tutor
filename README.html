@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAES — Preparación de estudio (admisión 2028) — PAES M1</title>
+    <style>
+
+/* Reset y base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: "Segoe UI", Calibri, "Helvetica Neue", Arial, sans-serif;
+    color: #333B48;
+    background: #F6F8FB;
+    line-height: 1.65;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #1F3864;
+    color: #E8EDF4;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-header .subtitulo {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 8px 0;
+}
+
+.sidebar-nav .seccion {
+    margin-bottom: 4px;
+}
+
+.sidebar-nav .seccion-titulo {
+    display: block;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 7px 20px 7px 32px;
+    color: #E8EDF4;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: #2E5A9E;
+    color: #fff;
+}
+
+.sidebar-nav a.activo {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #fff;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px 48px;
+    max-width: 900px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.82rem;
+    color: #7A8494;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+.breadcrumb a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .separador {
+    margin: 0 6px;
+    color: #B0B8C4;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+    border-bottom: 2px solid #D0D7E2;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1F3864;
+    margin: 32px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #D0D7E2;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E5A9E;
+    margin: 24px 0 8px 0;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333B48;
+    margin: 20px 0 6px 0;
+}
+
+/* Párrafos y enlaces */
+p {
+    margin: 0 0 14px 0;
+}
+
+a {
+    color: #2E5A9E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Listas */
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px 0;
+    font-size: 0.92rem;
+}
+
+thead th {
+    background: #1F3864;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #1F3864;
+}
+
+tbody td {
+    padding: 9px 14px;
+    border: 1px solid #D0D7E2;
+}
+
+tbody tr:nth-child(even) {
+    background: #EDF1F7;
+}
+
+tbody tr:hover {
+    background: #DDE3ED;
+}
+
+/* Código */
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    background: #F0F3F8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: #C0392B;
+}
+
+pre {
+    background: #1E2330;
+    color: #E8EDF4;
+    padding: 16px 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 14px 0 18px 0;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.88rem;
+}
+
+/* Bloques especiales */
+blockquote {
+    border-left: 4px solid #2E5A9E;
+    padding: 12px 16px;
+    margin: 14px 0;
+    background: rgba(46, 90, 158, 0.06);
+    border-radius: 0 4px 4px 0;
+    color: #4A5568;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #D0D7E2;
+    margin: 24px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/* Botón volver arriba */
+.volver-arriba {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #1F3864;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 24px 20px;
+        padding-top: 56px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 0.82rem;
+    }
+
+    thead th, tbody td {
+        padding: 6px 8px;
+    }
+}
+
+/* Index: tarjetas */
+.index-seccion {
+    margin-bottom: 32px;
+}
+
+.index-seccion h2 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.index-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.index-lista li {
+    margin-bottom: 10px;
+}
+
+.index-lista a {
+    display: block;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333B48;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.index-lista a:hover {
+    border-color: #2E5A9E;
+    box-shadow: 0 2px 8px rgba(46, 90, 158, 0.12);
+    text-decoration: none;
+}
+
+.index-lista .titulo {
+    font-weight: 600;
+    color: #1F3864;
+    font-size: 0.95rem;
+}
+
+.index-lista .desc {
+    font-size: 0.82rem;
+    color: #6B7280;
+    margin-top: 2px;
+}
+
+.btn-descargar {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1F3864;
+    border-radius: 14px;
+    text-decoration: none;
+}
+.btn-descargar:hover {
+    background: #2E5A9E;
+}
+
+/* Documentos relacionados */
+.relacionados {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 2px solid #D0D7E2;
+}
+
+.relacionados-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F3864;
+    margin-bottom: 12px;
+}
+
+.relacionados-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relacionado-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #F6F8FB;
+    border: 1px solid #D0D7E2;
+    border-radius: 6px;
+    color: #2E5A9E;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.relacionado-chip:hover {
+    background: #2E5A9E;
+    color: #fff;
+    border-color: #2E5A9E;
+    text-decoration: none;
+}
+
+/* Impresión */
+@media print {
+    .sidebar, .menu-toggle, .volver-arriba {
+        display: none !important;
+    }
+
+    .contenido {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<h1>PAES M1</h1>
+<div class="subtitulo">Preparación de estudio</div>
+</div>
+<div class="sidebar-nav">
+<div class="seccion">
+<span class="seccion-titulo">🏠 Inicio</span>
+<a href="README.html" class="activo">PAES — Preparación de estudio (admisión 2028)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">🎯 Metas</span>
+<a href="metas/carreras.html">Carreras de interés — Medicina (Universidad de Chile)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📋 Plan</span>
+<a href="plan/entrenamiento-m1.html">Plan de entrenamiento — Matemática 1 (M1)</a>
+<a href="plan/calendario-detallado.html">Calendario detallado de entrenamiento M1 — semana a semana</a>
+<a href="plan/guia-estudio-m1.html">Guía de estudio — Matemática 1 (PAES)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📖 Guías por fase</span>
+<a href="plan/guias/f1.html">Guía F1 — Base de Geometría y Funciones (W1-W14)</a>
+<a href="plan/guias/f2.html">Guía F2 — Completar y profundizar (W15-W16 + W21-W30)</a>
+<a href="plan/guias/f3.html">Guía F3 — Ensayos oficiales y refuerzo dirigido (W31-W42)</a>
+<a href="plan/guias/f4.html">Guía F4 — Ciclo final (W43-W59)</a>
+<a href="plan/guias/f5.html">Guía F5 — Ajuste final y PAES (W60-W62)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📚 Material</span>
+<a href="material/indice.html">Inventario de material de estudio</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">✏️ Mini-controles</span>
+<a href="material/mc/mc-f1.html">Mini-controles — Fase 1 (MC1-MC3)</a>
+<a href="material/mc/mc-f2.html">Mini-controles — Fase 2 (MC4-MC7)</a>
+<a href="material/mc/mc-f3f4.html">Mini-controles — Refuerzo por área (MC8-MC13)</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📄 Guías semanales</span>
+<a href="material/semanas/semana-01.html">Semana 1</a>
+<a href="material/semanas/semana-02.html">Semana 2</a>
+</div>
+<div class="seccion">
+<span class="seccion-titulo">📅 Calendario</span>
+<a href="calendario.html">Calendario</a>
+</div>
+</div>
+</nav>
+    <main class="contenido">
+        
+        <h1 id="paes-preparacion-de-estudio-admision-2028">PAES — Preparación de estudio (admisión 2028)</h1>
+<p>Proyecto personal del tutor: preparación para la Prueba de Acceso a la Educación Superior<br />
+(PAES) de un estudiante.</p>
+<h2 id="contexto">Contexto</h2>
+<ul>
+<li><strong>Beneficiario:</strong> estudiante del tutor (la estudiante, sin nombre; cursa 3° medio en 2026,<br />
+  egresa de 4° medio a fines de 2027).</li>
+<li><strong>Rendición:</strong> PAES regular, noviembre-diciembre 2027 (admisión 2028).</li>
+<li><strong>Horizonte de preparación:</strong> ~14 meses desde sep 2026.</li>
+<li><strong>Pruebas a rendir:</strong></li>
+<li>Competencia Lectora (obligatoria).</li>
+<li>Competencia Matemática 1 (obligatoria).</li>
+<li>Ciencias (electiva: Biología, Física, Química).</li>
+<li>Matemática 2 (M2): <strong>no se rinde</strong> — no es requisito para Medicina en la U. de Chile.</li>
+<li><strong>Carrera objetivo:</strong> Medicina — Universidad de Chile (única universidad de interés).</li>
+<li><strong>Material:</strong> Preu/curso pagado + material propio existente (no relevante para el seguimiento;<br />
+  inventario opcional en <code>material/indice.md</code>).</li>
+</ul>
+<h2 id="decision-clave-verificada">Decisión clave verificada</h2>
+<ul>
+<li><strong>M2 no es necesaria:</strong> verificado 2026-09-21 — Medicina UCH (admisión 2026) exige solo<br />
+  Lectura, M1 y Ciencias (ponderaciones: NEM 10%, Ranking 20%, Lectura 15%, M1 20%, Ciencias 35%).<br />
+  Detalle en <code>metas/carreras.md</code>.</li>
+</ul>
+<h2 id="metas-de-puntaje-m1">Metas de puntaje (M1)</h2>
+<ul>
+<li><strong>2026 (referencia, medida en ensayos oficiales DEMRE):</strong> 800 puntos. La estudiante no rinde<br />
+  la PAES 2026.</li>
+<li><strong>2027 (rendición oficial, admisión 2028):</strong> 1000 puntos (aspiracional; ruta por tramos:<br />
+  800 en W13 → 850-900 en W30 → 950+ operativo para la PAES 2027. Detalle en<br />
+<code>plan/entrenamiento-m1.md</code>).</li>
+</ul>
+<p>Nota técnica sobre la escala: la PAES se puntúa de 100 a 1000, con media ~500 y desviación<br />
+estándar ~100. 1000 es el tope absoluto de la escala (solo lo alcanzan puntajes extremos de la<br />
+distribución); 800 ya está en el percentil superior. El corte ponderado de Medicina UCH 2026 fue<br />
+931,15.</p>
+<h2 id="puntos-pendientes">Puntos pendientes</h2>
+<ul>
+<li>[x] Aplicar la prueba diagnóstica M1 (<code>diagnosticos/m1-2026-09/prueba_m1_diagnostica.docx</code>)<br />
+      y corregir con <code>correccion_m1.md</code> (clave + matriz por área + interpretación). Resultado<br />
+      2026-09-24: X/Y bruto (50%). Perfil: Geometría 0% y Funciones 25% como debilidades<br />
+      claras; Números 50% parcial; Proporcionalidad, Álgebra y Estadística 75% (fortalezas).<br />
+      Registrado en <code>seguimiento/ensayos.md</code> y <code>diagnosticos/m1-2026-09/resultado_2026-09-24.md</code>.</li>
+<li>[x] Elaborar el plan de entrenamiento M1 con los resultados de la prueba inicial<br />
+      (<code>plan/entrenamiento-m1.md</code>): 2 h semanales, fases hasta nov 2027, hito ensayo DEMRE dic<br />
+      2026 (meta 800) y PAES 2027 (meta 1000), calendario de medición cada 2-6 semanas.</li>
+<li>[ ] Fechas oficiales DEMRE 2027 cuando se publiquen.</li>
+<li>[ ] Ponderaciones y requisitos UCH para la admisión 2028 cuando se publiquen (revalidar M2).</li>
+<li>[ ] Trabajar en las guías de estudio (insuficientes; sesión de trabajo 2026-09-25): revisar<br />
+      contenido y completar. Material actual: <code>plan/guias/f1.md</code>…<code>f5.md</code> + compendio<br />
+<code>plan/guia-estudio-m1.md</code> (+ versiones web y PDF).</li>
+</ul>
+<h2 id="estructura">Estructura</h2>
+<ul>
+<li><code>generar_sitio.py</code> + <code>sitio/</code> — visor web LOCAL (generado desde los <code>.md</code> con <code>python
+  generar_sitio.py</code>; abrir <code>sitio/index.html</code> en el navegador). Incluye todo el contenido<br />
+  (plan, guías, material, seguimiento y diagnóstico) con navegación. No se publica.</li>
+<li><code>metas/carreras.md</code> — universidades de interés, requisitos, ponderaciones.</li>
+<li><code>plan/calendario-detallado.md</code> — calendario semana a semana (62 semanas, fases, contenidos,<br />
+  mediciones e hitos; pausa de vacaciones 18-ene al 14-feb-2027).</li>
+<li><code>plan/entrenamiento-m1.md</code> — plan de entrenamiento M1 (2 h semanales, fases, medición).</li>
+<li><code>plan/guia-estudio-m1.md</code> — guía de estudio por área: base teórica + ejercicios clave resueltos<br />
+  (36 ejercicios, alineada con el diagnóstico y el plan).</li>
+<li><code>plan/guias/f1.md</code> … <code>f5.md</code> — guías por fase: F1 y F2 con teoría y ejercicios por semana<br />
+  (F1: 57 ejercicios; F2: 44 ejercicios, verificados numéricamente); F3-F5 como protocolos de<br />
+  ensayo, refuerzo y estrategia de examen.</li>
+<li><code>plan/guias/f1.pdf</code> … <code>f5.pdf</code> — versiones PDF de las guías por fase (generadas desde los<br />
+<code>.html</code> con Chrome headless; f1: 5 págs, f2: 4 págs, f3-f5: 1-2 págs).</li>
+<li><code>plan/guia-estudio-m1.pdf</code> — versión PDF de la guía (8 págs; generada desde el <code>.html</code> con Chrome).</li>
+<li><code>plan/guia-estudio-m1.html</code> — fuente visual del PDF de la guía (regenerable).</li>
+<li><code>plan/entrenamiento-m1.pdf</code> — versión PDF del plan (generada desde el <code>.html</code> con Chrome headless).</li>
+<li><code>plan/entrenamiento-m1.html</code> — fuente visual del PDF (regenerable; editar y convertir con Chrome).</li>
+<li><code>seguimiento/ensayos.md</code> — registro de ensayos y evolución de puntajes.</li>
+<li><code>seguimiento/sistema.md</code> — sistema de guía semanal: roles, protocolo, reglas de ajuste y<br />
+  formato de reporte de hito.</li>
+<li><code>seguimiento/sesiones.md</code> — bitácora semanal (sesiones hechas, temas, dificultades, MC/ensayos).</li>
+<li><code>seguimiento/perfil-areas.md</code> — evolución del % de logro por área tras cada medición.</li>
+<li><code>material/mc/mc-f1.md</code>, <code>mc-f2.md</code>, <code>mc-f3f4.md</code> — banco de mini-controles (13 MC × 10<br />
+  preguntas del área en curso + 2 de mantenimiento de fortalezas, con clave; claves verificadas<br />
+  numéricamente) para las mediciones del plan.</li>
+<li><code>material/indice.md</code> — inventario del material de estudio (Preu, guías, libros, ensayos).</li>
+<li><code>diagnosticos/m1-2026-09/</code> — prueba diagnóstica M1 (docx generado por <code>generar_prueba.py</code>)</li>
+<li>clave de corrección (<code>correccion_m1.md</code>) + resultado corregido (<code>resultado_2026-09-24.md</code>).</li>
+</ul>
+<h2 id="decisiones">Decisiones</h2>
+<ul>
+<li>2026-09-21: inicio del proyecto; rendición PAES nov-dic 2027 (admisión 2028); pruebas Lectura,<br />
+  Matemática 1 y Ciencias; carrera objetivo Medicina.</li>
+<li>2026-09-21: único destino de interés = Universidad de Chile (Medicina). No se rendirá M2<br />
+  (verificado: UCH no la exige ni pondera para Medicina). Estudiante sin nombre. Preu no relevante<br />
+  para el seguimiento del proyecto.</li>
+<li>2026-09-21: la estudiante cursa 3° medio (2026); egresa de 4° medio a fines de 2027, coincidiendo<br />
+  con la rendición de la PAES regular (nov-dic 2027).</li>
+<li>2026-09-21: metas de puntaje M1: 800 (2026, referencia) y 1000 (2027, rendición oficial).</li>
+<li>2026-09-24: diagnóstico M1 aplicado y corregido: X/Y bruto (50%). Prioridades de<br />
+  entrenamiento: Geometría (0%) y Funciones (25%) como refuerzo prioritario; Números (50%) a<br />
+  consolidar; Proporcionalidad, Álgebra y Estadística (75%) a mantener.</li>
+<li>2026-09-24: plan de entrenamiento M1 definido: 2 h semanales; metas 800 (ensayos oficiales<br />
+  DEMRE 2026) y 1000 (PAES nov-dic 2027). Documentado en <code>plan/entrenamiento-m1.md</code>.</li>
+<li>2026-09-24: la estudiante NO rinde la PAES 2026; su única rendición oficial es la PAES regular<br />
+  de nov-dic 2027 (admisión 2028). La meta de 800 para 2026 se mide en ensayos oficiales DEMRE.</li>
+<li>2026-09-29: el proyecto es SOLO local. Se descartó la webapp (eliminados <code>index.html</code>,<br />
+<code>calendario.html</code>, <code>guias.html</code>, <code>practica.html</code>, <code>descargas.html</code>, <code>css/</code> y <code>js/</code>) y la idea de<br />
+  publicar en GitHub Pages. El material se conserva en <code>.md</code> (fuente), <code>.html</code> (fuente de PDF) y<br />
+<code>.pdf</code> (imprimible). Sin remote git.</li>
+</ul>
+        <div class="relacionados">
+<h3 class="relacionados-titulo">Documentos relacionados</h3>
+<div class="relacionados-lista">
+<a href="metas/carreras.html" class="relacionado-chip">Carreras y ponderaciones</a>
+<a href="plan/entrenamiento-m1.html" class="relacionado-chip">Plan de entrenamiento M1</a>
+<a href="plan/calendario-detallado.html" class="relacionado-chip">Calendario semana a semana</a>
+<a href="diagnosticos/m1-2026-09/resultado_2026-09-24.html" class="relacionado-chip">Diagnóstico M1</a>
+<a href="calendario.html" class="relacionado-chip">Calendario interactivo</a>
+</div>
+</div>
+    </main>
+    <button class="volver-arriba" aria-label="Volver arriba">↑</button>
+    <script>
+
+// Sidebar responsive
+document.addEventListener('DOMContentLoaded', function() {
+    var toggle = document.querySelector('.menu-toggle');
+    var sidebar = document.querySelector('.sidebar');
+
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+            sidebar.classList.toggle('abierto');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('abierto');
+            }
+        });
+    }
+
+    // Botón volver arriba
+    var btn = document.querySelector('.volver-arriba');
+    if (btn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    }
+});
+
+    </script>
+</body>
+</html>
